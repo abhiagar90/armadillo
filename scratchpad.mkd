@@ -1,0 +1,25 @@
+## Introduction
+
+This thesis is a document to record our endeavour to tackle the problem of forming the social networks of Indian Politicians and Corporates and analysing them.
+
+The main idea is to collect data from semantic web (and other sources) to form a database ( here onwards we call it the (b) "knowledge base" (b) )  and use it to for monitoring the top players in Indian society - mainly in the spheres of politics and businesses in India. We sought answers to questions like - who were the big players in Indian politics and businesses? Is there any influence (or possibility of it) of political field by a person in corporate field? How important is one politician in a network of politicians (or a businessperson in a business network)? Whom does actual power reside in a democracy.
+
+## Related work
+        Previously interactions between top players of the society has been studied by C.W. Mills in his book "The Power Elites" where he mentions about the interwoven interests of leaders in military, political, corporate, educational level. Furthermore, Thomas Piketty in his book "Capital in Twenty First Century" discusses the new age of capitalism with data collected from journalists in Europe. Piketty believes in lines with C.W. Mills that the power in a so-called democratic society truly resides on a handful of individuals holding important resources. The above works are mainly concentrated in the background of Europe and US but is equally important and viable in developing countries like India as well. In justification, Patrick French has analysed the Indian politics revealing the hereditary nature of Indian political relationships in his book - "India: A Portrait". A recent work titled "Who owns your media" showed the relations or influence of big business families over media ownerships shows similar interesting patterns where public resources are controlled by handful of corporates.
+        Technically a knowledge base is a data store to keep unstructured information for using it to analyse patterns, create new inferences or just to diseminate information. Works on creating similar things has been done by makers of Littlesis.org, poderopedia.org etc. LittleSis.org is an US based website reflecting eminent personalities in the govt. of United States. The website shows networks of US politicians, member of govts, businessmen etc through visualizations and/or normal tabular representations. It also has a wiki system where any registered user can modify the content (basically crowd source the content to add more information). Some analysis has also been given forward through the use of blogs or articles published in the site. Poderopedia has similar content but for the country of Chile.
+
+Our work is similar to above in the context of data delivery or information visualization with respect to Indian corporate-political data.We put forward the techniques and challenges encountered to build a knowledge base and its application to find patterns or new knowledge.
+
+# Advantages 
+The creation of such a system is beneficial for the society as a whole. It disemminates current information to public (or forms an indirect media for the same) which brings about accountability and transparency in the democracy. The project in the long run, helps to create a neat, structured minimal error data collection which otherwise is scattered at respective sources. Moreover, it also acts as a mashup data from different domains to be further used by journalists and academecians etc. Alongwith this, our work shows how such system of inter-disciplinary helps to find patterns and discover more informationa (with the challenges of building up a wiki based system to circulate information) .
+
+#Goals in details
+In regard to above ideas, we splitted our goals to following objectives - 
+    1. Create a structured knowledgebase of corporate-political data. 
+        Our main motive was to collect noisy semi structured data from various sources was the first problem encountered. This was followed by the task of entity resolution to merge repeated information pertaining to a single person. Finally the data was fitted into a model for easy queries.
+
+    2. Create a web portal to share and/or spread the information contained in the database.
+        The idea was to visualize the data contained in the knowledgebase. In lines with littlesis, we wanted to create a portal to show the networks obtained through different sources and add a wiki to add more through the crowd. Moreover, we also tried to give a minimal query engine to allow users to make custom queries for further analysis. We also wanted to create read/write apis to our knowledge database to help app writers to easily extend it to their applications.
+    3. Analysis to find patterns in data.
+        Our endeavour is to use the knowledge graph and the query engine we tried to build to look into the network properties and find new patterns and information out of it.
+        
