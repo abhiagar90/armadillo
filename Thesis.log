@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.1.3)  26 JUN 2016 00:39
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.6.25)  26 JUN 2016 15:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -586,42 +586,42 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 
  (./chapter1.tex
 Chapter 1.
+
+Overfull \hbox (4.86118pt too wide) in paragraph at lines 23--24
+[]\OT1/cmr/m/n/12 To col-lect data from se-man-tic web (and other sources) to f
+orm a database
+ []
+
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.24 
-      [1
+l.24     \item T
+                o create a neat, structured minimal error data collection wh...
+[1
 
 
 
 
 
-]
-Overfull \hbox (11.01106pt too wide) in paragraph at lines 25--26
+]pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.42 
+      [2]
+Overfull \hbox (11.01106pt too wide) in paragraph at lines 43--44
 []\OT1/cmr/m/n/12 French economist Thomas Piketty in his fa-mous work \OT1/cmr/
 bx/n/12 Cap-i-tal in the Twenty-
  []
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
+pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.32 
-      [2]pdfTeX warning (ext4): destination with the same identifier (name{page
-.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.44     \item \textbf
-                      {Create a structured knowledgebase of corporate-politi...
-[3]
-Overfull \hbox (0.27472pt too wide) in paragraph at lines 44--46
-[]\OT1/cmr/bx/n/12 Create a struc-tured knowl-edge-base of corporate-political 
-data.
- []
-
-)pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has
- been already used, duplicate ignored
+l.50 
+      [3])pdfTeX warning (ext4): destination with the same identifier (name{pag
+e.4}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.145 \include{chapter1}
@@ -844,7 +844,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 161.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 161.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 161.
 Package rerunfilecheck Info: File `Thesis.out' has not changed.
-(rerunfilecheck)             Checksum: BD13652213745F9C283016A2A267918B;2069.
+(rerunfilecheck)             Checksum: 156D4C10D12723C9C38D1C912E1E0741;2081.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -853,7 +853,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 161.
  ) 
 Here is how much of TeX's memory you used:
  8681 strings out of 493304
- 127068 string characters out of 6139872
+ 127068 string characters out of 6139871
  315164 words of memory out of 5000000
  11825 multiletter control sequences out of 15000+600000
  13472 words of font info for 49 fonts, out of 8000000 for 9000
@@ -867,7 +867,7 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Thesis.pdf (30 pages, 1433967 bytes).
+Output written on Thesis.pdf (30 pages, 1433269 bytes).
 PDF statistics:
  462 PDF objects out of 1000 (max. 8388607)
  403 compressed objects within 5 object streams
