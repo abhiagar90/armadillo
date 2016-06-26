@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.6.25)  26 JUN 2016 15:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.6.26)  27 JUN 2016 02:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -418,7 +418,7 @@ less on input line 55.
 \c@fact=\count130
 (./Thesis.aux (./titlepage.aux) (./certificate.aux) (./abstract.aux)
 (./acknowledgement.aux) (./chapter1.aux) (./chapter2.aux) (./chapter3.aux)
-(./chapter4.aux) (./chapter5.aux))
+(./chapter4.aux) (./chapter5.aux) (./chapter9.aux))
 \openout1 = `Thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 100.
@@ -493,7 +493,7 @@ LaTeX Info: Redefining \nameref on input line 100.
 \openout2 = `titlepage.aux'.
 
  (./titlepage.tex
-<./Figures/iit_logo.pdf, id=136, 523.60315pt x 553.20177pt>
+<./Figures/iit_logo.pdf, id=188, 523.60315pt x 553.20177pt>
 File: ./Figures/iit_logo.pdf Graphic file (type pdf)
 
 <use ./Figures/iit_logo.pdf>
@@ -624,7 +624,7 @@ l.145 \include{chapter1}
 
  (./chapter2.tex
 Chapter 2.
-<./Figures/big_pic.pdf, id=283, 954.56625pt x 466.74374pt>
+<./Figures/big_pic.pdf, id=349, 954.56625pt x 466.74374pt>
 File: ./Figures/big_pic.pdf Graphic file (type pdf)
 
 <use ./Figures/big_pic.pdf>
@@ -646,7 +646,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 38--39
 
  []
 
-<./Figures/tech_pic.png, id=298, 717.68124pt x 472.76625pt>
+<./Figures/tech_pic.png, id=364, 717.68124pt x 472.76625pt>
 File: ./Figures/tech_pic.png Graphic file (type png)
 
 <use ./Figures/tech_pic.png>
@@ -668,7 +668,7 @@ l.147 \include{chapter2}
 
  (./chapter3.tex
 Chapter 3.
-<./Figures/sys_pipeline.png, id=305, 755.82375pt x 394.47375pt>
+<./Figures/sys_pipeline.png, id=371, 755.82375pt x 394.47375pt>
 File: ./Figures/sys_pipeline.png Graphic file (type png)
 
 <use ./Figures/sys_pipeline.png>
@@ -695,7 +695,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 121--122
 
  []
 
-<./Figures/Jindal.png, id=334, 1289.81876pt x 933.4875pt>
+<./Figures/Jindal.png, id=399, 1289.81876pt x 933.4875pt>
 File: ./Figures/Jindal.png Graphic file (type png)
 
 <use ./Figures/Jindal.png>
@@ -715,7 +715,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 135--136
 
  []
 
-<./Figures/Sinha.png, id=335, 1278.7775pt x 702.625pt>
+<./Figures/Sinha.png, id=400, 1278.7775pt x 702.625pt>
 File: ./Figures/Sinha.png Graphic file (type png)
 
 <use ./Figures/Sinha.png>
@@ -725,7 +725,7 @@ Package pdftex.def Info: ./Figures/Sinha.png used on input line 139.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./Figures/Gandhi.png, id=336, 779.91376pt x 452.69125pt>
+<./Figures/Gandhi.png, id=401, 779.91376pt x 452.69125pt>
 File: ./Figures/Gandhi.png Graphic file (type png)
 
 <use ./Figures/Gandhi.png>
@@ -735,7 +735,7 @@ Package pdftex.def Info: ./Figures/Gandhi.png used on input line 150.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./Figures/Jaydev.png, id=337, 501.875pt x 427.5975pt>
+<./Figures/Jaydev.png, id=402, 501.875pt x 427.5975pt>
 File: ./Figures/Jaydev.png Graphic file (type png)
 
 <use ./Figures/Jaydev.png>
@@ -745,7 +745,7 @@ Package pdftex.def Info: ./Figures/Jaydev.png used on input line 158.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./Figures/Jay_Panda.png, id=338, 618.31pt x 444.66125pt>
+<./Figures/Jay_Panda.png, id=403, 618.31pt x 444.66125pt>
 File: ./Figures/Jay_Panda.png Graphic file (type png)
 
 <use ./Figures/Jay_Panda.png>
@@ -755,7 +755,7 @@ Package pdftex.def Info: ./Figures/Jay_Panda.png used on input line 166.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./Figures/Kamal_Nath.png, id=339, 639.38875pt x 418.56375pt>
+<./Figures/Kamal_Nath.png, id=404, 639.38875pt x 418.56375pt>
 File: ./Figures/Kamal_Nath.png Graphic file (type png)
 
 <use ./Figures/Kamal_Nath.png>
@@ -765,7 +765,7 @@ Package pdftex.def Info: ./Figures/Kamal_Nath.png used on input line 174.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./Figures/Ravi_Shankar.png, id=340, 721.69624pt x 412.54124pt>
+<./Figures/Ravi_Shankar.png, id=405, 721.69624pt x 412.54124pt>
 File: ./Figures/Ravi_Shankar.png Graphic file (type png)
 
 <use ./Figures/Ravi_Shankar.png>
@@ -817,7 +817,165 @@ Chapter 5.
 
 
 
-] (./Thesis.bbl [21
+]
+\openout2 = `chapter9.aux'.
+
+ (./chapter9.tex
+Chapter 6.
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--4
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--6
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--8
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--13
+
+ []
+
+[21
+
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 14--15
+
+ []
+
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ì in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ô in font cmr12!
+
+Underfull \hbox (badness 10000) in paragraph at lines 19--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 21--22
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 25--26
+
+ []
+
+[22]
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ì in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ì in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ì in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+
+Overfull \hbox (69.81189pt too wide) in paragraph at lines 37--38
+\OT1/cmr/m/n/12 speed up the do-main data when new needs arise [https://neo4j.c
+om/developer/graph-
+ []
+
+[23]
+Overfull \hbox (124.20947pt too wide) in paragraph at lines 47--48
+\OT1/cmr/m/n/12 graph database - to power it's google's knowl-edge graph. [ci-t
+a-tion: https://github.com/google/cayley] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 52--53
+
+ []
+
+[24]
+Overfull \hbox (12.1375pt too wide) in paragraph at lines 66--67
+[]\OT1/cmr/m/n/12 Just like a node, a re-la-tion-ship can also hold any num-ber
+ of attributes(key-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 76--77
+
+ []
+
+
+Overfull \hbox (21.55415pt too wide) in paragraph at lines 78--81
+[]\OT1/cmr/m/n/12 A node is rep-re-sented like this: (:per-son:politician name:
+'Narendra Modi',sex:'M')
+ []
+
+[25]
+Overfull \hbox (4.41269pt too wide) in paragraph at lines 85--87
+[]\OT1/cmr/m/n/12 MATCH (jin-dal:politician name:'Naveen Jindal')-[anyrelation]
+-(anynode) RE-
+ []
+
+[26]
+Overfull \hbox (13.80414pt too wide) in paragraph at lines 116--117
+\OT1/cmr/m/n/12 present are val-i-dated: 'start-date'(int), 'end-date'(int), 'i
+s-cur-rent'(boolean).
+ []
+
+
+Overfull \hbox (3.81674pt too wide) in paragraph at lines 122--123
+[]\OT1/cmr/m/n/12 Some la-bels for re-la-tion-ships in cur-rent core data are: 
+re-lat-edto, worksin,
+ []
+
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ô in font cmr12!
+[27] [28] [29] [30] [31]
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ô in font cmr12!
+
+Overfull \hbox (90.55722pt too wide) in paragraph at lines 277--282
+\OT1/cmr/m/n/12 news al-ready, etc [ci-ta-tion: https://en.wikipedia.org/wiki/C
+ategory:Business[]families[]of[]India]
+ []
+
+[32]
+Underfull \hbox (badness 10000) in paragraph at lines 287--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 289--290
+
+ []
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 291--155
+
+ []
+
+[33] (./Thesis.bbl [34
 
 
 
@@ -829,30 +987,31 @@ Missing character: There is no ‚ in font cmti12!
 Missing character: There is no Ä in font cmti12!
 Missing character: There is no ù in font cmti12!
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 161.
- [22]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 161.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 163.
+ [35]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 163.
  (./Thesis.aux (./titlepage.aux)
 (./certificate.aux) (./abstract.aux) (./acknowledgement.aux) (./chapter1.aux)
-(./chapter2.aux) (./chapter3.aux) (./chapter4.aux) (./chapter5.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 161.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 161.
+(./chapter2.aux) (./chapter3.aux) (./chapter4.aux) (./chapter5.aux)
+(./chapter9.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 163.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 163.
 Package rerunfilecheck Info: File `Thesis.out' has not changed.
-(rerunfilecheck)             Checksum: D172EABAF585428932D06F0AB3B8DB36;2017.
+(rerunfilecheck)             Checksum: D72C4C895406428E97547212F6D505D3;2896.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 161.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 163.
  ) 
 Here is how much of TeX's memory you used:
- 8679 strings out of 493304
- 127044 string characters out of 6139871
- 315164 words of memory out of 5000000
- 11824 multiletter control sequences out of 15000+600000
+ 8787 strings out of 493304
+ 128149 string characters out of 6139871
+ 315742 words of memory out of 5000000
+ 11844 multiletter control sequences out of 15000+600000
  13472 words of font info for 49 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 44i,19n,46p,1005b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,19n,46p,1005b,494s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/tex
@@ -861,10 +1020,10 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Thesis.pdf (30 pages, 1434009 bytes).
+Output written on Thesis.pdf (43 pages, 1462202 bytes).
 PDF statistics:
- 456 PDF objects out of 1000 (max. 8388607)
- 398 compressed objects within 4 object streams
- 97 named destinations out of 1000 (max. 500000)
- 320 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 650 PDF objects out of 1000 (max. 8388607)
+ 577 compressed objects within 6 object streams
+ 178 named destinations out of 1000 (max. 500000)
+ 424 words of extra memory for PDF output out of 10000 (max. 10000000)
 
