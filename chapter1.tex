@@ -32,7 +32,6 @@ We intended to complete following tasks through our project-
          \item \emph{ How important is one politician in a network of politicians (or a businessperson in a business network)? }
          \item \emph{ Whom does actual power reside in a democracy? }
         \end{itemize}
-
 \end{itemize}
 We believe that through our work, we will be able to show how such system of inter-disciplinary data helps to spread information and find patterns and discover more knowledge.
 
@@ -51,6 +50,12 @@ Works like what we propose have already been done for countries like USA, UK, Ch
 Such system in absence of digital data/ structured data and other human factors is difficult in India. But various local and national initiatives have been started. \textbf{Association for democratic Reforms} \cite{ADR} for example has sites like \textbf{Myneta} \cite{MyNeta} to disseminate information about political leaders of India.	
 
 Our vision is to produce a system similar in lines to the websites embedded with the power to query interesting connections, find interesting visualizations, and help raise suspicious issues.
+
+The core two things that required our special attention when working with several data sources is the process of \textbf{ modelling the database as a graph } and method of \textbf{ resolving same entities from different data sources }. These two things are problems with extensive study of their own.
+
+\textbf{ Entity resolution } has been studied since 1946 by works of \emph{ Halber.L.Dunn }[citation]. Basic method is to match a pair of strings accurately to determine possible similar entities. Since then, several string matching algorithms has been used for this purpose. The \textbf{ levenshtein algorithm } [citations] gives score based on no of edits to convert one string to another.It is escpecially useful for to deal with problem of misspelt records. Improving on that the \textbf{ Jaro-Winkler} [citation] looks at matching characters within a small range while giving scores. This is suitable for short strings such as names and fits our purpose well. Another class of string matching algorithms looks at phonetics to resolve entities with similar sounding text. The \textbf{ soundex algorithm }[citation] is one of the most well known. These algorithms use english language pronunciations to create an index of the text. For our purpose, we have used the Jaro-Winkler and a variation of Soundex \textbf{ (Double Metaphone) }[citations]
+
+    The graph model of the data is required since we are emphasizing the relationships among the data. Graph databases as a concept existed long since mid-1960s when \textbf{ IBM IMS } [citation]supported graph structures in its hierarchical model. Graph databases allows one to give semantic queries  over data relationships. A graph databases model the data as nodes and relationships among them as edges between nodes. Internally, they store the data as a relational table (\textbf{ MariaDB }[citation]) or through document-value stores (\textbf{ Neo4j, OrientDB }[citation]). For the purpose of our project we have used the Neo4j database to store the data. 
 
 \section{Thesis Overview}
 The rest of the thesis has been divided into following -

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.6.25)  26 JUN 2016 15:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.6.25)  26 JUN 2016 23:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -403,6 +403,57 @@ Package: tabularx 1999/01/07 v2.07 `tabularx' package (DPC)
 \TX@cols=\count126
 \TX@ftn=\toks34
 )
+(/usr/share/texlive/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
+Package: algorithm2e 2013/01/06 v5.00 algorithms environments
+\c@AlgoLine=\count127
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2009/10/20 v1.13 Space after command names (DPC,MH)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/relsize/relsize.sty
+Package: relsize 2013/03/29 ver 4.1
+)
+********************************************************
+Package `algorithm2e' Release 5.0 -- january 06 2013 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (cfiorio@um2.fr)
+********************************************************
+\skiptotal=\skip73
+\skiplinenumber=\skip74
+\skiprule=\skip75
+\skiphlne=\skip76
+\skiptext=\skip77
+\skiplength=\skip78
+\algomargin=\skip79
+\skipalgocfslide=\skip80
+\algowidth=\dimen150
+\inoutsize=\dimen151
+\inoutindent=\dimen152
+\interspacetitleruled=\dimen153
+\interspacealgoruled=\dimen154
+\interspacetitleboxruled=\dimen155
+\algocf@inoutbox=\box33
+\algocf@inputbox=\box34
+\AlCapSkip=\skip81
+\AlCapHSkip=\skip82
+\algoskipindent=\skip83
+\algocf@nlbox=\box35
+\algocf@hangingbox=\box36
+\algocf@untilbox=\box37
+\algocf@skipuntil=\skip84
+\algocf@capbox=\box38
+\algoheightruledefault=\skip85
+\algoheightrule=\skip86
+\algotitleheightruledefault=\skip87
+\algotitleheightrule=\skip88
+\c@algocfline=\count128
+\c@algocfproc=\count129
+\c@algocf=\count130
+\algocf@algoframe=\box39
+\algocf@algobox=\box40
+)
 
 Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less on input line 53.
@@ -412,13 +463,13 @@ Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less on input line 55.
 
 \@float@every@figure=\toks35
-\c@claim=\count127
-\c@theorem=\count128
-\c@defn=\count129
-\c@fact=\count130
+\c@claim=\count131
+\c@theorem=\count132
+\c@defn=\count133
+\c@fact=\count134
 (./Thesis.aux (./titlepage.aux) (./certificate.aux) (./abstract.aux)
 (./acknowledgement.aux) (./chapter1.aux) (./chapter2.aux) (./chapter3.aux)
-(./chapter4.aux) (./chapter5.aux))
+(./chapter4.aux) (./chapter5.aux) (./chapter6.aux))
 \openout1 = `Thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 100.
@@ -438,16 +489,16 @@ LaTeX Font Info:    ... okay on input line 100.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count131
-\scratchdimen=\dimen150
-\scratchbox=\box33
-\nofMPsegments=\count132
-\nofMParguments=\count133
+\scratchcounter=\count135
+\scratchdimen=\dimen156
+\scratchbox=\box41
+\nofMPsegments=\count136
+\nofMParguments=\count137
 \everyMPshowfont=\toks36
-\MPscratchCnt=\count134
-\MPscratchDim=\dimen151
-\MPnumerator=\count135
-\makeMPintoPDFobject=\count136
+\MPscratchCnt=\count138
+\MPscratchDim=\dimen157
+\MPnumerator=\count139
+\makeMPintoPDFobject=\count140
 \everyMPtoPDFconversion=\toks37
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
@@ -471,7 +522,7 @@ Package caption Info: hyperref package is loaded.
 Package caption Info: rotating package is loaded.
 Package caption Info: supertabular package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\AtBeginShipoutBox=\box34
+\AtBeginShipoutBox=\box42
 Package hyperref Info: Link coloring OFF on input line 100.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
@@ -480,7 +531,7 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count137
+\c@section@level=\count141
 )
 LaTeX Info: Redefining \ref on input line 100.
 LaTeX Info: Redefining \pageref on input line 100.
@@ -493,7 +544,7 @@ LaTeX Info: Redefining \nameref on input line 100.
 \openout2 = `titlepage.aux'.
 
  (./titlepage.tex
-<./Figures/iit_logo.pdf, id=136, 523.60315pt x 553.20177pt>
+<./Figures/iit_logo.pdf, id=140, 523.60315pt x 553.20177pt>
 File: ./Figures/iit_logo.pdf Graphic file (type pdf)
 
 <use ./Figures/iit_logo.pdf>
@@ -599,7 +650,7 @@ l.25     \item T
 
 
 ]
-Overfull \hbox (11.01106pt too wide) in paragraph at lines 43--44
+Overfull \hbox (11.01106pt too wide) in paragraph at lines 42--43
 []\OT1/cmr/m/n/12 French economist Thomas Piketty in his fa-mous work \OT1/cmr/
 bx/n/12 Cap-i-tal in the Twenty-
  []
@@ -608,35 +659,40 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.44 
+l.43 
       [2]pdfTeX warning (ext4): destination with the same identifier (name{page
 .3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.50 
-      [3])pdfTeX warning (ext4): destination with the same identifier (name{pag
-e.4}) has been already used, duplicate ignored
+l.49 
+      [3]pdfTeX warning (ext4): destination with the same identifier (name{page
+.4}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.57 
+      [4])pdfTeX warning (ext4): destination with the same identifier (name{pag
+e.5}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.145 \include{chapter1}
-                         [4]
+                         [5]
 \openout2 = `chapter2.aux'.
 
  (./chapter2.tex
 Chapter 2.
-<./Figures/big_pic.pdf, id=283, 954.56625pt x 466.74374pt>
+<./Figures/big_pic.pdf, id=292, 954.56625pt x 466.74374pt>
 File: ./Figures/big_pic.pdf Graphic file (type pdf)
 
 <use ./Figures/big_pic.pdf>
 Package pdftex.def Info: ./Figures/big_pic.pdf used on input line 12.
 (pdftex.def)             Requested size: 381.81973pt x 186.69418pt.
-pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has 
+pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.30 \item\textbf
                  {Data Store}  - There should be a central repository for wh...
-[5
+[6
 
 
 
@@ -646,41 +702,36 @@ Underfull \hbox (badness 10000) in paragraph at lines 38--39
 
  []
 
-<./Figures/tech_pic.png, id=298, 717.68124pt x 472.76625pt>
+<./Figures/tech_pic.png, id=306, 717.68124pt x 472.76625pt>
 File: ./Figures/tech_pic.png Graphic file (type png)
 
 <use ./Figures/tech_pic.png>
 Package pdftex.def Info: ./Figures/tech_pic.png used on input line 42.
 (pdftex.def)             Requested size: 287.06741pt x 189.10315pt.
-pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has 
+pdfTeX warning (ext4): destination with the same identifier (name{page.7}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.51 \item\textbf
                  {Verifier}- The data coming from the crawler after resoluti...
-[6 <./Figures/tech_pic.png>])pdfTeX warning (ext4): destination with the same i
-dentifier (name{page.7}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.147 \include{chapter2}
-                         [7]
+[7 <./Figures/tech_pic.png>]) [8]
 \openout2 = `chapter3.aux'.
 
  (./chapter3.tex
 Chapter 3.
-<./Figures/sys_pipeline.png, id=305, 755.82375pt x 394.47375pt>
+<./Figures/sys_pipeline.png, id=314, 755.82375pt x 394.47375pt>
 File: ./Figures/sys_pipeline.png Graphic file (type png)
 
 <use ./Figures/sys_pipeline.png>
 Package pdftex.def Info: ./Figures/sys_pipeline.png used on input line 7.
 (pdftex.def)             Requested size: 302.32414pt x 157.7867pt.
- [8
+ [9
 
 
 
 
- <./Figures/sys_pipeline.png>] [9] [10]
-[11]
+ <./Figures/sys_pipeline.png>] [10] [11]
+[12]
 Underfull \hbox (badness 10000) in paragraph at lines 105--109
 
  []
@@ -690,12 +741,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 110--111
 
  []
 
-[12]
+[13]
 Underfull \hbox (badness 10000) in paragraph at lines 121--122
 
  []
 
-<./Figures/Jindal.png, id=334, 1289.81876pt x 933.4875pt>
+<./Figures/Jindal.png, id=343, 1289.81876pt x 933.4875pt>
 File: ./Figures/Jindal.png Graphic file (type png)
 
 <use ./Figures/Jindal.png>
@@ -715,7 +766,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 135--136
 
  []
 
-<./Figures/Sinha.png, id=335, 1278.7775pt x 702.625pt>
+<./Figures/Sinha.png, id=344, 1278.7775pt x 702.625pt>
 File: ./Figures/Sinha.png Graphic file (type png)
 
 <use ./Figures/Sinha.png>
@@ -725,7 +776,7 @@ Package pdftex.def Info: ./Figures/Sinha.png used on input line 139.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./Figures/Gandhi.png, id=336, 779.91376pt x 452.69125pt>
+<./Figures/Gandhi.png, id=345, 779.91376pt x 452.69125pt>
 File: ./Figures/Gandhi.png Graphic file (type png)
 
 <use ./Figures/Gandhi.png>
@@ -735,7 +786,7 @@ Package pdftex.def Info: ./Figures/Gandhi.png used on input line 150.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./Figures/Jaydev.png, id=337, 501.875pt x 427.5975pt>
+<./Figures/Jaydev.png, id=346, 501.875pt x 427.5975pt>
 File: ./Figures/Jaydev.png Graphic file (type png)
 
 <use ./Figures/Jaydev.png>
@@ -745,7 +796,7 @@ Package pdftex.def Info: ./Figures/Jaydev.png used on input line 158.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./Figures/Jay_Panda.png, id=338, 618.31pt x 444.66125pt>
+<./Figures/Jay_Panda.png, id=347, 618.31pt x 444.66125pt>
 File: ./Figures/Jay_Panda.png Graphic file (type png)
 
 <use ./Figures/Jay_Panda.png>
@@ -755,7 +806,7 @@ Package pdftex.def Info: ./Figures/Jay_Panda.png used on input line 166.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./Figures/Kamal_Nath.png, id=339, 639.38875pt x 418.56375pt>
+<./Figures/Kamal_Nath.png, id=348, 639.38875pt x 418.56375pt>
 File: ./Figures/Kamal_Nath.png Graphic file (type png)
 
 <use ./Figures/Kamal_Nath.png>
@@ -765,7 +816,7 @@ Package pdftex.def Info: ./Figures/Kamal_Nath.png used on input line 174.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./Figures/Ravi_Shankar.png, id=340, 721.69624pt x 412.54124pt>
+<./Figures/Ravi_Shankar.png, id=349, 721.69624pt x 412.54124pt>
 File: ./Figures/Ravi_Shankar.png Graphic file (type png)
 
 <use ./Figures/Ravi_Shankar.png>
@@ -775,9 +826,9 @@ Package pdftex.def Info: ./Figures/Ravi_Shankar.png used on input line 182.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) [13] [14 <./Figures/Jindal.png> <./Figures/Sinha.png>] [15 <./Figures/Gandhi.
-png> <./Figures/Jaydev.png>] [16 <./Figures/Jay_Panda.png> <./Figures/Kamal_Nat
-h.png>] [17 <./Figures/Ravi_Shankar.png>]
+) [14] [15 <./Figures/Jindal.png> <./Figures/Sinha.png>] [16 <./Figures/Gandhi.
+png> <./Figures/Jaydev.png>] [17 <./Figures/Jay_Panda.png> <./Figures/Kamal_Nat
+h.png>] [18 <./Figures/Ravi_Shankar.png>]
 \openout2 = `chapter4.aux'.
 
  (./chapter4.tex
@@ -797,7 +848,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 13--24
 
  []
 
-[18
+[19
 
 
 
@@ -807,17 +858,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 25--36
 
  []
 
-) [19]
+) [20]
 \openout2 = `chapter5.aux'.
 
  (./chapter5.tex
 Chapter 5.
-) [20
+) [21
 
 
 
 
-] (./Thesis.bbl [21
+]
+\openout2 = `chapter6.aux'.
+
+ (./chapter6.tex
+Chapter 6.
+) [22
+
+
+
+
+] (./Thesis.bbl [23
 
 
 
@@ -829,30 +890,31 @@ Missing character: There is no ‚ in font cmti12!
 Missing character: There is no Ä in font cmti12!
 Missing character: There is no ù in font cmti12!
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 161.
- [22]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 161.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 163.
+ [24]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 163.
  (./Thesis.aux (./titlepage.aux)
 (./certificate.aux) (./abstract.aux) (./acknowledgement.aux) (./chapter1.aux)
-(./chapter2.aux) (./chapter3.aux) (./chapter4.aux) (./chapter5.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 161.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 161.
+(./chapter2.aux) (./chapter3.aux) (./chapter4.aux) (./chapter5.aux)
+(./chapter6.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 163.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 163.
 Package rerunfilecheck Info: File `Thesis.out' has not changed.
-(rerunfilecheck)             Checksum: D172EABAF585428932D06F0AB3B8DB36;2017.
+(rerunfilecheck)             Checksum: 646059753B63FB465FF6D7A74C4FFD55;2061.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 161.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 163.
  ) 
 Here is how much of TeX's memory you used:
- 8679 strings out of 493304
- 127044 string characters out of 6139871
- 315164 words of memory out of 5000000
- 11824 multiletter control sequences out of 15000+600000
+ 10044 strings out of 493304
+ 146332 string characters out of 6139871
+ 358220 words of memory out of 5000000
+ 13170 multiletter control sequences out of 15000+600000
  13472 words of font info for 49 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 44i,19n,46p,1005b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,19n,46p,1097b,488s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/tex
@@ -861,10 +923,10 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Thesis.pdf (30 pages, 1434009 bytes).
+Output written on Thesis.pdf (32 pages, 1437216 bytes).
 PDF statistics:
- 456 PDF objects out of 1000 (max. 8388607)
- 398 compressed objects within 4 object streams
- 97 named destinations out of 1000 (max. 500000)
- 320 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 471 PDF objects out of 1000 (max. 8388607)
+ 410 compressed objects within 5 object streams
+ 100 named destinations out of 1000 (max. 500000)
+ 328 words of extra memory for PDF output out of 10000 (max. 10000000)
 
