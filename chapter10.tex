@@ -1,0 +1,93 @@
+\chapter{Detailed System Design}
+
+[TODO: fill]
+
+here we describe our system in detail. sole aim reduce manual er work...though in the long run we will be 
+crowdsourcing--but we want the design and research that goes behind the ER results ---  
+to make verifiers task easy- aid with them in moderation process ---  design system, design views for ease of verifiers --  they should be focussed on investigating the links --- show them bext possible results \\
+
+another key point which we have kept in mind always - 
+it to make the data gatherers task easy without any hassle
+ -- they should universally be able to communicate with the system, and should be able to keep track of their data, and also update their data as well, the data should be well seperarted in crawl data store - \\
+
+
+a small note about web and other technologies used: framwork flask - adaptable - minimar web framwework, jimga tamplates, wtforms, py2neo, bootstrap used
+talk abput two dbs - seperation of concerns -  explained in data integration section. 
+crawl data store:
+core data store:
+all atcors revolve around these, we have role based system
+actor with higher role can do all tasks that a lower one ca do and more \\
+
+
+data gatherers --
+use case diagram
+  -- they should universally be able to communicate with the system, and should be able to keep track of their data, and also update their data as well, the data should be well seperarted in crawl data store - taskid, userid, tokens -- authentication, api description
+  there we talked about json, hwre we talk about api, and metada saved with it
+  --va;idations in api in tendem with the data model described  \\
+-api snapshot
+of what is the view
+what is the resulkt from prstman
+
+verifiers/moderators 
+use cas edigarm
+-- valid url checked again --
+to reolve mean: give a uuid and a relid 
+
+selection algo
+and then search -- search query explained in diff section
+explain match view, explain diff view
+colors in diff view
+session checks - resume task
+ribust validation chekcing --- no data should get go to worng core data object
+locks parallization = apscheduler lib python
+views, jaro, search query, view plavcement, diff
+jaro useful in some cases only
+phonetic serves the purpose, more algos can be fit in
+diff new labels, new props, type, conf props, -- name, aliases, lists - mvps!! 
+lists and mvps handling imp \\
+
+
+a mini-guide to manual verification -- reema sarkar -- [an image]
+very imp as only write happens through verifier
+shortest path
+expand on nodes in neo4j yuvraj singh a falase case can describe
+examples of connection --- between sons etc. 
+screenshots verifier \\
+ 
+
+registered users
+wiki
+use case diagram
+explain the design all goes into crawldb
+all is verfied- always 
+screenshots
+read api
+wiki \\
+
+
+provanance
+screenshots can be seen by users
+how is it done
+when verifier verifies
+explain
+all inputs that we track
+see the fn \\
+
+admin:
+delete index
+refresh index
+eleveate users
+verfier contributions
+bots
+
+
+end users:
+read profiles
+see connections
+cypher read query - explain - etc.
+limit automatically
+viz
+provenance view
+sign up\\
+
+database model er diagrm sanphot meta db - index table also include?? [left] \\

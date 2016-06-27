@@ -164,7 +164,7 @@ Any data that is crawled is not fed into the system directly. Instead, a REST PU
 \end{enumerate}
 
 
-\section{Tools and Methods}
+\subsection{Tools and Methods}
 
 We describe here tools that we picked and methodology adopted up along the way for data collection and cleaning. It is important to note that no single tool can be a cure for all the data-sources. In fact, what we have learned in due course of time is that different kind of data sources require different approach.
 The data being noisy due to entry errors and the schema/ model/ format differences of the sources causes various consistency issues to creep up when compiling them into a single model.
@@ -185,7 +185,7 @@ There are other issues of not obtaining enough data to churn out any useful info
 \end{enumerate}
 
 
-\section{Corporate data}
+\subsection{Corporate data}
 
 The challenges in collecting any corporate data are:
 
@@ -240,7 +240,7 @@ For our purpose we obtained our director sharing data by following means-
 
 Thus in this way a dataset of 1000 companies and  9400 directors were expanded to a dataset of 90000 directors and 60000 companies.This data formed the starting point in our Core Database.
 
-\section{Political data}
+\subsection{Political data}
 
 Our task in this domain was to find personal information of MPs and their dependents. So we went looking in Wikipedia of various political members and their families. But Wikipedia is highly unstructured and crawling, parsing Wikipedia even with professional extractors is a tedious task.
 
@@ -250,15 +250,6 @@ We started with these problem statements in our mind:
     \item How to get the family information of MPs?
 \end{itemize}
 \subsection{MyNeta}
-
-they have done a tremendous work in digitizing this data
-data description
-info about constituency and states 
-info about assets and liabilities
-info about criminal cases
-mynetaid for a particular election helps in resolution from myneta dataset, kept as internal prop
-ls 2009 and ls 2014 data
-
 MyNeta is a site launched by Association of Democratic Reforms (ADR) to provide public awareness about Indian politicians. They contain several important information about Indian MPs including -
 \begin{itemize}
     \item Personal information
@@ -274,13 +265,14 @@ We also chose to scrape official LokSabha site for politician's personal propert
 We finally got this information from official site of LokSabha which gave us actual government provided records. Scripts were written in scrapy which allowed us to gather information about politician.
 We also downloaded the images of politicians to be used later in the Power Elites web app [chapter reference].
 
-\subsection{Rajya Sabha Official data}
+\subsubsection{Rajya Sabha Official data}
 
 We collected Rajya Sabha data as well from their official site to look for more corporate-political tie ups. Rajya Sabha data is more interesting as we have some businessmen directly nominated as a Rajya Sabha.  
 
 \section{Family Ties Information}
 
 We also have manually collected from the web various family ties in businesses and politics. Major source for this data is wikipedia. This data allowed us to find new relations/links from already obtained graph.
+
 chidambram and his family in news already, etc.
 [citation: https://en.wikipedia.org/wiki/Category:Business\_families\_of\_India]
 [citation: https://en.wikipedia.org/wiki/Political\_families\_of\_India]
