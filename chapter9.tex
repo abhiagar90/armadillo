@@ -290,13 +290,13 @@ All the mash-ups created by these datasets have been reported in viz section. [c
 
 Many data sources, many data-gatherers, different kind of data
 We describe here : How do we integrate all into one unified model described above
-Though the system has been described in detail in later section, we felt that our data integration model should be described here - data integration is a major challenge - and it is one of the major breakthrough that we did while designing the system \\
+Though the system has been described in detail in later section, we felt that our data integration model should be described here - data integration is a major challenge - and it is one of the major breakthrough that we achieved while designing the system \\
 
 The idea is to keep data-collection part separate from the system - separation of concerns
 What this means is data-gatherer cannot share any data stores with the system
 They basically push their crawled data to the system using REST api with a json payload
 The system doesn't know about how the data-gatherers are crawling and storing their data or the schema of their data, or where they are storing the data,  the system doesn't need to know if the data-gatherers run their scrapers and crawlers regularly
-The rest api calls will be authenticated which is described in system design section [citation] \\
+The rest api calls will be authenticated which is described in system design section [citation of design section] \\
 
 Initially, we were planning to open a mysql data-store with a fixed schema for the data-gatherers to directly write to. We planned separate tables for each of them and mapping tables to describe each row. As bas as this design sounds, it would have been an expensive mistake in the long run. \\
 
@@ -316,7 +316,7 @@ relations array contain description of the relations between the entities discus
 it has eight variables : id, sourceurl, label, properties, fetchdate, start\_entity, end\_entity, bidirectional - id is unique identifier for the relation for that data-gathering task. note here that label and properties here  - sourceurl, fetchdate will be used for provenance as described in later section -- bidirectional is the necessary relation property that we described in data model section---start\_entity and end\_entity are foreign key references to the unique ids in entities array.  
 [citation: sample screen shot or code listing of relations payload] \\
 
-all data crawled or manually collected is first pushed into crawl data store (aka crawl-DB) -  another separate neo4j database -  using rest api calls over json payload -- 
+all data crawled or manually collected is first pushed into crawl data store (aka crawl-DB) -  another separate neo4j database -  using rest api calls over json payload -- and then verified/resolved by human moderator before being pushed to the system. --- so a very basic high level view of the central internals of the system is shown in this iamge : 
 This way - we will have different non-connected subgraphs in the crawl data store(again a neo4j db).  
 But how do we resolve the nodes and relations now with the core data store? The basic setup id described in the next section. \\
 
