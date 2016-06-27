@@ -2,17 +2,25 @@
 %TODO - expand the questions
 \section{Conclusion}
  In short what hypothesis you predicted before starting to build the system?? Do you find them in the results?? Any other interesting patterns?? 
-What else can you conclude from your work?? What are your conclusions from the data collection stage? How and why is it difficult to get Indian data?? Did the data model worked well with graph db ?? Is it possible to resolve entities from two different datasets and find interesting connections??  What did your system show after data mashup?? How practical is your system taskflow if deployed in real world??
+To summarise, from the results of our queries in the graph it is clearly seen that the points we claimed previously is indeed true. Clear connections do exist between in corporate and political spheres as seen in the networks of Baijayant Panda and Jaydev Galla. Morever the clusters of Birla and Ambani suggests the control and distribution of power in close family ties.  
+The work also showed the challenges of collecting and processing data from different sources especially in the Indian context. The absence of proper digitization of the data and adherence to any uniform formats, the absence of good interface for its display all added to the difficulty.
+As a solution our system provides a good riddance from all above problems to become a common point for data access. The functionalities thus given are adequate enough to be used by the various users for the purposes they desire.
 
 \section{Future work}
 %\lipsum[2]
 We have tried to start a process of building a system which in the long run will help the Indian society. Our best efforts were to cover up as much functionality as possible. Yet however, many other problems or features are left to be done in future.
 %TODO - expand the questions
 \begin{itemize}
-\item Scaling up - The designed system works fine. How the system would scale up? How to handle more data when it is fed to the system?
-\item Better Visualizations - Can the visualizations be saved/ annotated/ more interacting??
-\item Inference Engine - Can the inferencing process be automated? Like in expert systems which uses a knowledge base and Prolog scripts to produce more knowledge??
-\item Better analysis of Social Networks - can the different questions about the social graph be answered? What about degree centrality?? No. of weak ties?? Clusters and their strengths? Can we compare with the random graph model to produce some interesting social network behaviors ??
-\item Better Query Engine - Can the query engine be improved so that even users not knowing CQL can give queries?
-\item Other use cases - Can other data be looked to expand the network with more nodes and relations?? What about IAS officers?? Monetary donations?? Media ownerships??
+\item Scaling up/out - The designed system works fine and smoothly for the current amount of data. But question remains how to handle the data storage and processing when more data is pushed? Practically scaling can be done vertically by adding more powerful servers CPU or horizontally by the use of distributed databases. Having said that, a new problem of data remodelling would creep up if the database type is changed.
+
+\item Better Visualizations - The visualizations existing presently in the system is very basic with simple interactions. More features can be added to help analysts, journalists to get more intuition out of the data. Functionalities should be present to enable people to annotate a visualizations, download it in different file formats, interact with it to reveal get more visualizations (like in Neo4j browser)
+
+\item Better Query Engine - Side by side with the visualization lies the query engine. As of now it only supports cypher queries as in Neo4j. But provisions can be made to add UI elements in a way such that users can form queries with little or no knowledge of cypher.
+
+\item Inference Engine - Till now it is the humans who are making analysis through the help of the knowledge base and visualizations. But we believe the system can be extended to let the machines draw conclusions from the same. Thinking in terms of Expert Systems and Symbolic AI, the knowledge base can be seen as a set of predicates (entities) and implications (relations). With the help of proper scripts of logic programming, new interesting applications can be made that inferences about the Indian society.
+
+\item Better analysis of Social Networks - The graph can be used to perform in depth social network analysis. Factors such as centrality of the graph can tell about the important entities present. Similarly, weak ties, size of clusters in network can reveal information about lobbying . Also a comparison between the graph with a random graph can show interesting social network patterns.
+
+\item Other use cases - Several other use cases can be incorporated and analysed with the data. Data about the IAS officers might show the possible relationships between bureacracy and elites. Data about financial contributions of individuals or institutions might show the affiliastions of big players with other entities. Moreover, the ownership data of different medias can be used to explain their possible content.
+
 \end{itemize}
