@@ -94,7 +94,6 @@ Entity resolution has been studied since 1946 by works of Halber.L.Dunn[citation
         Complexity of above algorithm is O(n*m) where n is size(S) and m is size(T) when n records are searched linearly in S.
         From the above, we can find that the two crucial operations here is the choice of proper scoring algorithm to pick s and search of t in S in line [line].
     #TODO - String Matching Algorithm
-        #TODO - What algorithm did you use ? Score comparison and pickup of a common algo.
         The requirement of a scoring algorithm was such that it should match words with small spelling mistakes and similar names. In our case, we have used Jaro distance as it considers ranges and transpositions while matching two words. A sample experiment from our side on a list of four names showed the following scores - 
         [[tble]]
         Upon a test run of all algorithms over a sample of 100 names from our datasets we decided to use jaro-winkler for the purpose. We also required to match names which are phonetically similar to other names. These helped us to match names like 'Gautam' and 'Gautambhai', 'Vidya', 'Bidya' and 'Viday' etc.
