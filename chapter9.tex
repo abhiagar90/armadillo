@@ -164,7 +164,7 @@ Any data that is crawled is not fed into the system directly. Instead, a REST PU
 \end{enumerate}
 
 
-\section{Tools and Methods}
+\subsection{Tools and Methods}
 
 We describe here tools that we picked up along the way for data collection and data cleaning. It is important to note that no single tool can be a cure for all the data-sources. In fact, what we have learned in due course of time is that different kind of data sources require different approach.
 
@@ -185,7 +185,7 @@ We describe here tools that we picked up along the way for data collection and d
 \end{enumerate}
 
 
-\section{Corporate data}
+\subsection{Corporate data}
 
 The challenges in collecting any corporate data are:
 
@@ -200,7 +200,7 @@ The challenges in collecting any corporate data are:
 [todo]
 We have been able to tackle the first four challenges to a commendable extent but the last one. A related work is Parag's [citation]. We first describe the sources we have encountered, and finally how we collected our corpus of 60000 directors and 90000 companies.
 
-\subsection{MCA}
+\subsubsection{MCA}
 [citation mca]
 
 Being the official government source, this is the most authentic data source we have found for obtaining the list of companies and LLPs (Limited Liability Partnerships) operating in India. It gives us all the companies registered year-wise before and after 1980 till date in the form of pdfs with their CIN/LLPIN (Corporate Identity Number/Limited Liability Partnership Identification Number) which is unique to a company/LLP. The only downside as always with any pdf data is a lengthy parsing job.
@@ -212,7 +212,7 @@ crawl: why not
 ]
 
 
-\subsection{capitaline database}
+\subsubsection{capitaline database}
 [ciation cpaitaline]
 One of the main challenges was to figure out the subsidiaries of a firm. This would complete the picture of the company network. Alas, finding the subsidiaries is not an easy task. We could find just one source after running around all over the internet:  Capitaline. However, the data seems to be spotty at best. We could not find details for a lot of the listed subsidiaries.
 
@@ -222,7 +222,7 @@ Parag has already collectd this data [citation] todo
 
 
 
-\subsection{companywiki}
+\subsubsection{companywiki}
 [citation compnywiki]
 [todo]
 advantages
@@ -235,7 +235,7 @@ linked data
 our core base
 
 
-\section{Political data}
+\subsection{Political data}
 
 ls crawl from ls site - images too - 
 
@@ -246,7 +246,7 @@ We started with these problem statements in our mind:
 How to get info on all 16 Lok Sabhas’ MPs?
 How to get the family information of MPs?
 
-\subsection{MyNeta}
+\subsubsection{MyNeta}
 
 they have done a tremendous work in digitizing this data
 courtesy
@@ -258,14 +258,14 @@ info about criminal cases
 mynetaid for a particular election helps in resolution from myneta dataset, kept as internal prop
 ls 2009 and ls 2014 data
 
-\subsection{Lok Sabha Official data}
+\subsubsection{Lok Sabha Official data}
 
 describe how we got the data
 name and address problem
 why we choose the data gain when we had myneta- family links of politicians
 
 
-\subsection{Rajya Sabha Official data}
+\subsubsection{Rajya Sabha Official data}
 
 describe how we got the data
 name and address problem
@@ -274,7 +274,7 @@ why we choose the data family trees of politicians
 
 
 
-\section{Family data}
+\subsubsection{Family data}
 
 why to see if somehow the powerhouses are connected 
 known examples already include naveen jindal, jayadev galla, etc.
