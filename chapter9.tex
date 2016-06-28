@@ -14,7 +14,7 @@ whatever data goes in our core data modal is non-redundant, free of noise and ve
 Practically anything connected can be represented by a graph(or a hyper-graph to be exact, refer our LIMITATIONS section). We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us. Thus, it makes sense to model our core data as a large inter-connected graph where every node is an entity and every edge represents a link between two of them.   \\
 
 
-A graph is composed of two elements: a node and a relationship. Each node represents an entity (a person, place, thing, category or other piece of data), and each relationship represents how two nodes are associated. This general-purpose structure allows you to model all kinds of scenarios – from a system of roads, to a network of devices, to a population’s medical history or anything else defined by relationships. [https://neo4j.com/developer/graph-database/]
+A graph is composed of two elements: a node and a relationship. Each node represents an entity (a person, place, thing, category or other piece of data), and each relationship represents how two nodes are associated. This general-purpose structure allows you to model all kinds of scenarios – from a system of roads, to a network of devices, to a population’s medical history or anything else defined by relationships. 
 
 Before beginning to describe how we achieve the above, it is important to understand that even traditional SQL tables are a connected piece of information, and can be modeled using a graph. \\
 
@@ -22,21 +22,21 @@ What we provide is therefore a graph to the user where he fits any relevant conn
 
 \subsection{Neo4j}
 
-Neo4j [https://neo4j.com/] is our choice of data storage. It is one of the leading JVM based NoSQL graph databases. We build our knowledge base on it as a graph and thus Neo4j is at the center of our entire system. We chose Neo4j because of the following reasons[https://neo4j.com/developer/graph-database/], and we have found it be a non-separable asset to our use cases. \\
+Neo4j \cite{neo}  is our choice of data storage. It is one of the leading JVM based NoSQL graph databases. We build our knowledge base on it as a graph and thus Neo4j is at the center of our entire system. We chose Neo4j because of the following reasons , and we have found it be a non-separable asset to our use cases. \cite{neogdb} \\
 
 \begin{enumerate}
 
-\item Only a database that embraces relationships as a core aspect of its data model is able to store, process, and query connections efficiently. While other databases compute relationships expensively at query time, a graph database stores connections as first class citizens, readily available for any “join-like” navigation operation. Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second per core.  [https://neo4j.com/developer/graph-database/]
+\item Only a database that embraces relationships as a core aspect of its data model is able to store, process, and query connections efficiently. While other databases compute relationships expensively at query time, a graph database stores connections as first class citizens, readily available for any “join-like” navigation operation. Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second per core. 
 
-\item Graph databases are designed to mimic the most natural way we tend to model data – the same way you would map it all out on a white-board. Your collection of circles, boxes, lines and arrows is – in essence – already a graph. [https://neo4j.com/blog/graph-data-modeling-success/]
+\item Graph databases are designed to mimic the most natural way we tend to model data – the same way you would map it all out on a white-board. Your collection of circles, boxes, lines and arrows is – in essence – already a graph. 
 
-\item In Neo4j, everything is stored in form of either an edge, a node or an attribute. Each node and edge can have any number of attributes. Both the nodes and edges can be labeled. Labels can be used to narrow searches. [http://neo4j.com/docs/1.8.3/indexing.html] Neo4j is very easy to learn and adapt. It's object property model is very intuitive and anything can be modeled on a white board in the form of nodes and edges.
+\item In Neo4j, everything is stored in form of either an edge, a node or an attribute. Each node and edge can have any number of attributes. Both the nodes and edges can be labeled. Labels can be used to narrow searches.  Neo4j is very easy to learn and adapt. It's object property model is very intuitive and anything can be modeled on a white board in the form of nodes and edges.
 
-\item Constant time traversals for relationships in the graph both in depth and in breadth due to efficient representation of nodes and relationships [https://neo4j.com/developer/graph-database/]
+\item Constant time traversals for relationships in the graph both in depth and in breadth due to efficient representation of nodes and relationships 
 
-\item All relationships in Neo4j are equally important and fast, making it possible to materialize and use new relationships later on to “shortcut” and speed up the domain data when new needs arise [https://neo4j.com/developer/graph-database/]
+\item All relationships in Neo4j are equally important and fast, making it possible to materialize and use new relationships later on to “shortcut” and speed up the domain data when new needs arise 
 
-\item Compact storage and memory caching for graphs, resulting in efficient scale-up and billions of nodes in one database on moderate hardware [https://neo4j.com/developer/graph-database/]
+\item Compact storage and memory caching for graphs, resulting in efficient scale-up and billions of nodes in one database on moderate hardware 
 
 \item It's NoSQL help us in modeling the varied data from different sources we have collected.
 
@@ -44,12 +44,12 @@ Neo4j [https://neo4j.com/] is our choice of data storage. It is one of the leadi
 
 \end{enumerate}
 
-That said, it is important to note that Google uses Cayley - an open source graph database -  to power it's google's knowledge graph. [citation: https://github.com/google/cayley] 
+That said, it is important to note that Google uses Cayley - an open source graph database -  to power it's google's knowledge graph.\cite{cayley} 
 
 
 \subsection{Property Graph Model Explained}
 
-Let us dive into some examples which explain how me model our core data in Neo4j using it's property graph model. [https://neo4j.com/developer/graph-database/] \\
+Let us dive into some examples which explain how me model our core data in Neo4j using it's property graph model.\cite{neogdb}  \\
 
 \begin{enumerate}
 
@@ -73,20 +73,21 @@ An example could be the image [image 1]
 
 \subsection{Cypher}
 
-Cypher is a declarative graph query language for the graph database Neo4j that allows for expressive and efficient querying and updating of the graph store. Cypher is a relatively simple but still very powerful language. Very complicated database queries can easily be expressed through Cypher. This allows users to focus on their domain instead of getting lost in database access.[http://docs.neo4j.org/chunked/stable/cypher-introduction.html] \\
+Cypher is a declarative graph query language for the graph database Neo4j that allows for expressive and efficient querying and updating of the graph store. Cypher is a relatively simple but still very powerful language. Very complicated database queries can easily be expressed through Cypher. This allows users to focus on their domain instead of getting lost in database access. \\
 
-A node is represented like this: (:person:politician {name:'Narendra Modi',sex:'M'})
-A relation is represented like this: (startnode)-[:relatedto {kind:'childof'}]->(endnode)
+A node is represented like this: \\
+    \emph{(:person:politician {name:\textbf{'Narendra Modi'},sex:'M'})}\\
+A relation is represented like this:\\
+    \emph{(startnode)-[:relatedto {kind:\textbf{'childof'}}]-$\textgreater$(endnode)}\\
 The structure here is self explanatory and can be further explored by reading Neo4j manual. A sample image[2] here describes the image for cypher.
 
 
 Querying in cypher is as easy as thinking about how you traverse a graph. Here is a simple query to return all the relationships that start from or end at node 'Naveen Jindal' of type politician.
 
-MATCH (jindal:politician {name:'Naveen Jindal'})-[anyrelation]-(anynode)
-RETURN anyrelation
+\emph{ \textbf{MATCH} (jindal:politician {name:\textbf{'Naveen Jindal'}})-[anyrelation]-(anynode)
+ \textbf{RETURN} anyrelation }
 
-Interested readers can be direct here to read more about cypher in Neo4j's manual: [https://neo4j.com/docs/developer-manual/current/]
-
+Interested readers can be direct here to read more about cypher in Neo4j's manual\cite{neomanual}: 
 \subsection{Our restricted property graph model}
 
 We had to specify some ground rules to model our data for imposing uniformity on varied data that is being fed into the system. Thus, our property data model follows the rules stated below.
@@ -132,23 +133,23 @@ We list some images here that better describe the present data model. [all the m
 
 \section{Data collection and description}
 
-Since the aim was to to build a social network for all the Indian power houses, we needed to identify and collect as much varied data as possible. It is only when different kind of data mingle with each other in the system that we can hope to see some hidden patterns or dig out interesting insights. All the visualizations that we obtained from this data is shown in the analysis section. [citation]
+Since the aim was to to build a social network for all the Indian power houses, we needed to identify and collect as much varied data as possible. It is only when different kind of data mingle with each other in the system that we can hope to see some hidden patterns or dig out interesting insights. All the visualizations that we obtained from this data is shown in the analysis section. [reference to analysis]
 
 We needed to search for alternate data sources that might help the ongoing work. We have looked for datasets spanning company details, board of directors, Lok-Sabha MPs, subsidiaries, banks, and any other relevant political-corporate data. 
 
-Any data that is crawled is not fed into the system directly. Instead, a REST PUSH api provided by our system is used to push it to a separate crawl data-store (rather than the core data-store) for moderation first. The  data integration is described in next section, while the rest api is described in next chapter. [citation]
+Any data that is crawled is not fed into the system directly. Instead, a REST PUSH api provided by our system is used to push it to a separate crawl data-store (rather than the core data-store) for moderation first. The  data integration is described in next section, while the rest api is described in next chapter. 
 
 \subsection{Challenges}
 
 \begin{enumerate}
 
-    \item  The biggest challenge in data collection is that data for Indian context is not easily available.  Open data initiatives like data.gov.in have initiated hope for data enthusiasts but there is still a long way to go. [citation]
+    \item  The biggest challenge in data collection is that data for Indian context is not easily available.  Open data initiatives like data.gov.in have initiated hope for data enthusiasts but there is still a long way to go. 
 
     \item No central place for any category of target data, so one would have to look for multiple sources. Instead, in a way, we are striving to create such a central place in the present work.
 
-    \item Since data has to be integrated from variety of source points, the credibility of a data item listed can be established strongly but with the added evil of entity resolution - which has been explained in a later section [CITATion section]
+    \item Since data has to be integrated from variety of source points, the credibility of a data item listed can be established strongly but with the added evil of entity resolution - which has been explained in a later section. 
 
-    \item Mostly, no unique identifiers for entities appear in datasets that are publicly available. There is a possibility of duplication of data, this is where the ER work comes in handy. [citation] 
+    \item Mostly, no unique identifiers for entities appear in datasets that are publicly available. There is a possibility of duplication of data, this is where the ER work comes in handy.  
 
     \item Most data contained noise, or erroneous details at times. This sometimes is intentional on the data entry operator's part, sometimes it's just a naive mistake. For example: name for some people was wrongly spelt in some publicly available websites.
 
@@ -180,7 +181,7 @@ There are other issues of not obtaining enough data to churn out any useful info
 
     \item \textbf{ Manual data collection } - When the dataset is small, it is manually collected by using some tool ( Google sheet's \emph{ ImportHtml } function for example) or by simply doing data entry by hand. The resultant data is free of errors with some tradeoff for time. Manual work is also required when \textbf {\emph { bootstrapping some dataset } }. Bootstrapping is the process of expanding a dataset using some seed dataset. For our case, we collected data for top 1000 companies by value. From this initial seed, company id no. (CIN) was collected from companywiki site, with their director information. Finally director's pages were looked after to collect information about other companies owned by them. In the end, this data generated a total of 60000 company records.
 
-    \item The \textbf{ data collected is preprocessed } using the python pandas library. Here issues like encoding mismatch (\emph{ utf-8 vs ascii }), text format conversions (like \emph{ converting a date given in string to UNIX timestamp format }) and text normalizations ( like \emph{ name field reduction to FirstName<single space>LastName }) are handled .
+    \item The \textbf{ data collected is preprocessed } using the python pandas library. Here issues like encoding mismatch (\emph{ utf-8 vs ascii }), text format conversions (like \emph{ converting a date given in string to UNIX timestamp format }) and text normalizations ( like \emph{ name field reduction to FirstName\textless single space \textgreater LastName }) are handled .
 
 \end{enumerate}
 
@@ -199,8 +200,7 @@ The challenges in collecting any corporate data are:
 
 We have been able to tackle the first four challenges to a commendable extent but the last one. A related work is Parag's [citation]. We first describe the sources we have encountered, and finally how we collected our corpus of 90000 directors and 60000 companies.
 
-\subsection{Ministry of Corporate Affairs (MCA)}
-[citation mca]
+\subsection{Ministry of Corporate Affairs (MCA)} \cite{MCA}
 
 Being the official government source, this is the most authentic data source we have found for obtaining the list of companies and LLPs (Limited Liability Partnerships) operating in India. It gives us all the companies registered year-wise before and after 1980 till date in the form of pdfs with their CIN/LLPIN (Corporate Identity Number/Limited Liability Partnership Identification Number) which is unique to a company/LLP. The only downside as always with any pdf data is a lengthy parsing job.
 
@@ -214,7 +214,7 @@ But MCA with all its data poses a lot of problems to deal with-
 \end{enumerate}
 
 \subsection{Initial approach, Capitaline database and ConpanyWiki}
-[citation capitaline]
+\cite{capitaline}
 Initially we tried to collect company data by searching the names of politicians as potential directors. This helped us to find companies associated with politicians as source of potential overlap between coporate-politcians. But the problem was that most of the companies that the politicians are linked to are small businesses on which we have little interest. Thus, we changed our approach to obtain the companies of interest (most valued companies for example), and find the entities linked with them. These entities of the top companies are actual power elites by our definition. Any links between them and politicians (direct or indirect) are our actual point of interests.
 At this juncture, we utilised the data from \textbf{ Capitaline }. Capitaline is a database containing info on Indian companies. We used Capitaline data as collected by Parag Pahwa[citation].
 
@@ -271,17 +271,14 @@ We collected Rajya Sabha data as well from their official site to look for more 
 
 \section{Family Ties Information}
 
-We also have manually collected from the web various family ties in businesses and politics. Major source for this data is wikipedia. This data allowed us to find new relations/links from already obtained graph.
+We also have manually collected from the web various family ties in businesses and politics. Major source for this data is wikipedia. This data allowed us to find new relations/links from already obtained graph.\cite{indianbfamilies} \cite{indianpfamilies}
 
-chidambram and his family in news already, etc.
-[citation: https://en.wikipedia.org/wiki/Category:Business\_families\_of\_India]
-[citation: https://en.wikipedia.org/wiki/Political\_families\_of\_India]
 
-All the mash-ups created by these datasets have been reported in viz section. [citation: viz section]
+All the mash-ups created by these datasets have been reported in viz section. [reference viz section]
 
 \section{Data integration}
 
-As discussed earlier, the real challenge of forming a data mashup is the non-uniformity of different sources which include differences in schema, data model, formats of text, assumptions of persons scraping the data(hereby referred to as data gatherers or gatherers) etc. To alleviate such problems, we came up with a particular data format to be used by all data gatherers on conformance with which he or she should preformat data before pushing in to the system. By separating out the problem of data integration, we have reduced maintainence costs for the knowledge base. In this way, the schema described in the system model is kept intact, while the data gatherer can crawl the data by his own whim as long as he conforms to the data format expected by the write API.
+As discussed earlier, the real challenge of forming a data mashup is the non-uniformity of different sources which include differences in schema, data model, formats of text, assumptions of persons scraping the data(hereby referred to as \textbf{ data gatherers } or \textbf{ gatherers }) etc. To alleviate such problems, we came up with a particular data format to be used by all data gatherers on conformance with which he or she should preformat data before pushing in to the system. By separating out the problem of data integration, we have reduced maintainence costs for the knowledge base. In this way, the schema described in the system model is kept intact, while the data gatherer can crawl the data by his own whim as long as he conforms to the data format expected by the write API.
 
 The initial plan was to allow the crawled data to be pushed into some MySQL database. Each gatherer would then have to define a mapping somewhere to map all the fields of the crawled data to the fields in the actual graph data. But this poised the problem of maintaining a new map file/table which was crucial to data pushing. The data gatherer would have to enlist new mappings for every new data crawled from a source. The maintenance of the  would have been another problem to deal with.
 %
@@ -343,22 +340,35 @@ parameters - S,T, threshold \;
 \end{algorithm}
 
 Complexity of above algorithm is O(n*m) where n is size(S) and m is size(T) when n records are searched linearly in S.
-        From the above, we can find that the two crucial operations here is the choice of proper scoring algorithm to pick s and search of t in S in line [line].
+        From the above, we can find that the two crucial operations here is the choice of proper scoring algorithm to pick s in line and search of t in S in line 1.
 
 \section{String Matching Algo}
-        The requirement of a scoring algorithm was such that it should match words with small spelling mistakes and similar names. In our case, we have used Jaro distance as it considers ranges and transpositions while matching two words. A sample experiment from our side on a list of four names showed the following scores - 
-        [[tble]]
-        Upon a test run of all algorithms over a sample of 100 names from our datasets we decided to use jaro-winkler for the purpose. We also required to match names which are phonetically similar to other names. These helped us to match names like 'Gautam' and 'Gautambhai', 'Vidya', 'Bidya' and 'Viday' etc.
+        The requirement of a scoring algorithm was such that it should match words with small spelling mistakes and similar names. In our case, we have used Jaro distance as it considers ranges and transpositions while matching two words. A sample experiment from our side on a list of four names showed the scores as seen in table \ref{table:1}.
+    \begin{table}[H]
+    \centering
+    \caption{Comparison of string matching algo}
+    \label{table:1}
+    \begin{tabular}{|l|l|l|l|l}
+    \cline{1-4}
+    \textbf{Words}                   & \textbf{levenshtein} & \textbf{jaro\_distance} & \textbf{jaro\_winkler} &  \\ \cline{1-4}
+    vidya vs biday                   & 3                    & 0.78                    & 0.78                   &  \\ \cline{1-4}
+    saawan kumar vs saavn kumer      & 3                    & 0.86                    & 0.89                   &  \\ \cline{1-4}
+    gautam adani vs gautambhai adani & 4                    & 0.86                    & 0.92                   &  \\ \cline{1-4}
+    \end{tabular}
+    \end{table}
+        Upon a test run of all algorithms over a sample of 100 names from our datasets we decided to use jaro-winkler for the purpose. We also required to match names which are phonetically similar to other names. These helped us to match names like \textit{ 'Gautam' } and \textit{ 'Gautambhai' }, \textit{ 'Vidya' }, \textit{ 'Bidya' } and \textit{ 'Biday' } etc.
 
 \section{Comparison techniques}
         As obvious from above algorithm the performance of entity matching algorithm depends largely on how fast the searching occurs in dataset S. A naive algorithm like above added a factor of O(n) on linear search over entire S. The obvious improvement over it is the possible implementation of a binary search to reduce search speed to O(log n) time. But binary search is not applicable here for following two reasons -
-            - Binary search uses a predicate like gt, eq, lt , the value of which is true or false. Such predicates determines some order in the dataset. 
-            - The absence of such predicates as above avoid any sorting or ranking of the data in any order.
+            \begin{enumerate}
+                \item Binary search uses a predicate like gt, eq, lt , the value of which is true or false. Such predicates determines some order in the dataset. 
+                \item The absence of such predicates as above avoid any sorting or ranking of the data in any order.
         As a result, the performance of the entire system got bottlenecked by the resolution module. As a result we sought out for other solutions regarding this.
+            \end{enumerate}
 
 \section{Machine learning techniques}
 
-        After having performance bottleneck in searching records in other datasets, we looked for probabilistic ways of solving the same problem. We used the python library of csvdedupe for this purpose. The library basically induced an active learning mechanism to obtain training samples where it picked two entities of possible match and prompts the user to label positive/negative. It then matches the related entities accordingly with the hypothesis formed. Unfortunately this approach suffered from following drawbacks-
+        After having performance bottleneck in searching records in other datasets, we looked for probabilistic ways of solving the same problem. We used the python library of dedupe \cite{dedupe} for this purpose. The library basically induced an active learning mechanism to obtain training samples where it picked two entities of possible match and prompts the user to label positive/negative. It then matches the related entities accordingly with the hypothesis formed. Unfortunately this approach suffered from following drawbacks-
         \begin{itemize}
         \item Too small data to accurately form a proper hypothesis. 
         \item The labels that were asked to mark alongwith data were picked at random and often the results of the algorithm are different in different runs (depending on the number of positive or negative label given at that time).
@@ -366,13 +376,13 @@ Complexity of above algorithm is O(n*m) where n is size(S) and m is size(T) when
         Fortunately indexing other dataset helped to come out of this.
 
 \section{Indexing and Apache Solr}
-        Indexing allows searching to be very fast of near O(1) speed. Indexes are datastructures that store contents of a document (in our context fields of records in a dataset) for faster access to the document. This enables faster retrieval with a trade off for using more memory. For our purpose we used Apache Solr framework for the searching step.Solr uses Apache Lucene to create an inverted index based desired on fields in the records. An inverted index basically creates a data structure on the content of the records and have pointers to the actual locations of the records. So for all text in the specified fields, Lucene breaks them (tokenizes them) and store them in a data structure for fast retrieval.  Solr also sets up a  Web server with REST APIs to allow us to integrate it with other parts of our system described in chapter [give reference here]. 
-        Since Solr has its own sets of protocols we had to modify the way we apply the resolution algorithm described above. The main steps followed by us to realize this are as follows. 
+        Indexing allows searching to be very fast of near O(1) speed. Indexes are datastructures that store contents of a document (in our context fields of records in a dataset) for faster access to the document. This enables faster retrieval with a trade off for using more memory. For our purpose we used Apache Solr framework \cite{solr}for the searching step. Solr uses Apache Lucene \cite{lucene} to create an inverted index based desired on fields in the records. An inverted index basically creates a data structure on the content of the records and have pointers to the actual locations of the records. So for all text in the specified fields, Lucene breaks them (tokenizes them) and store them in a data structure for fast retrieval.  Solr also sets up a  Web server with REST APIs to allow us to integrate it with other parts of our system described in chapter [reference system design chapter]. 
+        Since Solr has its own sets of protocols we had to modify the way we apply the resolution algorithm described above. The main steps followed by us to realize this are as follows.\cite{solrdocs} 
 \begin{itemize}
 
-        \item \textbf{ Defining a data set } to index  (the data set S above). We described a data source which contained the dataset. In this case, it was a mysql database. (file db-data-config.xml) .
-        \item \textbf{ Defining the fields } to index. Solr needs to have a schema of the records to know which fields will indexed and which one is kept as satellite data. These are specified in solr configuration files. (schema.xml)
-        \item \textbf{ Defining how to preprocess } all the terms before creating the index. Solr allows to specify a list of pre-built tokenizers, stemmers, filters to preprocess a term or custom ones if necessary. We used whitespace tokenizers and double metaphone phonetic filters to get a match score relevant to our purpose and in this way used the phonetic algorithm for better text matching. (file - solrconfig.xml)
+        \item \textbf{ Defining a data set } to index  (the data set S above). We described a data source which contained the dataset. In this case, it was a mysql database. (file \emph{ db-data-config.xml }) .
+        \item \textbf{ Defining the fields } to index. Solr needs to have a schema of the records to know which fields will indexed and which one is kept as satellite data. These are specified in solr configuration files. (file \emph{schema.xml})
+        \item \textbf{ Defining how to preprocess } all the terms before creating the index. Solr allows to specify a list of pre-built tokenizers, stemmers, filters to preprocess a term or custom ones if necessary. We used whitespace tokenizers and double metaphone phonetic filters to get a match score relevant to our purpose and in this way used the phonetic algorithm for better text matching. (file - \emph{ solrconfig.xml })
         \item \textbf{ Forming a lucene query } based on the contents of records of another dataset (data set T above)
         \item \textbf{ Applying Jaro algorithm } for comparison was difficult in Solr. This is because, all the functions applied to the text for indexing are necessarily single parameter. Jaro or any other non-phonetic string metric needs at lest two string Results returned by the Solr is further filtered by the Jaro-Winkler algorithm. Results being quite small, does not take much time even if a one-one matching algo is executed. 
 
@@ -389,19 +399,20 @@ Complexity of above algorithm is O(n*m) where n is size(S) and m is size(T) when
 
 \subsection{Lucene Queries}
     Proper search queries are essential to effeciently resolve an entity. These involved using above fields effectively to obtain relevant entities- 
-    The grammar of the lucene query used by us goes as follows-
+    The grammar of the lucene query used by us goes as follows-\\
+        \emph{ \textbf{ L } ::=   \textbf{ I }':'(\textbf{Q}) \textbf{L}  OR $\epsilon$ } \\
+       \emph{ where,  \textbf{I} ::= \textless index field \textgreater  }\\
+        \emph{ \textbf{Q} ::= \textless query string\textgreater to be matched against I } \\
 
-    L:= I:(Q) AND L OR epsilon
-
-    where I is the index field (one of above) and Q is the query string to be matched against I
-    Where index field is one of the above and query string can be as follows -
-    "string text" - matching the exact word 'string text'
-    string text - matches string or text or both
-    string~ - lucene applies edit distance to string and returns the possible matches
-
+    query string can be as follows -\\
+    
+    \emph{ "string text" } - matching the exact word 'string text'\\
+    \emph{ string text } - matches string or text or both \\
+    \emph{ string$\sim$ } - lucene applies edit distance to string and returns the possible matches \\
+    
     The query we used for our purpose is as follows-
     " labels:(each label separated by whitespace) aliases:(each alias~ separated by whitespace ) AND aliases-phonetic:(each alias separated by whitepace) AND keywords:( each keyword~ separated by whitespace)"
-
+    More details on lucene query can be found at %\url{https://lucene.apache.org/core/2\_9\_4/queryparsersyntax.html}
     Eg. - 
 \subsection{Performance}
     On testing our Solr integrated system with the original basic resolution algorithm, we found many fold improvements. Initially upon resolving 1000 corporate entities against about 500 political ones over the "name" field in both took us about 150 minutes to resolve. That makes resolution of a single entity about 18s.
