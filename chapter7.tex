@@ -1,0 +1,326 @@
+\chapter{Constructing the Social network}
+
+The driving fuel for any social network is the data it represents. The problem in constructing a linked-data system such as this one is always the data and the entropy it brings with itself. The challenges are always the usual ones - unavailability of data, noise in the collected data, no authentic source, and many-a-times no structure in the data. Even if we are successful in collecting and cleaning the linked data we want, the way we go about integrating all this variety of information in a single data store is itself an another challenge. \\
+
+The choice of data store matters here the most because one would like to query the data and unearth interesting relations between participating entities. Henceforth, a person or an organization will be called an entity. These entities would be linked to each other by certain edges/links just like in a graph which we will normally call relations. All these challenges are elevated manifold when one wishes to resolve entities from different datasets into a single unified entity. \\
+
+Here we describe in order our choice of data storage, our core data model for the linked data, data collection practices and data sources, data integration methodology, and finally the necessary evil in such a system entity resolution. \\
+
+\section{Everything is a graph}
+
+We begin by describing how we are going to actually store any kind of linked data we get and why our approach is a sensible one. We describe here where our core data is stored and how our core data model looks like. It has to be stated at the onset that care has been taken to ensure that
+whatever data goes in our core data modal is non-redundant, free of noise and verified. As already stated, our goal is to construct a social network between politicians, companies, entrepreneurs, military personnel, bureaucrats, political parties, universities, movie actors, and any important entity one can think of in the usual power hierarchy. Also, we want to be able to model all kinds of relationships that can exist between these entities with ease: family-links, donation-links, director-links, ownership-links, subsidiary-links, etc. \\
+
+Practically anything connected can be represented by a graph(or a hyper-graph to be exact, refer our LIMITATIONS section). We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us. Thus, it makes sense to model our core data as a large inter-connected graph where every node is an entity and every edge represents a link between two of them.   \\
+
+
+A graph is composed of two elements: a node and a relationship. Each node represents an entity (a person, place, thing, category or other piece of data), and each relationship represents how two nodes are associated. This general-purpose structure allows you to model all kinds of scenarios – from a system of roads, to a network of devices, to a population’s medical history or anything else defined by relationships. [https://neo4j.com/developer/graph-database/]
+
+Before beginning to describe how we achieve the above, it is important to understand that even traditional SQL tables are a connected piece of information, and can be modeled using a graph. \\
+
+What we provide is therefore a graph to the user where he fits any relevant connected data he has. The choice of the data model is clear, but two problems remain - how we are going to store our graph's interconnected data, and how do we query it efficiently for digging out interesting relationships. Our next two sections discuss the same. \\
+
+\subsection{Neo4j}
+
+Neo4j [https://neo4j.com/] is our choice of data storage. It is one of the leading JVM based NoSQL graph databases. We build our knowledge base on it as a graph and thus Neo4j is at the center of our entire system. We chose Neo4j because of the following reasons[https://neo4j.com/developer/graph-database/], and we have found it be a non-separable asset to our use cases. \\
+
+\begin{enumerate}
+
+\item Only a database that embraces relationships as a core aspect of its data model is able to store, process, and query connections efficiently. While other databases compute relationships expensively at query time, a graph database stores connections as first class citizens, readily available for any “join-like” navigation operation. Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second per core.  [https://neo4j.com/developer/graph-database/]
+
+\item Graph databases are designed to mimic the most natural way we tend to model data – the same way you would map it all out on a white-board. Your collection of circles, boxes, lines and arrows is – in essence – already a graph. [https://neo4j.com/blog/graph-data-modeling-success/]
+
+\item In Neo4j, everything is stored in form of either an edge, a node or an attribute. Each node and edge can have any number of attributes. Both the nodes and edges can be labeled. Labels can be used to narrow searches. [http://neo4j.com/docs/1.8.3/indexing.html] Neo4j is very easy to learn and adapt. It's object property model is very intuitive and anything can be modeled on a white board in the form of nodes and edges.
+
+\item Constant time traversals for relationships in the graph both in depth and in breadth due to efficient representation of nodes and relationships [https://neo4j.com/developer/graph-database/]
+
+\item All relationships in Neo4j are equally important and fast, making it possible to materialize and use new relationships later on to “shortcut” and speed up the domain data when new needs arise [https://neo4j.com/developer/graph-database/]
+
+\item Compact storage and memory caching for graphs, resulting in efficient scale-up and billions of nodes in one database on moderate hardware [https://neo4j.com/developer/graph-database/]
+
+\item It's NoSQL help us in modeling the varied data from different sources we have collected.
+
+\item The cypher query language provided by Neo4j helps in querying the connected data very easily and is very powerful. Also, the Neo4j browser client provided by Neo4j is vary good for visualizing the results of the cypher queries.
+
+\end{enumerate}
+
+That said, it is important to note that Google uses Cayley - an open source graph database -  to power it's google's knowledge graph. [citation: https://github.com/google/cayley] 
+
+
+\subsection{Property Graph Model Explained}
+
+Let us dive into some examples which explain how me model our core data in Neo4j using it's property graph model. [https://neo4j.com/developer/graph-database/] \\
+
+\begin{enumerate}
+
+\item The property graph contains connected entities (the nodes) which can hold any number of attributes (key-value-pairs). What this means for us is: a person node can have different attributes his date-of-birth, address, email, sex, etc.
+
+\item Nodes can be tagged with labels representing their different roles in our domain. That said, this unique thing about Neo4j helps us in specifying IS-A relationships via multiple labels on a single Neo4j node. Thus, a node can be labeled as a person, politician, businessman at the same time. The same information is very hard to model in traditional SQL databases.
+
+\item In addition to contextualizing node and relationship properties, labels may also serve to attach meta-data index or constraint information to certain nodes.
+
+\item Relationships provide directed, named semantically relevant connections between two node-entities. A relationship always has a direction, a type, a start node, and an end node. This model is exactly the same as directed edges in a traditional graph structure. Although they are directed, relationships can always be navigated regardless of direction.
+
+\item A relationship can also be labeled by a single label specifying what kind of a relationship exists between two nodes. Thus, if a politician is 'son-of' a businessman we can connect the two nodes by an edge attributed with such a label.
+
+\item Just like a node, a relationship can also hold any number of attributes(key-value pairs). In most cases, relationships have quantitative properties, such as weights, costs, distances, ratings, time intervals, or strengths. But for our use case, one can think of an example relationship as : a particular `person`(node) 'donated'(relationship-type) 'x amount of money at y date'(relationship properties) to(directed edge) a particular `politician`(node).
+
+\item As relationships are stored efficiently, two nodes can share any number or type of relationships without sacrificing performance.
+
+\end{enumerate}
+
+An example could be the image [image 1]
+
+\subsection{Cypher}
+
+Cypher is a declarative graph query language for the graph database Neo4j that allows for expressive and efficient querying and updating of the graph store. Cypher is a relatively simple but still very powerful language. Very complicated database queries can easily be expressed through Cypher. This allows users to focus on their domain instead of getting lost in database access.[http://docs.neo4j.org/chunked/stable/cypher-introduction.html] \\
+
+A node is represented like this: (:person:politician {name:'Narendra Modi',sex:'M'})
+A relation is represented like this: (startnode)-[:relatedto {kind:'childof'}]->(endnode)
+The structure here is self explanatory and can be further explored by reading Neo4j manual. A sample image[2] here describes the image for cypher.
+
+
+Querying in cypher is as easy as thinking about how you traverse a graph. Here is a simple query to return all the relationships that start from or end at node 'Naveen Jindal' of type politician.
+
+MATCH (jindal:politician {name:'Naveen Jindal'})-[anyrelation]-(anynode)
+RETURN anyrelation
+
+Interested readers can be direct here to read more about cypher in Neo4j's manual: [https://neo4j.com/docs/developer-manual/current/]
+
+\subsection{Our restricted property graph model}
+
+We had to specify some ground rules to model our data for imposing uniformity on varied data that is being fed into the system. Thus, our property data model follows the rules stated below.
+
+\begin {enumerate}
+
+\item As allowed by Neo4j - a node can have more than one label, a relation always has only one label.
+
+\item Every node and a relation has a unique uuid/relid
+
+\item All nodes are labeled 'entity' by default. To make anonymous queries on nodes easier.
+
+\item All living or dead people are labeled 'person'.
+
+\item Any person connected to a company as a director/owner is labeled 'businessperson'.
+
+\item All operating units are labeled as 'organization'.
+
+\item All companies is labeled as 'company'
+
+\item A political party is labeled as both 'organization' and 'company' alongside 'entity'
+
+\item Other self-explanatory labels for nodes in current core data are: city, state, constituency.
+
+\item Every 'entity' will have to have a name property. An aliases property - a neo4j array - helps in keeping track of different names of an entity.
+
+\item An 'entity' can have any number of properties, but these properties if present are validated: 'startdate'(int), 'enddate'(int), 'iscurrent'(boolean). For a person a 'startdate' represents his date-of-birth, for a company 'startdate' represents it's incorporation-date. The 'iscurrent' property can help us in tracking if the 'person' is dead or the 'company' is not active.
+
+\item startdate and enddate are timestamps since epoch - so any date-of-birth or company's incorporation-date will have to be converted to a particular format before pushing to the system.
+
+\item All relationships have to have a property bidirectional - to explicitly specify if the relationship goes both ways. This had to be done as Neo4j edges are always directed, though they can be queries without directions.
+
+\item  Some labels for relationships in current core data are: relatedto, worksin, geoBelongs.
+
+\item An entity can have any number of properties, but these properties if present are validated: startdate(int), enddate(int), iscurrent(boolean). For a person a startdate represents his date-of-birth, for a company startdate represents it's incorporation-date. The iscurrent property can help us in tracking if the person is dead or the company is not active.
+
+\item All the other meta-info will be stored in a separate sql database that will help in mapping any data point change to it’s source and the user who allowed that change. this is better explained in the provenance section in system design chapter.
+
+\end{enumerate}
+
+We list some images here that better describe the present data model. [all the model images]
+
+
+\section{Data collection and description}
+
+Since the aim was to to build a social network for all the Indian power houses, we needed to identify and collect as much varied data as possible. It is only when different kind of data mingle with each other in the system that we can hope to see some hidden patterns or dig out interesting insights. All the visualizations that we obtained from this data is shown in the analysis section. [citation]
+
+We needed to search for alternate data sources that might help the ongoing work. We have looked for datasets spanning company details, board of directors, Lok-Sabha MPs, subsidiaries, banks, and any other relevant political-corporate data. 
+
+Any data that is crawled is not fed into the system directly. Instead, a REST PUSH api provided by our system is used to push it to a separate crawl data-store (rather than the core data-store) for moderation first. The  data integration is described in next section, while the rest api is described in next chapter. [citation]
+
+\subsection{Challenges}
+
+\begin{enumerate}
+
+    \item  The biggest challenge in data collection is that data for Indian context is not easily available.  Open data initiatives like data.gov.in have initiated hope for data enthusiasts but there is still a long way to go. [citation]
+
+    \item No central place for any category of target data, so one would have to look for multiple sources. Instead, in a way, we are striving to create such a central place in the present work.
+
+    \item Since data has to be integrated from variety of source points, the credibility of a data item listed can be established strongly but with the added evil of entity resolution - which has been explained in a later section [CITATion section]
+
+    \item Mostly, no unique identifiers for entities appear in datasets that are publicly available. There is a possibility of duplication of data, this is where the ER work comes in handy. [citation] 
+
+    \item Most data contained noise, or erroneous details at times. This sometimes is intentional on the data entry operator's part, sometimes it's just a naive mistake. For example: name for some people was wrongly spelt in some publicly available websites.
+
+    \item Data was missing for some datasets. For example, in the affidavit that the politicians have to fill before elections, or in the data collected from companywiki.
+
+    \item Names are the biggest problems in such a work. People use titles like Mr., Shri, Shriman, Late, Lt., Mrs., Kumari, Kumar which again add more complexity to the problem. 
+
+    \item There is no standard data format for dates even across government departments. Similarly for the address - there is no standard format to extract out relevant information.
+
+    \item Most of the government sites maintain significant data on-line but hidden in a complex web of links and they love uploading data in PDFs! 
+
+
+\end{enumerate}
+
+
+\subsection{Tools and Methods}
+
+We describe here tools that we picked up along the way for data collection and data cleaning. It is important to note that no single tool can be a cure for all the data-sources. In fact, what we have learned in due course of time is that different kind of data sources require different approach.
+
+[todo]
+
+\begin{enumerate}
+
+    \item A naive method that we experimented during the initial work is to fetch a source url through python's urllib library, and then process it using BeautifulSoup. 
+
+    \item selenium
+
+    \item scrapy
+
+    \item manual at times: if data less and useful for connections. 
+
+    \item data collected is preprocessed using pandas library, nameparser, wote our own algorithms for converting date-of-birth to startdate format (int) -  timestamp epoch
+
+\end{enumerate}
+
+
+\subsection{Corporate data}
+
+The challenges in collecting any corporate data are:
+
+\begin{enumerate}
+    \item Getting government provided unique identification numbers for the company
+    \item Getting government provided director identification numbers for their directors
+    \item Linking these two IDS.
+    \item Getting the list of all companies over the time with their Ids of course.
+    \item Getting the list of subsidiaries for each company/group. (The toughest job)
+\end{enumerate}  
+
+[todo]
+We have been able to tackle the first four challenges to a commendable extent but the last one. A related work is Parag's [citation]. We first describe the sources we have encountered, and finally how we collected our corpus of 60000 directors and 90000 companies.
+
+\subsubsection{MCA}
+[citation mca]
+
+Being the official government source, this is the most authentic data source we have found for obtaining the list of companies and LLPs (Limited Liability Partnerships) operating in India. It gives us all the companies registered year-wise before and after 1980 till date in the form of pdfs with their CIN/LLPIN (Corporate Identity Number/Limited Liability Partnership Identification Number) which is unique to a company/LLP. The only downside as always with any pdf data is a lengthy parsing job.
+
+MCA, with its search engine, is amazing! Armed with the CIN, we can obtain a lot more information for a company from the MCA site itself. We get the type of the company, the category of the company, the headquarters, its market capital, date of incorporation and the charges it is facing. Not only that we also obtain the signatories of a company from the MCA site as well i.e. their board of their directors, with their unique DIN(Director Identity Number). This can again be useful in entity resolution. (This is a new feature they introduced).
+
+[todo: mca problems
+crawl: why not
+]
+
+
+\subsubsection{capitaline database}
+[ciation cpaitaline]
+One of the main challenges was to figure out the subsidiaries of a firm. This would complete the picture of the company network. Alas, finding the subsidiaries is not an easy task. We could find just one source after running around all over the internet:  Capitaline. However, the data seems to be spotty at best. We could not find details for a lot of the listed subsidiaries.
+
+The problem with capital line is multifold: No CIN, LLPIN. Very bad interface to crawl but nonetheless crawlable. It has no single source of the companies. And subsidiaries information extraction would just reveal names of subsidiaries, no unique IDs! There is no hyperlink from the subsidiaries name to any company page.
+
+Parag has already collectd this data [citation] todo
+
+
+
+\subsubsection{companywiki}
+[citation compnywiki]
+[todo]
+advantages
+linked data
+reverse search from both directions
+seed parag dataset
+three days crawl selenium
+dataset stats
+linked data
+our core base
+
+
+\subsection{Political data}
+
+ls crawl from ls site - images too - 
+
+Our task in this domain was to find personal information of MPs and their dependents. So we went looking in Wikipedia of various political members and their families. But Wikipedia is highly unstructured and crawling, parsing Wikipedia even with professional extractors is a tedious task.
+
+We started with these problem statements in our mind:
+
+How to get info on all 16 Lok Sabhas’ MPs?
+How to get the family information of MPs?
+
+\subsubsection{MyNeta}
+
+they have done a tremendous work in digitizing this data
+courtesy
+data description
+problems -  missing fields, name format
+info about constituency and states 
+info about assets and liabilities
+info about criminal cases
+mynetaid for a particular election helps in resolution from myneta dataset, kept as internal prop
+ls 2009 and ls 2014 data
+
+\subsubsection{Lok Sabha Official data}
+
+describe how we got the data
+name and address problem
+why we choose the data gain when we had myneta- family links of politicians
+
+
+\subsubsection{Rajya Sabha Official data}
+
+describe how we got the data
+name and address problem
+why we choose the data family trees of politicians
+
+
+
+
+\subsubsection{Family data}
+
+why to see if somehow the powerhouses are connected 
+known examples already include naveen jindal, jayadev galla, etc.
+chidambram and his family in news already, etc.
+[citation: https://en.wikipedia.org/wiki/Category:Business\_families\_of\_India]
+[citation: https://en.wikipedia.org/wiki/Political\_families\_of\_India]
+
+All the mash-ups created by these datasets have been reported in viz section. [citation: viz section]
+
+\section{Data integration}
+
+[TODO]
+
+Many data sources, many data-gatherers, different kind of data
+We describe here : How do we integrate all into one unified model described above
+Though the system has been described in detail in later section, we felt that our data integration model should be described here - data integration is a major challenge - and it is one of the major breakthrough that we achieved while designing the system \\
+
+The idea is to keep data-collection part separate from the system - separation of concerns
+What this means is data-gatherer cannot share any data stores with the system
+They basically push their crawled data to the system using REST api with a json payload
+The system doesn't know about how the data-gatherers are crawling and storing their data or the schema of their data, or where they are storing the data,  the system doesn't need to know if the data-gatherers run their scrapers and crawlers regularly
+The rest api calls will be authenticated which is described in system design section [citation of design section] \\
+
+Initially, we were planning to open a mysql data-store with a fixed schema for the data-gatherers to directly write to. We planned separate tables for each of them and mapping tables to describe each row. As bas as this design sounds, it would have been an expensive mistake in the long run. \\
+
+The present system communicates with all the data-gatherers using json. Why json? It is the new language of the web, mingles well with language like python, and is non-structured - exactly what we need to support our core data model - similar to a NoSQL schema. JSON (JavaScript Object Notation) is a lightweight data-interchange format. It is easy for humans to read and write. It is easy for machines to parse and generate. [citation : json.org]   \\
+
+the json payload in the rest api is such: along with the authentication information(described in system design section): it has two json array objects : entities and relations. \\
+
+entities array contain description of the entities in the freshly pushed data - almost like in Neo4j. 
+it has five variables : id, sourceurl, labels, properties, fetchdate - id is unique identifier for the node for that data-gathering task. note here that labels and properties here  - sourceurl, fetchdate will be used for provenance as described in later section \\
+
+
+Since we need every data to be accounted for ---  sourceurl and fethdate
+gatherers will know the source and when the data was fetched 
+[citation: sample screen shot of json entities payload] \\
+
+relations array contain description of the relations between the entities discussed above 
+it has eight variables : id, sourceurl, label, properties, fetchdate, start\_entity, end\_entity, bidirectional - id is unique identifier for the relation for that data-gathering task. note here that label and properties here  - sourceurl, fetchdate will be used for provenance as described in later section -- bidirectional is the necessary relation property that we described in data model section---start\_entity and end\_entity are foreign key references to the unique ids in entities array.  
+[citation: sample screen shot or code listing of relations payload] \\
+
+all data crawled or manually collected is first pushed into crawl data store (aka crawl-DB) -  another separate neo4j database -  using rest api calls over json payload -- and then verified/resolved by human moderator before being pushed to the system. --- so a very basic high level view of the central internals of the system is shown in this iamge : 
+This way - we will have different non-connected subgraphs in the crawl data store(again a neo4j db).  
+But how do we resolve the nodes and relations now with the core data store? The basic setup id described in the next section. \\
+
+
+\section{Data resolution}
+
+here
