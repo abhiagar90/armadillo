@@ -166,21 +166,21 @@ Any data that is crawled is not fed into the system directly. Instead, a REST PU
 
 \subsection{Tools and Methods}
 
-We describe here tools that we picked up along the way for data collection and data cleaning. It is important to note that no single tool can be a cure for all the data-sources. In fact, what we have learned in due course of time is that different kind of data sources require different approach.
-
-[todo]
+We describe here tools that we picked and methodology adopted up along the way for data collection and cleaning. It is important to note that no single tool can be a cure for all the data-sources. In fact, what we have learned in due course of time is that different kind of data sources require different approach.
+The data being noisy due to entry errors and the schema/ model/ format differences of the sources causes various consistency issues to creep up when compiling them into a single model.
+There are other issues of not obtaining enough data to churn out any useful information. In that case we have adopted techiniques of generating more data from that which is available.
 
 \begin{enumerate}
 
-    \item A naive method that we experimented during the initial work is to fetch a source url through python's urllib library, and then process it using BeautifulSoup. 
+    \item A \textbf{ naive method } that we experimented during the initial work is to fetch an html page through python's urllib library, and then parsing the same with BeautifulSoup library. Advantages of Beautiful soup is that it allows users to get html elements by text query instead of div ids like xpath or css selectors. On the downside, this approach requires all cases of failures handled explicitly in the code. Even the data to be stored is to be explicitly written in desired type of file (csv in our case).
 
-    \item selenium
+    \item \textbf{ Selenium } - It is basically a web testing framework, mainly used to automate human interactions with an website. Running Selenium is similar to having an human agent using a browser to select items and extract data for you. Since it works as an agent with a browser, many issues get automatically averted like - authentication issues against a bot, easy interactions with browser gui elements (for eg. - modal panes) etc. Selenium was extensively in scraping of the companywiki website.
 
-    \item scrapy
+    \item \textbf{ scrapy } - scrapy is a framework to create a web crawler bot which can be used to crawl the web and scrape pages. It has almost everything required to get data easily. A request wrapper to send requests at ease, callback functions to handle errors, ORMs to store the data with ease with whatever format user wants, file downloader etc. scrapy also uses twisted, an asynchronous network library which is event driven. So unlike other tools above, data collection with scrapy is very fast. The disadvantage however is that of a high learning curve which can be a waste of time if amount of data to be collected is not that high. Scrapy also cannot interact with same page Javascript requests and interact with browser elements. The websites of Loksabha, RajyaSabha was scraped using scrapy.
 
-    \item manual at times: if data less and useful for connections. 
+    \item \textbf{ Manual data collection } - When the dataset is small, it is manually collected by using some tool ( Google sheet's \emph{ ImportHtml } function for example) or by simply doing data entry by hand. The resultant data is free of errors with some tradeoff for time. Manual work is also required when \textbf {\emph { bootstrapping some dataset } }. Bootstrapping is the process of expanding a dataset using some seed dataset. For our case, we collected data for top 1000 companies by value. From this initial seed, company id no. (CIN) was collected from companywiki site, with their director information. Finally director's pages were looked after to collect information about other companies owned by them. In the end, this data generated a total of 60000 company records.
 
-    \item data collected is preprocessed using pandas library, nameparser, wote our own algorithms for converting date-of-birth to startdate format (int) -  timestamp epoch
+    \item The \textbf{ data collected is preprocessed } using the python pandas library. Here issues like encoding mismatch (\emph{ utf-8 vs ascii }), text format conversions (like \emph{ converting a date given in string to UNIX timestamp format }) and text normalizations ( like \emph{ name field reduction to FirstName<single space>LastName }) are handled .
 
 \end{enumerate}
 
@@ -197,87 +197,82 @@ The challenges in collecting any corporate data are:
     \item Getting the list of subsidiaries for each company/group. (The toughest job)
 \end{enumerate}  
 
-[todo]
-We have been able to tackle the first four challenges to a commendable extent but the last one. A related work is Parag's [citation]. We first describe the sources we have encountered, and finally how we collected our corpus of 60000 directors and 90000 companies.
+We have been able to tackle the first four challenges to a commendable extent but the last one. A related work is Parag's [citation]. We first describe the sources we have encountered, and finally how we collected our corpus of 90000 directors and 60000 companies.
 
-\subsubsection{MCA}
+\subsection{Ministry of Corporate Affairs (MCA)}
 [citation mca]
 
 Being the official government source, this is the most authentic data source we have found for obtaining the list of companies and LLPs (Limited Liability Partnerships) operating in India. It gives us all the companies registered year-wise before and after 1980 till date in the form of pdfs with their CIN/LLPIN (Corporate Identity Number/Limited Liability Partnership Identification Number) which is unique to a company/LLP. The only downside as always with any pdf data is a lengthy parsing job.
 
-MCA, with its search engine, is amazing! Armed with the CIN, we can obtain a lot more information for a company from the MCA site itself. We get the type of the company, the category of the company, the headquarters, its market capital, date of incorporation and the charges it is facing. Not only that we also obtain the signatories of a company from the MCA site as well i.e. their board of their directors, with their unique DIN(Director Identity Number). This can again be useful in entity resolution. (This is a new feature they introduced).
+MCA, with its search engine, contains a huge amount of data. Armed with the CIN, we can obtain a lot more information for a company from the MCA site itself. We get the type of the company, the category of the company, the headquarters, its market capital, date of incorporation and the charges it is facing. Not only that we also obtain the signatories of a company from the MCA site as well i.e. their board of directors, with their unique DIN(Director Identity Number). This can again be useful in entity resolution. (This is a new feature they introduced).
 
-[todo: mca problems
-crawl: why not
-]
+But MCA with all its data poses a lot of problems to deal with-
+\begin{enumerate}
+    \item MCA has an exhaustive list of all legally registered companies which is a really big number to process. As such, not only crawling  them will be a lengthy task, but also processing the data after crawled and filtering out the relevant companies of interest. Then will come the issue normalizing and cleaning up the data.
+    \item Crawling MCA and scraping it is not a very straight forward task as the web UI within it contains a bad control flow with  manipulation of many browser GUI elements which as of now can be performed by testing frameworks like Selenium only. This is a real performance bottleneck determined by speed of Selenium and MCA server. 
+    \item Although it allows one to look for director DINs and other information from a CIN, the reverse is not implemented. The site does not also provide enough filtering options to filter out data in first place.
+\end{enumerate}
 
+\subsection{Initial approach, Capitaline database and ConpanyWiki}
+[citation capitaline]
+Initially we tried to collect company data by searching the names of politicians as potential directors. This helped us to find companies associated with politicians as source of potential overlap between coporate-politcians. But the problem was that most of the companies that the politicians are linked to are small businesses on which we have little interest. Thus, we changed our approach to obtain the companies of interest (most valued companies for example), and find the entities linked with them. These entities of the top companies are actual power elites by our definition. Any links between them and politicians (direct or indirect) are our actual point of interests.
+At this juncture, we utilised the data from \textbf{ Capitaline }. Capitaline is a database containing info on Indian companies. We used Capitaline data as collected by Parag Pahwa[citation].
 
-\subsubsection{capitaline database}
-[ciation cpaitaline]
-One of the main challenges was to figure out the subsidiaries of a firm. This would complete the picture of the company network. Alas, finding the subsidiaries is not an easy task. We could find just one source after running around all over the internet:  Capitaline. However, the data seems to be spotty at best. We could not find details for a lot of the listed subsidiaries.
+The data collected consisted of folowing information-
+\begin{itemize}
+    \item Company name
+    \item Director
+    \item Subsidiaries if any
+    \item Values in crores
+    \item Donations to political parties
+\end{itemize}
 
-The problem with capital line is multifold: No CIN, LLPIN. Very bad interface to crawl but nonetheless crawlable. It has no single source of the companies. And subsidiaries information extraction would just reveal names of subsidiaries, no unique IDs! There is no hyperlink from the subsidiaries name to any company page.
+However, the problem was that it had no unique ids like CIN, DIN to uniquely determine a company or director and help us in resolution. So we decided to generate a new dataset of our own. Using the Company Name and Value field we picked top 1000 valued company and looked for relevant information in other data stores like CompanyWiki. 
+CompanyWiki is another website containing data from mostly MCA. It helped us by giving a better platform with more options of searching/ querying the data. It also contained government IDs for the entries (CIN for companies, DIN for directors etc. ) which helped us to link entities. The website also allowed us to search on CINs, DINS  / get CINs given DINs and vice-versa. 
+For our purpose we obtained our director sharing data by following means-
 
-Parag has already collectd this data [citation] todo
+\begin{itemize}
+    \item Obtain top 1000 valued company from capitaline data - an SQL query on database table storing the company name and value ordered by value and limit to 1000 entries
+    \item Manual annotation of 1000 companies to get its CIN. This was done by searching for the company name in CompanyWiki
+    \item Running Selenium script for taking the list of IDs to get all director names, DINs from company wiki
+    \item Using these to get all the companies, CINs where the corresponding director is a member. Here also Selenium was used to get the company names, CINs from the list of DINs inputted. The script took entire 3 days to complete the task. Advantage of using the CIN here became useful when duplicates are filtered with the help of it
+\end{itemize}
 
-
-
-\subsubsection{companywiki}
-[citation compnywiki]
-[todo]
-advantages
-linked data
-reverse search from both directions
-seed parag dataset
-three days crawl selenium
-dataset stats
-linked data
-our core base
-
+Thus in this way a dataset of 1000 companies and  9400 directors were expanded to a dataset of 90000 directors and 60000 companies.This data formed the starting point in our Core Database.
 
 \subsection{Political data}
-
-ls crawl from ls site - images too - 
 
 Our task in this domain was to find personal information of MPs and their dependents. So we went looking in Wikipedia of various political members and their families. But Wikipedia is highly unstructured and crawling, parsing Wikipedia even with professional extractors is a tedious task.
 
 We started with these problem statements in our mind:
+\begin{itemize}
+    \item How to get info on all 16 Lok Sabhas’ MPs?
+    \item How to get the family information of MPs?
+\end{itemize}
+\subsection{MyNeta}
+MyNeta is a site launched by Association of Democratic Reforms (ADR) to provide public awareness about Indian politicians. They contain several important information about Indian MPs including -
+\begin{itemize}
+    \item Personal information
+    \item State, Constituency of MP
+    \item Assets and Liabilities
+    \item Criminal cases - if any
+\end{itemize}
+For our work, we used only the personal information of the politician. MyNeta also keeps an internal id (named MyNeta ID) which we keep to resolve duplicates in the data.
 
-How to get info on all 16 Lok Sabhas’ MPs?
-How to get the family information of MPs?
+\subsection{Lok Sabha Official data}
 
-\subsubsection{MyNeta}
-
-they have done a tremendous work in digitizing this data
-courtesy
-data description
-problems -  missing fields, name format
-info about constituency and states 
-info about assets and liabilities
-info about criminal cases
-mynetaid for a particular election helps in resolution from myneta dataset, kept as internal prop
-ls 2009 and ls 2014 data
-
-\subsubsection{Lok Sabha Official data}
-
-describe how we got the data
-name and address problem
-why we choose the data gain when we had myneta- family links of politicians
-
+We also chose to scrape official LokSabha site for politician's personal properties as per government records for better triangulation of political entities (especially when we found some information missing in MyNeta dataset) and also for looking up family ties of the political leaders.
+We finally got this information from official site of LokSabha which gave us actual government provided records. Scripts were written in scrapy which allowed us to gather information about politician.
+We also downloaded the images of politicians to be used later in the Power Elites web app [chapter reference].
 
 \subsubsection{Rajya Sabha Official data}
 
-describe how we got the data
-name and address problem
-why we choose the data family trees of politicians
+We collected Rajya Sabha data as well from their official site to look for more corporate-political tie ups. Rajya Sabha data is more interesting as we have some businessmen directly nominated as a Rajya Sabha.  
 
+\section{Family Ties Information}
 
+We also have manually collected from the web various family ties in businesses and politics. Major source for this data is wikipedia. This data allowed us to find new relations/links from already obtained graph.
 
-
-\subsubsection{Family data}
-
-why to see if somehow the powerhouses are connected 
-known examples already include naveen jindal, jayadev galla, etc.
 chidambram and his family in news already, etc.
 [citation: https://en.wikipedia.org/wiki/Category:Business\_families\_of\_India]
 [citation: https://en.wikipedia.org/wiki/Political\_families\_of\_India]
@@ -286,41 +281,129 @@ All the mash-ups created by these datasets have been reported in viz section. [c
 
 \section{Data integration}
 
-[TODO]
+As discussed earlier, the real challenge of forming a data mashup is the non-uniformity of different sources which include differences in schema, data model, formats of text, assumptions of persons scraping the data(hereby referred to as data gatherers or gatherers) etc. To alleviate such problems, we came up with a particular data format to be used by all data gatherers on conformance with which he or she should preformat data before pushing in to the system. By separating out the problem of data integration, we have reduced maintainence costs for the knowledge base. In this way, the schema described in the system model is kept intact, while the data gatherer can crawl the data by his own whim as long as he conforms to the data format expected by the write API.
 
-Many data sources, many data-gatherers, different kind of data
-We describe here : How do we integrate all into one unified model described above
-Though the system has been described in detail in later section, we felt that our data integration model should be described here - data integration is a major challenge - and it is one of the major breakthrough that we achieved while designing the system \\
+The initial plan was to allow the crawled data to be pushed into some MySQL database. Each gatherer would then have to define a mapping somewhere to map all the fields of the crawled data to the fields in the actual graph data. But this poised the problem of maintaining a new map file/table which was crucial to data pushing. The data gatherer would have to enlist new mappings for every new data crawled from a source. The maintenance of the  would have been another problem to deal with.
+%
+Instead we chose to provide gatherers with a REST API and  a specific data format which he/she has to adhere to while pushing in the data.
+For now, JSON payload is used in a specific format. Similar to the graph database format, this payload is designed as follows -
 
-The idea is to keep data-collection part separate from the system - separation of concerns
-What this means is data-gatherer cannot share any data stores with the system
-They basically push their crawled data to the system using REST api with a json payload
-The system doesn't know about how the data-gatherers are crawling and storing their data or the schema of their data, or where they are storing the data,  the system doesn't need to know if the data-gatherers run their scrapers and crawlers regularly
-The rest api calls will be authenticated which is described in system design section [citation of design section] \\
+\begin{lstlisting}[language=json,firstnumber=1]
+{"menu": {
+  "id": "file",
+  "value": "File",
+  "popup": {
+    "menuitem": [
+      {"value": "New", "onclick": "CreateNewDoc()"},
+      {"value": "Open", "onclick": "OpenDoc()"},
+      {"value": "Close", "onclick": "CloseDoc()"}
+    ]
+  }
+}}
+\end{lstlisting}
 
-Initially, we were planning to open a mysql data-store with a fixed schema for the data-gatherers to directly write to. We planned separate tables for each of them and mapping tables to describe each row. As bas as this design sounds, it would have been an expensive mistake in the long run. \\
+The main components of the payload is as follows -
+\begin{itemize}
+    \item entities - array with each element having following info
+        \begin{enumerate}
+            \item id - unique id specific to data gathering task
+            \item labels, properties - adhering to an entity in graph db
+            \item sourceurl, fetchdate - to be used for provenance (to be given by the gatherer) to be discussed in chapter [ref chapter]
+        \end{enumerate}
+    \item relations - array with each element having following info
+        \begin{enumerate}
+            \item id - unique id specific to data gathering task
+            \item startentity,endentity - ids of entities
+            \item isbidirectional - whether the relation is bidirectional 
+            \item labels, properties - adhering to relation properties in graphdb
+            \item sourceurl, fetchdate - to be used for provenance (to be given by gatherer) to be discussed in chapter [ref chapter]
+        \end{enumerate}
+    \item authentication info - used by the Power Elites app described later [ ref chapter]
+\end{itemize}
 
-The present system communicates with all the data-gatherers using json. Why json? It is the new language of the web, mingles well with language like python, and is non-structured - exactly what we need to support our core data model - similar to a NoSQL schema. JSON (JavaScript Object Notation) is a lightweight data-interchange format. It is easy for humans to read and write. It is easy for machines to parse and generate. [citation : json.org]   \\
+All data crawled or manually collected is first pushed into a separate graph database ( a separate Neo4j instance)-  \emph{ "crawl data store" } (here onwards refer to as crawl-DB) using REST API calls with the JSON payload. The pushed data is then verified/resolved by human moderator before being pushed to the system. A high level view of the central internals of the system is shown below:
+[image]
+This way - we will have different non-connected subgraphs in the Crawl - DB .  
+But how do we resolve the nodes and relations now with the core data store? The basic setup id described in the next section. 
 
-the json payload in the rest api is such: along with the authentication information(described in system design section): it has two json array objects : entities and relations. \\
+\section{Entity Resolution}
+The basic algorithm of entity resolution goes as follows-
 
-entities array contain description of the entities in the freshly pushed data - almost like in Neo4j. 
-it has five variables : id, sourceurl, labels, properties, fetchdate - id is unique identifier for the node for that data-gathering task. note here that labels and properties here  - sourceurl, fetchdate will be used for provenance as described in later section \\
+\begin{algorithm}[H]
+\KwData{Datasets - S, T }
+\KwResult{list -L consisting of proper matches of T in S }
+initialization - L is empty \;
+parameters - S,T, threshold \;
+ \For{all records in t in T}{
+  \nl search for t in S \;
+  \nl pick records s in S for which match-score(t, s) $\geq$ threshold \;
+  \nl append s in L \;
+ }
+ \caption{Basic Entity Resolution}
+\end{algorithm}
 
+Complexity of above algorithm is O(n*m) where n is size(S) and m is size(T) when n records are searched linearly in S.
+        From the above, we can find that the two crucial operations here is the choice of proper scoring algorithm to pick s and search of t in S in line [line].
 
-Since we need every data to be accounted for ---  sourceurl and fethdate
-gatherers will know the source and when the data was fetched 
-[citation: sample screen shot of json entities payload] \\
+\section{String Matching Algo}
+        The requirement of a scoring algorithm was such that it should match words with small spelling mistakes and similar names. In our case, we have used Jaro distance as it considers ranges and transpositions while matching two words. A sample experiment from our side on a list of four names showed the following scores - 
+        [[tble]]
+        Upon a test run of all algorithms over a sample of 100 names from our datasets we decided to use jaro-winkler for the purpose. We also required to match names which are phonetically similar to other names. These helped us to match names like 'Gautam' and 'Gautambhai', 'Vidya', 'Bidya' and 'Viday' etc.
 
-relations array contain description of the relations between the entities discussed above 
-it has eight variables : id, sourceurl, label, properties, fetchdate, start\_entity, end\_entity, bidirectional - id is unique identifier for the relation for that data-gathering task. note here that label and properties here  - sourceurl, fetchdate will be used for provenance as described in later section -- bidirectional is the necessary relation property that we described in data model section---start\_entity and end\_entity are foreign key references to the unique ids in entities array.  
-[citation: sample screen shot or code listing of relations payload] \\
+\section{Comparison techniques}
+        As obvious from above algorithm the performance of entity matching algorithm depends largely on how fast the searching occurs in dataset S. A naive algorithm like above added a factor of O(n) on linear search over entire S. The obvious improvement over it is the possible implementation of a binary search to reduce search speed to O(log n) time. But binary search is not applicable here for following two reasons -
+            - Binary search uses a predicate like gt, eq, lt , the value of which is true or false. Such predicates determines some order in the dataset. 
+            - The absence of such predicates as above avoid any sorting or ranking of the data in any order.
+        As a result, the performance of the entire system got bottlenecked by the resolution module. As a result we sought out for other solutions regarding this.
 
-all data crawled or manually collected is first pushed into crawl data store (aka crawl-DB) -  another separate neo4j database -  using rest api calls over json payload -- and then verified/resolved by human moderator before being pushed to the system. --- so a very basic high level view of the central internals of the system is shown in this iamge : 
-This way - we will have different non-connected subgraphs in the crawl data store(again a neo4j db).  
-But how do we resolve the nodes and relations now with the core data store? The basic setup id described in the next section. \\
+\section{Machine learning techniques}
 
+        After having performance bottleneck in searching records in other datasets, we looked for probabilistic ways of solving the same problem. We used the python library of csvdedupe for this purpose. The library basically induced an active learning mechanism to obtain training samples where it picked two entities of possible match and prompts the user to label positive/negative. It then matches the related entities accordingly with the hypothesis formed. Unfortunately this approach suffered from following drawbacks-
+        \begin{itemize}
+        \item Too small data to accurately form a proper hypothesis. 
+        \item The labels that were asked to mark alongwith data were picked at random and often the results of the algorithm are different in different runs (depending on the number of positive or negative label given at that time).
+        \end{itemize}
+        Fortunately indexing other dataset helped to come out of this.
 
-\section{Data resolution}
+\section{Indexing and Apache Solr}
+        Indexing allows searching to be very fast of near O(1) speed. Indexes are datastructures that store contents of a document (in our context fields of records in a dataset) for faster access to the document. This enables faster retrieval with a trade off for using more memory. For our purpose we used Apache Solr framework for the searching step.Solr uses Apache Lucene to create an inverted index based desired on fields in the records. An inverted index basically creates a data structure on the content of the records and have pointers to the actual locations of the records. So for all text in the specified fields, Lucene breaks them (tokenizes them) and store them in a data structure for fast retrieval.  Solr also sets up a  Web server with REST APIs to allow us to integrate it with other parts of our system described in chapter [give reference here]. 
+        Since Solr has its own sets of protocols we had to modify the way we apply the resolution algorithm described above. The main steps followed by us to realize this are as follows. 
+\begin{itemize}
 
-here
+        \item \textbf{ Defining a data set } to index  (the data set S above). We described a data source which contained the dataset. In this case, it was a mysql database. (file db-data-config.xml) .
+        \item \textbf{ Defining the fields } to index. Solr needs to have a schema of the records to know which fields will indexed and which one is kept as satellite data. These are specified in solr configuration files. (schema.xml)
+        \item \textbf{ Defining how to preprocess } all the terms before creating the index. Solr allows to specify a list of pre-built tokenizers, stemmers, filters to preprocess a term or custom ones if necessary. We used whitespace tokenizers and double metaphone phonetic filters to get a match score relevant to our purpose and in this way used the phonetic algorithm for better text matching. (file - solrconfig.xml)
+        \item \textbf{ Forming a lucene query } based on the contents of records of another dataset (data set T above)
+        \item \textbf{ Applying Jaro algorithm } for comparison was difficult in Solr. This is because, all the functions applied to the text for indexing are necessarily single parameter. Jaro or any other non-phonetic string metric needs at lest two string Results returned by the Solr is further filtered by the Jaro-Winkler algorithm. Results being quite small, does not take much time even if a one-one matching algo is executed. 
+
+\end{itemize}
+\subsection{Solr Fields}
+    To effectively triangulate two entities, special emphasis was given on which fields to compare while doing it. After few experiments we decided to match records on following fields generated from the graph data model we discussed in previous section.
+
+\begin{itemize}
+    \item \textbf{ Aliases }- a list that contains names pertaining to an entity. This is especially required when a person/institution is known by several names in the world. Eg. - Narendra Modi vs Narendra Damodar Modi, BJP vs Bharatiya Janata Party 
+    \item \textbf{ Aliases  Phonetic } - same as above but here search is done on phonetic index.
+    \item \textbf{ label } - Label dictates the type of entity as per data model in chapter [refer chapter here].
+    \item \textbf{ Keywords } - a list that contains main keywords of the entity. This field is most helpful in triangulation as it indexes all the properties of the entity and the aliases of the entities directly related with the original. Important properties unique to a particular entity like location for a particular item.
+\end{itemize}
+
+\subsection{Lucene Queries}
+    Proper search queries are essential to effeciently resolve an entity. These involved using above fields effectively to obtain relevant entities- 
+    The grammar of the lucene query used by us goes as follows-
+
+    L:= I:(Q) AND L OR epsilon
+
+    where I is the index field (one of above) and Q is the query string to be matched against I
+    Where index field is one of the above and query string can be as follows -
+    "string text" - matching the exact word 'string text'
+    string text - matches string or text or both
+    string~ - lucene applies edit distance to string and returns the possible matches
+
+    The query we used for our purpose is as follows-
+    " labels:(each label separated by whitespace) aliases:(each alias~ separated by whitespace ) AND aliases-phonetic:(each alias separated by whitepace) AND keywords:( each keyword~ separated by whitespace)"
+
+    Eg. - 
+\subsection{Performance}
+    On testing our Solr integrated system with the original basic resolution algorithm, we found many fold improvements. Initially upon resolving 1000 corporate entities against about 500 political ones over the "name" field in both took us about 150 minutes to resolve. That makes resolution of a single entity about 18s.
+    Compared to that, a single entity is resolved in Solr in little over 1s showing a performance upgrade of about 18x.
+
