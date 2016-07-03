@@ -1,17 +1,17 @@
 \chapter{Constructing the Social network}
 
-The driving fuel for any social network is the data it represents. The problem in constructing a linked-data system such as this one is always the data and the entropy it brings with itself. The challenges are always the usual ones - unavailability of data, noise in the collected data, no authentic source, and many-a-times no structure in the data. Even if we are successful in collecting and cleaning the linked data we want, the way we go about integrating all this variety of information in a single data store is itself an another challenge. \\
+The driving fuel for any social network is the data it represents. The problem in constructing a linked-data system such as this one is always the data and the entropy it brings. The challenges are always the usual ones - unavailability of data, noise in the collected data, no authentic source, and many-a-times no structure in the data. Even if we are successful in collecting and cleaning the linked data we want, the way we go about integrating all this variety of information in a single data-store is itself an another challenge. \\
 
-The choice of data store matters here the most because one would like to query the data and unearth interesting relations between participating entities. Henceforth, a person or an organization will be called an entity. These entities would be linked to each other by certain edges/links just like in a graph which we will normally call relations. All these challenges are elevated manifold when one wishes to resolve entities from different datasets into a single unified entity. \\
+The choice of data-store matters here the most because one would like to query the data and unearth interesting relations between participating entities. Henceforth, a person or an \emph{organization} will be called an \emph{entity}. These entities would be linked to each other by certain edges/links just like in a graph which we will normally call \emph{relations}. All these challenges are elevated manifold when one wishes to resolve entities from different datasets into a single unified entity. \\
 
 Here we describe in order our choice of data storage, our core data model for the linked data, data collection practices and data sources, data integration methodology, and finally the necessary evil in such a system -  entity resolution. \\
 
 \section{Everything is a graph}
 \label{datamodel}
 We begin by describing how we are going to actually store any kind of linked data we get and why our approach is a sensible one. We describe here where our core data is stored and how our core data model looks like. It has to be stated at the onset that care has been taken to ensure that
-whatever data goes in our core data modal is non-redundant, free of noise and verified. As already stated, our goal is to construct a social network between politicians, companies, entrepreneurs, military personnel, bureaucrats, political parties, universities, movie actors, and any important entity one can think of in the usual power hierarchy. Also, we want to be able to model all kinds of relationships that can exist between these entities with ease: family-links, donation-links, director-links, ownership-links, subsidiary-links, etc. \\
+whatever data goes in our core data modal is non-redundant, free of noise and verified. As already stated, our goal is to construct a social network between politicians, companies, entrepreneurs, military personnel, bureaucrats, political parties, universities, movie actors, and other important entities in the usual power hierarchy. Also, we want to be able to model all kinds of relationships that can exist between these entities with ease: family-links, donation-links, director-links, ownership-links, subsidiary-links, etc. \\
 
-Practically anything connected can be represented by a graph. We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us. Thus, it makes sense to model our core data as a large inter-connected graph where every node is an entity and every edge represents a link between two of them.   \\
+Practically any connected data can be represented by a graph. We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us. Thus, it makes sense to model our core data as a large inter-connected graph where \emph{every node is an entity and every edge represents a link between two of them}.   \\
 
 % (or a hyper-graph to be exact, refer our LIMITATIONS section)
 
@@ -24,21 +24,21 @@ What we provide is therefore a graph to the user where he fits any relevant conn
 
 \subsection{Neo4j}
 
-Neo4j \cite{neo}  is our choice of data storage. It is one of the leading JVM based NoSQL graph databases. We build our knowledge base on it as a graph and thus Neo4j is at the center of our entire system. We chose Neo4j because of the following reasons , and we have found it be a non-separable asset to our use cases. \cite{neogdb} \\
+Neo4j \cite{neo}  is our choice of data storage. It is one of the leading JVM based NoSQL graph databases. We build our knowledge base on it as a graph and thus Neo4j is at the center of our entire system. We have found \emph{Neo4j} to be a non-separable asset for our use cases because of the following reasons \cite{neogdb}. \\
 
 \begin{enumerate}
 
-\item Only a database that embraces relationships as a core aspect of its data model is able to store, process, and query connections efficiently. While other databases compute relationships expensively at query time, a graph database stores connections as first class citizens, readily available for any 'join-like' navigation operation. Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second per core. 
+\item Only a database that embraces relationships as a core aspect of its data model is able to store, process, and query connections efficiently. While other databases compute relationships expensively at query time, a graph database stores connections as first-class citizens, readily available for any join-like navigation operation. Accessing those already persistent connections is an efficient, constant-time operation and allows you to quickly traverse millions of connections per second per core. 
 
 \item Graph databases are designed to mimic the most natural way we tend to model data - the same way you would map it all out on a white-board. Your collection of circles, boxes, lines and arrows is - in essence - already a graph. 
 
 \item In Neo4j, everything is stored in form of either an edge, a node or an attribute. Each node and edge can have any number of attributes. Both the nodes and edges can be labeled. Labels can be used to narrow searches.  Neo4j is very easy to learn and adapt. It's object property model is very intuitive and anything can be modeled on a white board in the form of nodes and edges.
 
-\item Constant time traversals for relationships in the graph both in depth and in breadth due to efficient representation of nodes and relationships 
+\item Constant time traversals for relationships in the graph both in depth and in breadth due to efficient representation of nodes and relationships.
 
-\item All relationships in Neo4j are equally important and fast, making it possible to materialize and use new relationships later on to 'shortcut' and speed up the domain data when new needs arise 
+\item All relationships in Neo4j are equally important and fast, making it possible to materialize and use new relationships later on to shortcut and speed up the domain data when new needs arise. 
 
-\item Compact storage and memory caching for graphs, resulting in efficient scale-up and billions of nodes in one database on moderate hardware 
+\item Compact storage and memory caching for graphs, resulting in efficient scale-up and billions of nodes in one database on moderate hardware.
 
 \item It's NoSQL help us in modeling the varied data from different sources we have collected.
 
@@ -63,9 +63,9 @@ Let us dive into some examples which explain how me model our core data in Neo4j
 
 \item Relationships provide directed, named semantically relevant connections between two node-entities. A relationship always has a direction, a type, a start node, and an end node. This model is exactly the same as directed edges in a traditional graph structure. Although they are directed, relationships can always be navigated regardless of direction.
 
-\item A relationship can also be labeled by a single label specifying what kind of a relationship exists between two nodes. Thus, if a politician is 'son-of' a businessman we can connect the two nodes by an edge attributed with such a label.
+\item A relationship can also be labeled by a single label specifying what kind of a relationship exists between two nodes. Thus, if a politician is son-of a businessman we can connect the two nodes by an edge attributed with such a label.
 
-\item Just like a node, a relationship can also hold any number of attributes(key-value pairs). In most cases, relationships have quantitative properties, such as weights, costs, distances, ratings, time intervals, or strengths. 
+\item Just like a node, a relationship can also hold any number of attributes (key-value pairs). In most cases, relationships have quantitative properties, such as weights, costs, distances, ratings, time intervals, or strengths. 
 
 % But for our use case, one can think of an example relationship as : a particular `person`(node) 'donated'(relationship-type) 'x amount of money at y date'(relationship properties) to(directed edge) a particular `politician`(node).
 
@@ -88,9 +88,9 @@ An example could be the Figure \ref{fig:neo1}
 Cypher is a declarative graph query language for the graph database Neo4j that allows for expressive and efficient querying and updating of the graph store. Cypher is a relatively simple but still very powerful language. Very complicated database queries can easily be expressed through Cypher. This allows users to focus on their domain instead of getting lost in database access. \\
 
 A node is represented like this: \\
-    \emph{(:person:politician {name:\textbf{'Narendra Modi'},sex:'M'})}\\ \\
+    \emph{(:person:politician \{name:\textbf{'Narendra Modi'},sex:'M'\})}\\ \\
 A relation is represented like this:\\
-    \emph{(startnode)-[:relatedto {kind:\textbf{'childof'}}]-$\textgreater$(endnode)}\\ \\
+    \emph{(startnode)-[:relatedto \{kind:\textbf{'childof'}\}]-$\textgreater$(endnode)}\\ \\
 The structure here is self explanatory and can be further explored by reading Neo4j manual. Figure \ref{fig:neo2} explains better.
 
 
@@ -103,12 +103,12 @@ The structure here is self explanatory and can be further explored by reading Ne
 \end{figure}
 
 
-Querying in cypher is as easy as thinking about how you traverse a graph. Here is a simple query to return all the relationships that start from or end at node 'Naveen Jindal' of type politician.
+Querying in cypher is as easy as thinking about how you traverse a graph. Here is a simple query to return all the relationships that start from or end at node Naveen Jindal of type politician.
 
-\emph{ \textbf{MATCH} (jindal:politician {name:\textbf{'Naveen Jindal'}})-[anyrelation]-(anynode)
+\emph{ \textbf{MATCH} (jindal:politician \{name:\textbf{'Naveen Jindal'}\})-[anyrelation]-(anynode)
  \textbf{RETURN} anyrelation }
 
-Interested readers can be direct here to read more about cypher in Neo4j's manual\cite{neomanual}: 
+Interested readers can direct here to read more about cypher in Neo4j's manual\cite{neomanual}: 
 \subsection{Our restricted property graph model}
 
 We had to specify some ground rules to model our data for imposing uniformity on varied data that is being fed into the system. Thus, our property data model follows the rules stated below.
@@ -119,33 +119,33 @@ We had to specify some ground rules to model our data for imposing uniformity on
 
 \item Every node and a relation has a unique uuid/relid.
 
-\item All nodes are labeled 'entity' by default. To make anonymous queries on nodes easier.
+\item All nodes are labeled \emph{entity} by default. To make anonymous queries on nodes easier.
 
-\item All living or dead people are labeled 'person'.
+\item All living or dead people are labeled \emph{person}.
 
-\item Any person connected to a company as a director/owner is labeled 'businessperson'.
+\item Any person connected to a company as a director/owner is labeled \emph{businessperson}.
 
-\item All operating units are labeled as 'organization'.
+\item All operating units are labeled as \emph{organization}.
 
-\item All companies is labeled as 'company'
+\item All companies are labeled as \emph{company}.
 
-\item A political party is labeled as both 'organization' and 'company' alongside 'entity'
+\item A political party is labeled as both \emph{organization} and \emph{company} alongside \emph{entity}.
 
 \item Other self-explanatory labels for nodes in current core data are: city, state, constituency.
 
-\item Every 'entity' will have to have a name property. An aliases property - a neo4j array - helps in keeping track of different names of an entity.
+\item Every \emph{entity} will have to have a \emph{name} property. An \emph{aliases} property - a neo4j array - helps in keeping track of different names of an entity.
 
-\item An 'entity' can have any number of properties, but these properties if present are validated: 'startdate'(int), 'enddate'(int), 'iscurrent'(boolean). For a person a 'startdate' represents his date-of-birth, for a company 'startdate' represents it's incorporation-date. The 'iscurrent' property can help us in tracking if the 'person' is dead or the 'company' is not active.
+\item An \emph{entity} can have any number of properties, but these properties if present are validated: \emph{startdate}(int), \emph{enddate}(int), \emph{iscurrent}(boolean). For a person a \emph{startdate} represents his date-of-birth, for a company \emph{startdate} represents it's incorporation-date. The \emph{iscurrent} property can help us in tracking if the \emph{person} is dead or the \emph{company} is not active.
 
-\item startdate and enddate are timestamps since epoch - so any date-of-birth or company's incorporation-date will have to be converted to a particular format before pushing to the system.
+\item \emph{startdate} and \emph{enddate} are timestamps since epoch - so any date-of-birth or company's incorporation-date will have to be converted to a particular format before pushing to the system.
 
-\item All relationships have to have a property bidirectional - to explicitly specify if the relationship goes both ways. This had to be done as Neo4j edges are always directed, though they can be queries without directions.
+\item All relationships have to have a property \emph{bidirectional} - to explicitly specify if the relationship goes both ways. This had to be done as Neo4j edges are always directed, though they can be queried without directions.
 
 \item  Some labels for relationships in current core data are: relatedto, worksin, geoBelongs.
 
-\item An entity can have any number of properties, but these properties if present are validated: startdate(int), enddate(int), iscurrent(boolean). For a person a startdate represents his date-of-birth, for a company startdate represents it's incorporation-date. The iscurrent property can help us in tracking if the person is dead or the company is not active.
+\item An entity can have any number of properties, but these properties if present are validated: startdate(int), enddate(int), iscurrent(boolean).
 
-\item All the other meta-info will be stored in a separate sql database that will help in mapping any data point change to it's source and the user who allowed that change. this is better explained in the provenance section in system design chapter.
+\item All the other meta-info will be stored in a separate SQL database that will help in mapping any data point change to it's source and the user who allowed that change. This is better explained in the provenance section \ref{sectionprov}.
 
 \end{enumerate}
 
@@ -162,7 +162,7 @@ We list some images here that better describe the present data model.
 \begin{figure}[H]
 \begin{center}	
 \includegraphics[width=1\textwidth]{model2} 
-\caption{A model showing businessperson- organization relationship }
+\caption{Model showing businessperson-organization relationship }
 \label{fig:model2}
 \end{center}
 \end{figure}
@@ -210,7 +210,7 @@ We list some images here that better describe the present data model.
 \begin{figure}[H]
 \begin{center}	
 \includegraphics[width=1\textwidth]{model8} 
-\caption{Model showing relation between organization and its home city}
+\caption{Model showing relation between \emph{organization} and its home city}
 \label{fig:model8}
 \end{center}
 \end{figure}
@@ -226,11 +226,11 @@ We list some images here that better describe the present data model.
 \section{Data collection and description}
 \label{datacollect}
 
-Since the aim was to to build a social network for all the Indian power houses, we needed to identify and collect as much varied data as possible. It is only when different kind of data mingle with each other in the system that we can hope to see some hidden patterns or dig out interesting insights. All the visualizations that we obtained from this data are shown in the analysis Chapter \ref{chapviz}
+Since the aim was to to build a social network for all the Indian power houses, we needed to identify and collect as much varied data as possible. It is only when different kind of data mingle with each other in the system that we can hope to see some hidden patterns or dig out interesting insights. All the visualizations that we obtained from this data are shown in the analysis Chapter \ref{chapviz}.
 
 We needed to search for alternate data sources that might help the ongoing work. We have looked for datasets spanning company details, board of directors, Lok-Sabha MPs, subsidiaries, banks, and any other relevant political-corporate data. 
 
-Any data that is crawled is not fed into the system directly. Instead, a REST PUSH API provided by our system is used to push it to a separate crawl data-store (rather than the core data-store) for moderation first. The  data integration is described in next section, while the REST API is described in next chapter. 
+Any data that is crawled is not fed into the system directly. Instead, a REST POST API provided by our system is used to push it to a separate crawl data-store (rather than the core data-store) for moderation first. The  data integration REST API is described in \ref{dataint}. 
 
 \subsection{Challenges}
 
@@ -238,9 +238,7 @@ Any data that is crawled is not fed into the system directly. Instead, a REST PU
 
     \item  The biggest challenge in data collection is that data for Indian context is not easily available.  Open data initiatives like data.gov.in have initiated hope for data enthusiasts but there is still a long way to go. 
 
-    \item No central place for any category of target data, so one would have to look for multiple sources. Instead, in a way, we are striving to create such a central place in the present work.
-
-    \item Since data has to be integrated from variety of source points, the credibility of a data item listed can be established strongly but with the added evil of entity resolution - which has been explained in a later section. 
+    \item Since data has to be integrated from variety of source points, the credibility of a data item listed can be established strongly but with the added evil of entity resolution - which has been explained in section \ref{dataer}. 
 
     \item Mostly, no unique identifiers for entities appear in datasets that are publicly available. There is a possibility of duplication of data, this is where the ER work comes in handy.  
 
@@ -300,7 +298,7 @@ We have been able to tackle the first four challenges to a commendable extent bu
 
 Being the official government source, MCA \cite{MCA} is the most authentic data source we have found for obtaining the list of companies and LLPs (Limited Liability Partnerships) operating in India. It gives us all the companies registered year-wise before and after 1980 till date in the form of pdfs with their CIN/LLPIN (Corporate Identity Number/Limited Liability Partnership Identification Number) which is unique to a company/LLP. The only downside as always with any pdf data is a lengthy parsing job.
 
-MCA, with its search engine, contains a huge amount of data. Armed with the CIN, we can obtain a lot more information for a company from the MCA site itself. We get the type of the company, the category of the company, the headquarters, its market capital, date of incorporation and the charges it is facing. Not only that we also obtain the signatories of a company from the MCA site as well i.e. their board of directors, with their unique DIN(Director Identity Number). This can again be useful in entity resolution. (This is a new feature they introduced).
+MCA, with its search engine, contains a huge amount of data. Armed with the CIN, we can obtain a lot more information for a company from the MCA site itself. We get the type of the company, the category of the company, the headquarters, its market capital, date of incorporation and the charges it is facing. Not only that we also obtain the signatories of a company from the MCA site as well i.e. their board-of-directors, with their unique DIN(Director Identity Number). This can again be useful in entity resolution. (This is a new feature they introduced).
 
 But MCA with all its data poses a lot of problems to deal with-
 \begin{enumerate}
@@ -403,7 +401,7 @@ For now, JSON payload is used in a specific format. Similar to the graph databas
         "id": "2",
         "fetchdate": "1466024344",
         "sourceurl": "http://loksabha.nic.in",
-        "labels": ["organization", "politicalparty", "nationalparty", "entity"],
+        "labels": ["\emph{organization}", "politicalparty", "nationalparty", "entity"],
         "properties": {
             "name": "Indian National Congress"
         }
@@ -441,7 +439,7 @@ The main components of the payload is as follows -
     \item authentication info - used by the Power Elites app described later \ref{chapwebapp}
 \end{itemize}
 
-All data crawled or manually collected is first pushed into a separate graph database ( a separate Neo4j instance)-  \emph{ "crawl data store" } (here onwards refer to as crawl-DB) using REST API calls with the JSON payload. The pushed data is then verified/resolved by human moderator before being pushed to the system. A high level view of the central internals of the system is shown in the Figure \ref{fig:twodb}.
+All data crawled or manually collected is first pushed into a separate graph database ( a separate Neo4j instance)-  \emph{crawl data-store} (here onwards refer to as crawl-DB) using REST API calls with the JSON payload. The pushed data is then verified/resolved by human moderator before being pushed to the system. A high level view of the central internals of the system is shown in the Figure \ref{fig:twodb}.
 
 \begin{figure}[H]
 \begin{center}  
@@ -452,7 +450,7 @@ All data crawled or manually collected is first pushed into a separate graph dat
 \end{figure}
 
 This way - we will have different non-connected subgraphs in the Crawl - DB .  
-But how do we resolve the nodes and relations now with the core data store? The basic setup id described in the next section. 
+But how do we resolve the nodes and relations now with the core data-store? The basic setup id described in the next section. 
 
 \section{Entity Resolution}
 \label{dataer}
@@ -475,7 +473,7 @@ parameters - S,T, threshold \;
 Complexity of above algorithm is O(n*m) where n is size(S) and m is size(T) when n records are searched linearly in S.
         From the above, we can find that the two crucial operations here is the choice of proper scoring algorithm to pick s in line and search of t in S in line 1.
 
-\section{String Matching Algorithm}
+\section{String Matching Algorithms}
         The requirement of a scoring algorithm was such that it should match words with small spelling mistakes and similar names. In our case, we have used Jaro-Winkler distance as it considers ranges and transpositions while matching two words. A sample experiment from our side on a list of four names showed the scores as seen in table \ref{table:1}.
     \begin{table}[H]
     \centering

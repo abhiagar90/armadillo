@@ -1,10 +1,10 @@
 \chapter{Design of Power Elites Web App}
 \label{chapwebapp}
 
-In the present chapter, we dissect our system bit by bit and describe each component in detail. We have already described how our data is integrated from different data sources, and also how our ER system works. Here we describe the wiki and the web app that uses all those features. The main motive of ours was to develop a public portal to disperse the information to the mass. It is important to note that it is of sole importance that while designing the web application (and the entire system) was to reduce manual work of the verifier - so a lot of brainstorming and design changes went in that direction. Any feature or performance improvement in the verification process makes life easy for the verifier. The system has been designed to be able to crowd-source the verification process like others. \\
+In the present chapter, we dissect our system bit by bit and describe each component in detail. We have already described how our data is integrated from different data sources, and also how our ER system works. Here we describe the wiki and the web application that uses all those features. It is important to note that that our main goal while designing the web application (and the entire system) was to reduce manual work of the verifier - so a lot of brainstorming and design changes went in that direction. Any feature or performance improvement in the verification process makes life easy for the verifier. The system has been designed to be able to crowd-source the verification process. \\
 
-Another key point which we have kept in mind always while building the system is to make the 
-data-gatherers task hassle-free  - that they should universally be able to communicate with the system. Towards this effect they should also be able to keep track of their data, and also update their old data as well. We have already described how we achieve this using json and rest over a Neo4j back-end we call crawl data-store. We have already described how separation of concerns  further help in achieving this as the crawled-data is well separated in crawl data store. \\
+Another key point which we have kept in mind while building the system is to make the 
+data-gatherers' task hassle-free - that they should universally be able to communicate with the system. Towards this effect they should also be able to keep track of their data, and update their old data as well. We have already described how we achieve this using JSON and REST over a Neo4j back-end which we call crawl data-store. We have already described how separation of concerns further help in achieving this as the crawled-data is well separated in crawl data store. \\
 
 \section{Terminology}
 
@@ -20,13 +20,13 @@ The detailed design of the system can be seen in \ref{fig:system}. We formally d
 
 \begin{enumerate}
     
-    \item \textbf{Data-Gatherer:} An authorized individual or a group of individuals who crawl linked data from different sources. This data can be about entities and relations that belong to any domain supported by our system: political, corporate, sports, bureaucratic, etc. A data-gatherer can use their API-token to push data to our crawl data store using json payload.
+    \item \textbf{Data-Gatherer:} An authorized individual or a group of individuals who crawl linked data from different sources. This data can be about entities and relations that belong to a domain supported by our system: political, corporate, sports, bureaucratic, etc. A data-gatherer can use their API-token to push data to our crawl data store using JSON payload.
 
-    \item \textbf{Crawl Data Store:} The Neo4j data store which stores all non-verified, non-resolved data that data-gatherers push into the system. All data from here is first verified and resolved  
+    \item \textbf{Crawl Data Store:} The Neo4j data store which stores all non-verified, non-resolved data that data-gatherers push into the system. All data from here is first verified and resolved.
 
-    \item \textbf{Resolver:} A tool that searches over indexed graph data to suggest possible entities for a given entity. ER mechanism has been described in Section \ref{dataer}. A resolver in essence in our system suggests the probable matches but does not resolve.
+    \item \textbf{Resolver:} A tool that searches over indexed graph data to suggest possible matching entities for a given entity. ER mechanism has been described in Section \ref{dataer}. A resolver in essence in our system suggests the probable matches but does not resolve.
 
-    \item \textbf{Verifier:} An authorized person who matches an entity against a possible list of suggestions by the resolver. The only human element on which the system is dependent to be able to push data to the core data store.
+    \item \textbf{Verifier:} An authorized person who matches an entity against a possible list of suggestions by the resolver. The only human element on which the system is dependent to be able to push correct data to the core data store.
 
     \item \textbf{Core Data Store:} The Neo4j data store which stores all verified, resolved data that data-gatherers push into the system.  This basically represents our knowledge base - an integration of data from different sources.
 
@@ -36,9 +36,9 @@ The detailed design of the system can be seen in \ref{fig:system}. We formally d
 
     \item \textbf{Meta-DB:} MySQL back-end which stores provenance of any info added or changed in the core data store.
 
-    \item \textbf{Index-DB:} MySQL back-end which stores condensed information (and connected information) of all the entities in the core data store. Apache Solr runs on top of it to index this information to help the resolution process. 
+    \item \textbf{Index-DB:} MySQL back-end which stores condensed information (and connected information) of all the entities in the core data store. Apache Solr runs on top of it to index this information to speed-up the resolution process. 
 
-    \item \textbf{Admin:} The user with all the privileges in the system - can also delete all indexes, refresh all indexes, see which user/verifier contributed most to the system, change role of a user.
+    \item \textbf{Admin:} The user with all the privileges in the system - can delete all indexes, refresh all indexes, see which user/verifier contributed most to the system, change role of a user, etc.
 
     \item \textbf{End user:} Non-authorized users that can access information through the web app. They cannot make or suggest any changes to the core data store.
 
@@ -92,18 +92,18 @@ He can add more users to the task which will allow those users to be able to pus
 \begin{figure}[H]
 \begin{center}  
 \includegraphics[width=0.7\textwidth]{taskadduser} 
-\caption{Adding user to a task}
+\caption{Adding users to a task}
 \label{fig:taskadduser}
 \end{center}
 \end{figure}
 
 
 \subsection{Authorization \& POST API}
-Every authorized user in the system is given an api-token at the time of sign-up. An api request is authorized if userid and api-token are provided correctly. For pushing data to the system using a valid api-request, json has been employed as the payload. The structure has been described in Section \ref{dataint}. To push the JSON to the system, the API request is described in Table \ref{tab:postjson}.
+Every authorized user in the system is given an api-token at the time of sign-up. An api request is authorized if userid and api-token are provided correctly. For pushing data to the system using a valid api-request, JSON has been employed as the payload. The structure has been described in Section \ref{dataint}. To push the JSON to the system, the API request is described in Table \ref{tab:postjson}.
 
 \begin{table}[H]
 \centering
-\caption{Request API: /apis/postgraph/?userid=$\langle userid \rangle$\&token=$\langle userid \rangle$}
+\caption{Request API: /apis/postgraph/?userid=$\langle userid \rangle$\&token=$\langle tokenid \rangle$}
 \label{tab:postjson}
 \begin{tabular}{ll}
 
@@ -129,7 +129,7 @@ Every authorized user in the system is given an api-token at the time of sign-up
 \end{table}
 
 \subsection{JSON Response}
-If request is authorized and json is as per our convention, then the data is pushed to the crawl data-store. Validations before the push happen as described in the \ref{dataint}. The response is almost identical copy of the request json, including the meta-data. All the meta-data has been marked with a beginning and an ending underscore as shown in \ref{jsonresponse} \\
+If request is authorized and JSON is as per our convention, then the data is pushed to the crawl data-store. Validations before the push happen as described in the \ref{dataint}. The response is almost identical copy of the request JSON, including the meta-data. All the meta-data has been marked with a beginning and an ending underscore as shown in \ref{jsonresponse} \\
 
 
 \label{jsonresponse}
@@ -155,6 +155,7 @@ If request is authorized and json is as per our convention, then the data is pus
 \end{lstlisting}
 
 
+
 \section{Resolver and verifier}
 
 \begin{enumerate}
@@ -170,12 +171,12 @@ If request is authorized and json is as per our convention, then the data is pus
 \end{center}
 \end{figure}
  
-\item \textbf{Resolution:} Every node in the crawl data-store has to be resolved to a node (existing or new) in the core data-store, meaning to resolve is to provide it with a uuid. Similarly for relations, a relid is provided. This is achieved when a verifier picks up an object during match (Figure \ref{fig:match}) from the possible list of objects suggested by the resolver. Diff view (Figure \ref{fig:diff}) aids the verifier to granularly look at new labels, new properties and conflicting properties (shown with differentiating colors).
+\item \textbf{Resolution:} Every node in the crawl data-store has to be resolved to a node (existing or new) in the core data-store. To resolve an entity is to provide it with a uuid. Similarly for relations, a relid is provided. This is achieved when a verifier picks up an object during match (Figure \ref{fig:match}) from the possible list of objects suggested by the resolver. Diff view (Figure \ref{fig:diff}) aids the verifier to granularly look at new labels, new properties and conflicting properties (shown with differentiating colors).
 
 \begin{figure}[H]
 \begin{center}  
 \includegraphics[width=1\textwidth]{match} 
-\caption{The match view in verification task}
+\caption{The match-view in verification task}
 \label{fig:match}
 \end{center}
 \end{figure}
@@ -183,7 +184,7 @@ If request is authorized and json is as per our convention, then the data is pus
 \begin{figure}[H]
 \begin{center}  
 \includegraphics[width=1\textwidth]{diff} 
-\caption{The diff view in verification task}
+\caption{The diff-view in verification task}
 \label{fig:diff}
 \end{center}
 \end{figure}
@@ -203,7 +204,7 @@ If request is authorized and json is as per our convention, then the data is pus
 \end{figure}
 
 
-\item \textbf{Parallelization:} A graph object selected during a verifier's session is locked for some time to let the selection algorithm know of it's status, this way the selection algorithm picks up another potential node.
+\item \textbf{Parallelization:} A graph object selected during a verifier's session is locked for some time to let the selection algorithm know of it's status, this way the selection algorithm picks up another potential node for a new user.
 
 \item \textbf{Jaro:} Provision for running jaro on fetched entities from Apache Solr has been provided in the match view. In practice, phonetic has been seen to be do very well for names we have encountered. We have kept this feature extensible in the sense if some other algorithms need to be tested for the task.
 
@@ -238,10 +239,10 @@ If request is authorized and json is as per our convention, then the data is pus
 \end{center}
 \end{figure}
 
-\item \textbf{Wiki:} Authorized users can access the wiki to edit entities and relationships in the core data-store. All these edits are first sent to the crawl data-store in the same fashion as any json from a data-gatherer is handled. This way all changes in the system occur through the verification process to have the core data-store free of any noise or redundancy. 
+\item \textbf{Wiki:} Authorized users can access the wiki to edit entities and relationships in the core data-store. All these edits are first sent to the crawl data-store in the same fashion as any JSON from a data-gatherer is handled. This way all changes in the system occur through the verification process so that the core data-store is free of any noise or redundancy. 
 
 
-\item \textbf{Wiki features:} Wiki can be accessed to add a new node, add a  new relation (Figure \ref{fig:addrel}),  edit an existing node  - add a new label (Figure \ref{fig:addlabel}), edit an existing relation. A user can add as many properties to the entity/relationship as possible (Figure \ref{fig:oldprops}). Certain properties that can be potential candidates for addition are also suggested in the edit view (Figure \ref{fig:oldprops}). 
+\item \textbf{Wiki features:} Wiki can be accessed to add a new node, add a  new relation (Figure \ref{fig:addrel}),  edit an existing node, add a new label (Figure \ref{fig:addlabel}), edit an existing relation. A user can add as many properties to the entity/relationship as possible (Figure \ref{fig:oldprops}). Certain properties that can be potential candidates for addition are also suggested in the edit view (Figure \ref{fig:oldprops}). 
 
 \begin{figure}[H]
 \begin{center}  
@@ -274,6 +275,7 @@ If request is authorized and json is as per our convention, then the data is pus
 
 
 \section{Provenance}
+\label{sectionprov}
 
 \begin{enumerate}
 
@@ -295,7 +297,7 @@ If request is authorized and json is as per our convention, then the data is pus
 \begin{figure}[H]
 \begin{center}  
 \includegraphics[scale=0.5]{prov2} 
-\caption{Every change has an associated meta-data}
+\caption{Every change has associated meta-data}
 \label{fig:prov2}
 \end{center}
 \end{figure}
@@ -311,7 +313,7 @@ If request is authorized and json is as per our convention, then the data is pus
 
 \begin{enumerate}
 
-\item \textbf{Use Case:} Use case diagram for not logged in end users is shown in Figure \ref{fig:enduser}.
+\item \textbf{Use Case:} Use case diagram for not logged-in end users is shown in Figure \ref{fig:enduser}.
 
 \begin{figure}[H]
 \begin{center}  
@@ -389,7 +391,7 @@ If request is authorized and json is as per our convention, then the data is pus
 
      \item \textbf{Solr Indexes:} Admin can delete all the Solr indexes, and can also refresh them for maintenance purposes.
 
-     \item \textbf{Change user roles:} Admin can change roles of existing authorized users, so a user role in the system is always controlled by the admins.
+     \item \textbf{Change user roles:} Admin can change roles of existing authorized users, so a user roles in the system are always controlled by the admins.
 
 
      \item \textbf{View contributions:} Admin on a broader level needs to look over the verification/moderation process in the system. Towards that effect, an admin can view all the statistics about verifiers and data-gatherers present in the system.
