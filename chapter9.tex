@@ -464,12 +464,12 @@ The basic algorithm of entity resolution goes as follows-
 \KwResult{list -L consisting of proper matches of T in S }
 initialization - L is empty \;
 parameters - S,T, threshold \;
- \For{all records in t in T}{
+ \For{all records t in T}{
   \nl search for t in S \;
   \nl pick records s in S for which match-score(t, s) $\geq$ threshold \;
-  \nl append s in L \;
+  \nl append all s in L \;
  }
- \caption{Basic Entity Resolution}
+ \caption{Generic Entity Resolution}
 \end{algorithm}
 
 Complexity of above algorithm is O(n*m) where n is size(S) and m is size(T) when n records are searched linearly in S.
