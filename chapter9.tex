@@ -388,12 +388,13 @@ All the mash-ups created by these datasets have been reported in viz section \re
 \section{Data Integration}
 \label{dataint}
 
-As discussed earlier, the real challenge of forming a data mash-up is the non-uniformity of different sources which include differences in schema, data model, formats of text, assumptions of persons scraping the data(hereby referred to as \textbf{ data gatherers } or \textbf{ gatherers }) etc. To alleviate such problems, we came up with a particular data format to be used by all data gatherers on conformance with which he or she should pre-format the data before pushing in to the system. By separating out the problem of data integration, we have reduced maintenance costs for the knowledge base. In this way, the schema described in the system model is kept intact, while the data gatherer can crawl the data by his own whim as long as he conforms to the data format expected by the write API.
+As discussed earlier, the real challenge of forming a data mash-up is the non-uniformity of different sources which include differences in schema, data model, formats of text, assumptions of persons scraping the data(hereby referred to as \textbf{ data gatherers } or \textbf{ gatherers }) etc. To alleviate such problems, we came up with a particular data format to be adhered to by all data-gatherers for uniformity before data is pushed to the system.\\
 
-The initial plan was to allow the crawled data to be pushed into some MySQL database. Each gatherer would then have to define a mapping somewhere to map all the fields of the crawled data to the fields in the actual graph data. But this poised the problem of maintaining a new map file/table which was crucial to data pushing. The data gatherer would have to enlist new mappings for every new data crawled from a source. The maintenance of the  would have been another problem to deal with.
+By separating out the problem of data integration and keeping aggregated data in a separate data-store, we have been able to reduce maintenance costs for the knowledge base. In this way, the schema described in the system model is kept intact, while the data gatherer can crawl the data in accordance with his own whim as long as he conforms to the data format expected by the write API. \\
+
+The initial plan was to allow the crawled data to be pushed into some MySQL database. Each gatherer would then have to define a mapping somewhere to map all the fields of the crawled data to the fields in the actual graph data. But this poised the problem of maintaining a new map file/table which was crucial for pushing the data. The data gatherer would have to enlist new mappings for every new data crawled from a source. The maintenance of such a database would have been another problem to deal with. \\
 %
-Instead we chose to provide gatherers with a REST API and  a specific data format which he/she has to adhere to while pushing in the data.
-For now, JSON payload is used in a specific format. Similar to the graph database format, this payload is designed as follows -
+Instead we chose to provide gatherers with a REST API and a specific data format which he/she has to adhere to while pushing in the data. For now, JSON payload is used in a specific format. Very similar to the graph database model, this payload is designed as follows:
 
 \begin{lstlisting}[language=json,firstnumber=1]
 {
@@ -427,33 +428,39 @@ For now, JSON payload is used in a specific format. Similar to the graph databas
         "end_entity": "2",
         "fetchdate": "1466024344",
         "sourceurl": "http://loksabha.nic.in",
-        "bidirectional": "no",
+        "bidirectional": "False",
         "properties": {
         }
     }]
 }
 \end{lstlisting}
 
-The main components of the payload is as follows -
+The main components of the payload are as follows -
+
 \begin{itemize}
+
     \item entities - array with each element having following info
         \begin{enumerate}
-            \item id - unique id specific to data gathering task
+            \item id - unique entity id specific to data gathering task
             \item labels, properties - adhering to an entity in graph db
-            \item sourceurl, fetchdate - to be used for provenance (to be given by the gatherer) to be discussed in chapter \ref{chapwebapp}
+            \item sourceurl, fetchdate - to be used for provenance (to be given by the gatherer) and to be discussed in chapter \ref{chapwebapp}
         \end{enumerate}
+
     \item relations - array with each element having following info
+
         \begin{enumerate}
-            \item id - unique id specific to data gathering task
-            \item startentity,endentity - ids of entities
-            \item isbidirectional - whether the relation is bidirectional 
-            \item labels, properties - adhering to relation properties in graphdb
+            \item id - unique relation id specific to data gathering task
+            \item startentity,endentity - ids of participating entities
+            \item bidirectional - boolean attribute to determine whether the relation is bidirectional 
+            \item labels, properties - adhering to relation attributes in neo4j graph database
             \item sourceurl, fetchdate - to be used for provenance (to be given by gatherer) to be discussed in chapter \ref{chapwebapp}
         \end{enumerate}
-    \item authentication info - used by the Power Elites app described later \ref{chapwebapp}
+
+    \item authentication info - used by the Power Elites app as described in later chapter \ref{chapwebapp}
+
 \end{itemize}
 
-All data crawled or manually collected is first pushed into a separate graph database ( a separate Neo4j instance)-  \emph{crawl data-store} (here onwards refer to as crawl-DB) using REST API calls with the JSON payload. The pushed data is then verified/resolved by human moderator before being pushed to the system. A high level view of the central internals of the system is shown in the Figure \ref{fig:twodb}.
+All data crawled or manually collected is first pushed into a separate graph database ( a separate Neo4j instance)-  \emph{crawl data-store} (here onwards refer to as crawl-DB) using REST API calls with the JSON payload. The pushed data is then verified and resolved by human moderator before being pushed to the system. A high level view of the central internals of the system is shown in the Figure \ref{fig:twodb}.
 
 \begin{figure}[H]
 \begin{center}  
@@ -463,13 +470,13 @@ All data crawled or manually collected is first pushed into a separate graph dat
 \end{center}
 \end{figure}
 
-This way - we will have different non-connected subgraphs in the Crawl - DB .  
-But how do we resolve the nodes and relations now with the core data-store? The basic setup id described in the next section. 
+This way - we have different non-connected subgraphs in the Crawl - DB .  
+But how do we resolve the nodes and relations now with the core data-store? The basic setup is described in the next section of Entity Resolution. 
 
 \section{Entity Resolution}
 \label{dataer}
 
-The basic algorithm of entity resolution goes as follows-
+The basic algorithm of entity resolution is as follows-
 
 \begin{algorithm}[H]
 \KwData{Datasets - S, T }
@@ -485,10 +492,11 @@ parameters - S,T, threshold \;
 \end{algorithm}
 
 Complexity of above algorithm is O(n*m) where n is size(S) and m is size(T) when n records are searched linearly in S.
-        From the above, we can find that the two crucial operations here is the choice of proper scoring algorithm to pick s in line and search of t in S in line 1.
+        From the above, we can find that the two crucial operations here are the choice of proper scoring algorithm to pick s from S in line 2 and search for t in S in line 1. The faster and better they are, the more efficient is our entire ER task.
 
 \subsection{String Matching Algorithms}
-        The requirement of a scoring algorithm was such that it should match words with small spelling mistakes and similar names. In our case, we have used Jaro-Winkler distance as it considers ranges and transpositions while matching two words. A sample experiment from our side on a list of four names showed the scores as seen in table \ref{table:1}.
+        The requirement of a scoring algorithm for our basic ER algo is such that it should match efficiently all similar sounding and similarly spelt words. For our initial testcases, we experimented with Jaro-Winkler distance (and others) as it considers ranges and transpositions while matching two words. A sample experiment and result scores on a list of four names can be seen in table \ref{table:1}.
+
     \begin{table}[H]
     \centering
     \caption{Comparison of string matching algorithm}
@@ -501,57 +509,65 @@ Complexity of above algorithm is O(n*m) where n is size(S) and m is size(T) when
     gautam adani vs gautambhai adani & 4                    & 0.86                    & 0.92                   &  \\ \cline{1-4}
     \end{tabular}
     \end{table}
-        Upon a test run of all algorithms over a sample of 100 names from our datasets we decided to use jaro-winkler for the purpose. We also required to match names which are phonetically similar to other names. These helped us to match names like \textit{ 'Gautam' } and \textit{ 'Gautambhai' }, \textit{ 'Vidya' }, \textit{ 'Bidya' } and \textit{ 'Biday' } etc.
+        Upon a test run of all algorithms over a sample of 100 names from our datasets we decided to use jaro-winkler for the purpose. 
+
+        But, we also needed to match names which are phonetically similar to other names. These helped us to match names like \textit{ 'Gautam' } and \textit{ 'Gautambhai' }, \textit{ 'Vidya' }, \textit{ 'Bidya' } and \textit{ 'Biday' } etc.
 
 \subsection{Comparison techniques}
-        As obvious from above algorithm the performance of entity matching algorithm depends largely on how fast the searching occurs in dataset S. A naive algorithm like above added a factor of O(n) on linear search over entire S. As a result, the performance of the entire system got bottlenecked by the resolution module. As a result we sought out for other solutions regarding this. The obvious improvement over it is the possible implementation of a binary search to reduce search speed to O(log n) time. But binary search is not applicable here for following two reasons -
-            \begin{enumerate}
-                \item Binary search uses a predicate like gt, eq, lt , the value of which is true or false. Such predicates determines some order in the dataset. 
-                \item The absence of such predicates as above avoid any sorting or ranking of the data in any order for any possibility of binary search.
         
-            \end{enumerate}
+        As obvious from the above basic ER algorithm, the performance of entity matching algorithm depends largely on how fast the searching (and thus the comparison between two strings) occurs in dataset S. A naive algorithm like above added a factor of O(n) due to linear search over entire S. As a result, the performance of the entire system got bottlenecked by the resolution module. We started looking for other alternatives regarding this. The obvious improvement over it could have been the possible implementation of a binary search to reduce search speed to O(log n) time. But binary search uses predicates like gt, eq, lt , the value of which are true or false. Such predicates determines some order in the dataset. Data usually cannot be ordered like this eliminating out the possibility of binary search over our data.
+        
 
 \subsection{Machine learning techniques}
 
-        After having performance bottleneck in searching records in other datasets, we looked for probabilistic ways of solving the same problem. We used the python library of dedupe \cite{dedupe} for this purpose. The library basically induced an active learning mechanism to obtain training samples where it picked two entities of possible match and prompts the user to label positive/negative. It then matches the related entities accordingly with the hypothesis formed. Unfortunately this approach suffered from following drawbacks-
+        After having performance bottleneck in searching records in other datasets, we looked for probabilistic ways of solving the same problem. We used the python library dedupe \cite{dedupe} for this purpose. The library basically induced an active learning mechanism to obtain training samples where it picks two entities of possible match and prompts the user to label positive/negative. It then matches the related entities accordingly with the hypothesis formed. Unfortunately this approach suffered from following drawbacks-
         \begin{itemize}
         \item Too small data to accurately form a proper hypothesis. 
         \item The labels that were asked to mark along with data were picked at random and often the results of the algorithm are different in different runs (depending on the number of positive or negative label given at that time).
         \end{itemize}
-        Fortunately indexing other dataset helped to come out of this.
+
+        Fortunately indexing the core-dataset proved to a be silver-bullet for all the searching problems.
 
 \subsection{Indexing and Apache Solr}
-        Indexing allows searching to be very fast of near O(1) speed. Indexes are data-structures that store contents of a document (in our context fields of records in a dataset) for faster access to the document. This enables faster retrieval with a trade off for using more memory. For our purpose we used Apache Solr framework \cite{solr}for the searching step. Solr uses Apache Lucene \cite{lucene} to create an inverted index based desired on fields in the records. An inverted index basically creates a data structure on the content of the records and have pointers to the actual locations of the records. So for all text in the specified fields, Lucene breaks them (tokenizes them) and store them in a data structure for fast retrieval.  Solr also sets up a  Web server with REST APIs to allow us to integrate it with other parts of our system described in Chapter \ref{chapwebapp}. 
+        Indexing allows searching to be very fast - of near O(1) speed. Indexes are data-structures that store contents of a document (in our context fields of records in a dataset) for faster access to the document. This enables faster retrieval with a trade-off of using more memory. For our purpose we used Apache Solr framework \cite{solr} for the searching step. Solr uses Apache Lucene \cite{lucene} to create an inverted index on desired fields in the records. An inverted index basically creates a data structure on the content of the records and have pointers to the actual locations of the records. So for all text in the specified fields, Lucene breaks them (tokenizes them) and store them in a data structure for fast retrieval.  Solr also sets up a  Web server with REST APIs to allow us to integrate it with other parts of our system described in Chapter \ref{chapwebapp}. 
         Since Solr has its own sets of protocols we had to modify the way we apply the resolution algorithm described above. The main steps followed by us to realize this are as follows.\cite{solrdocs} 
 \begin{itemize}
 
-        \item \textbf{ Defining a data set } to index  (the data set S above). We described a data source which contained the dataset. In this case, it was a mysql database. (file \emph{ db-data-config.xml }) .
-        \item \textbf{ Defining the fields } to index. Solr needs to have a schema of the records to know which fields will indexed and which one is kept as satellite data. These are specified in solr configuration files. (file \emph{schema.xml})
-        \item \textbf{ Defining how to preprocess } all the terms before creating the index. Solr allows to specify a list of pre-built tokenizers, stemmers, filters to preprocess a term or custom ones if necessary. We used whitespace tokenizers and double metaphone phonetic filters to get a match score relevant to our purpose and in this way used the phonetic algorithm for better text matching. (file - \emph{ solrconfig.xml })
+        \item \textbf{Defining a data set} to index  (the data set S in ER algo). We described a data source which contained the dataset. In this case, it was a mysql database. (file \emph{ db-data-config.xml }) .
+        
+        \item \textbf{Defining the fields} to index. Solr needs to have a schema of the records to know which fields will indexed and which one is kept as satellite data. These are specified in solr configuration files. (file \emph{schema.xml})
+
+        \item \textbf{Defining how to pre-process} all the terms before creating the index. Solr allows to specify a list of pre-built tokenizers, stemmers, filters to preprocess a term or custom ones if necessary. We used whitespace tokenizers and double metaphone phonetic filters to get a match score relevant to our purpose and in this way used the phonetic algorithm for better text matching. (file - \emph{ solrconfig.xml })
+        
         \item \textbf{ Forming a lucene query } based on the contents of records of another dataset (data set T above)
-        \item \textbf{ Applying Jaro algorithm } for comparison was difficult in Solr. This is because, all the functions applied to the text for indexing are necessarily single parameter. Jaro or any other non-phonetic string metric needs at lest two string Results returned by the Solr is further filtered by the Jaro-Winkler algorithm. Results being quite small, does not take much time even if a one-one matching algorithm is executed. 
+        
+        \item \textbf{ Applying Jaro algorithm } for comparison was difficult in Solr. This is because, all the functions applied to the text for indexing are necessarily single parameter. Jaro or any other non-phonetic string metric needs at-least two strings. Results returned by the Solr can be further filtered by the Jaro-Winkler algorithm. Results being quite small, does not take much time even if a one-one matching algorithm is executed. 
 
 \end{itemize}
 \subsubsection{Solr Fields}
     To effectively triangulate two entities, special emphasis was given on which fields to compare while doing it. After few experiments we decided to match records on following fields generated from the graph data model we discussed in previous section.
 
 \begin{itemize}
-    \item \textbf{ Aliases }- a list that contains names pertaining to an entity. This is especially required when a person/institution is known by several names in the world. Eg. - Narendra Modi vs Narendra Damodar Modi, BJP vs Bharatiya Janata Party 
+    
+    \item \textbf{Aliases}- a list that contains alternate and primary names pertaining to an entity. This is especially required when a person/institution is known by several names in the world. Eg. - Narendra Modi vs Narendra Damodar Modi, BJP vs Bharatiya Janata Party
+
     \item \textbf{ Aliases  Phonetic } - same as above but here search is done on phonetic index.
-    \item \textbf{ label } - Label dictates the type of entity as per data model in section- \ref{datamodel}.
+
+    \item \textbf{Label} - Label dictates the type of entity as per data model in section- \ref{datamodel}. An entity can have multiple labels.
+
     \item \textbf{ Keywords } - a list that contains main keywords of the entity. This field is most helpful in triangulation as it indexes all the properties of the entity and the aliases of the entities directly related with the original entity. Important properties unique to a particular entity like location for a particular item.
 \end{itemize}
 
 \subsubsection{Lucene Queries}
-    Proper search queries are essential to efficiently resolve an entity. These involved using above fields effectively to obtain relevant entities- 
-    The grammar of the lucene query used by us goes as follows-\\
+    Proper search queries are essential for efficiently resolving an entity. These involves using the above indexed fields effectively to obtain relevant entities. The grammar of the lucene query used goes as follows-\\
+
         \emph{ \textbf{ L } ::=   \textbf{ I }':'(\textbf{Q}) \textbf{L}  OR $\epsilon$ } \\
        \emph{ where,  \textbf{I} ::= \textless index field \textgreater  }\\
         \emph{ \textbf{Q} ::= \textless query string\textgreater to be matched against I } \\
 
     query string can be as follows -\\
     
-    \emph{ "string text" } - matching the exact word 'string text'\\
+    \emph{"string text"} - matching the exact word 'string text'\\
     \emph{ string text } - matches string or text or both \\
     \emph{ string$\sim$ } - lucene applies edit distance to string and returns the possible matches \\
     
@@ -560,6 +576,6 @@ Complexity of above algorithm is O(n*m) where n is size(S) and m is size(T) when
     More details on lucene query can be found at \url{https://lucene.apache.org/core/2\_9\_4/queryparsersyntax.html}
     %Eg. - 
 \subsubsection{Performance}
-    On testing our Solr integrated system with the original basic resolution algorithm, we found many fold improvements. Initially upon resolving 1000 corporate entities against about 500 political ones over the "name" field in both took us about 150 minutes to resolve. That makes resolution of a single entity about 18s.
-    Compared to that, a single entity is resolved in Solr in little over 1s showing a performance upgrade of about 18x.
+    On testing our Solr integrated system against the original basic resolution algorithm, we found many-folds improvement. Initially upon resolving 1000 corporate entities against about 500 political ones over the "name" field in both the datasets took us about 150 minutes to resolve using basic ER algo. That makes resolution of a single entity about 18s.
+    Compared to that, a single entity is resolved in Solr in little over 1s showing a performance upgrade of almost around 18x.
 
