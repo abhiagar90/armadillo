@@ -2,7 +2,7 @@
 
 The driving fuel for any social network is the data it represents. The problem in constructing a linked-data system such as this one is always the data and the entropy it brings. The challenges are always the usual ones - unavailability of data, noise in the collected data, no authentic source, and many-a-times no structure in the data. Even if we are successful in collecting and cleaning the linked data we want, the way we go about integrating all this variety of information in a single data-store is itself an another challenge. \\
 
-The choice of data-store matters here the most because one would like to query the data and unearth interesting relations between participating entities. Henceforth, a person or an \emph{organization} will be called an \emph{entity}. These entities would be linked to each other by certain edges/links just like in a graph which we will normally call \emph{relations}. All these challenges are elevated manifold when one wishes to resolve entities from different datasets into a single unified entity. \\
+The choice of data-store matters here the most because one would like to query the data and unearth interesting relations between parties111cipating entities. Henceforth, a person or an \emph{organization} will be called an \emph{entity}. These entities would be linked to each other by certain edges/links just like in a graph which we will normally call \emph{relations}. All these challenges are elevated manifold when one wishes to resolve entities from different datasets into a single unified entity. \\
 
 Here we describe in order our choice of data storage, our core data model for the linked data, data collection practices and data sources, data integration methodology, and finally the necessary evil in such a system -  entity resolution. \\
 
@@ -11,7 +11,7 @@ Here we describe in order our choice of data storage, our core data model for th
 We begin by describing how we are going to actually store any kind of linked data we get and why our approach is a sensible one. We describe here where our core data is stored and how our core data model looks like. It has to be stated at the onset that care has been taken to ensure that
 whatever data goes in our core data modal is non-redundant, free of noise and verified. As already stated, our goal is to construct a social network between politicians, companies, entrepreneurs, military personnel, bureaucrats, political parties, universities, movie actors, and other important entities in the usual power hierarchy. Also, we want to be able to model all kinds of relationships that can exist between these entities with ease: family-links, donation-links, director-links, ownership-links, subsidiary-links, etc. \\
 
-Practically any connected data can be represented by a graph. We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us. Thus, it makes sense to model our core data as a large inter-connected graph where \emph{every node is an entity and every edge represents a link between two of them}.   \\
+Practically any connected data can be represented by a graph. We live in a connected world. There are no isolated pieces of information, but rich, connected domains all around us. Thus, it makes sense to model our core data as a large inter-connected graph where \emph{every node is a real-life entity and every edge represents a real-life link between two of them}.   \\
 
 % (or a hyper-graph to be exact, refer our LIMITATIONS section)
 
@@ -61,7 +61,7 @@ Let us dive into some examples which explain how me model our core data in Neo4j
 
 \item In addition to contextualizing node and relationship properties, labels may also serve to attach meta-data index or constraint information to certain nodes.
 
-\item Relationships provide directed, named semantically relevant connections between two node-entities. A relationship always has a direction, a type, a start node, and an end node. This model is exactly the same as directed edges in a traditional graph structure. Although they are directed, relationships can always be navigated regardless of direction.
+\item Relationships provide directed, named semantically relevant connections between two node-entities. A relationship always has a direction, a type, a start node, and an end node. This model is exactly the same as directed edges in a traditional graph structure. Although they are directed, relationships can always be navigated regardless of direction using cypher query in Neo4j.
 
 \item A relationship can also be labeled by a single label specifying what kind of a relationship exists between two nodes. Thus, if a politician is son-of a businessman we can connect the two nodes by an edge attributed with such a label.
 
@@ -108,7 +108,7 @@ Querying in cypher is as easy as thinking about how you traverse a graph. Here i
 \emph{ \textbf{MATCH} (jindal:politician \{name:\textbf{'Naveen Jindal'}\})-[anyrelation]-(anynode)
  \textbf{RETURN} anyrelation }
 
-Interested readers can direct here to read more about cypher in Neo4j's manual\cite{neomanual}: 
+Interested readers can redirect here to read more about cypher in Neo4j's manual\cite{neomanual}: 
 \subsection{Our restricted property graph model}
 
 We had to specify some ground rules to model our data for imposing uniformity on varied data that is being fed into the system. Thus, our property data model follows the rules stated below.
@@ -141,15 +141,15 @@ We had to specify some ground rules to model our data for imposing uniformity on
 
 \item All relationships have to have a property \emph{bidirectional} - to explicitly specify if the relationship goes both ways. This had to be done as Neo4j edges are always directed, though they can be queried without directions.
 
-\item  Some labels for relationships in current core data are: relatedto, worksin, geoBelongs.
+\item  Some labels for relationships in current core data are: \emph{relatedto}, \emph{worksin}, \emph{geoBelongs}.
 
-\item An entity can have any number of properties, but these properties if present are validated: startdate(int), enddate(int), iscurrent(boolean).
+\item An entity can have any number of properties, but these properties if present are validated: \emph{startdate}(int), \emph{enddate}(int), \emph{iscurrent}(boolean).
 
-\item All the other meta-info will be stored in a separate SQL database that will help in mapping any data point change to it's source and the user who allowed that change. This is better explained in the provenance section \ref{sectionprov}.
+\item Any other meta-info will be stored in a separate SQL database that will help in mapping any data point change to it's source and the user who allowed that change. This is better explained in the provenance section \ref{sectionprov}.
 
 \end{enumerate}
 
-We list some images here that better describe the present data model. 
+We list some images here that better describe the core data model. 
 
 \begin{figure}[H]
 \begin{center}	
@@ -223,7 +223,7 @@ We list some images here that better describe the present data model.
 \end{center}
 \end{figure}
 
-\section{Data collection and description}
+\section{Data Collection \& Description}
 \label{datacollect}
 
 Since the aim was to to build a social network for all the Indian power houses, we needed to identify and collect as much varied data as possible. It is only when different kind of data mingle with each other in the system that we can hope to see some hidden patterns or dig out interesting insights. All the visualizations that we obtained from this data are shown in the analysis Chapter \ref{chapviz}.
@@ -238,7 +238,7 @@ Any data that is crawled is not fed into the system directly. Instead, a REST PO
 
     \item  The biggest challenge in data collection is that data for Indian context is not easily available.  Open data initiatives like data.gov.in have initiated hope for data enthusiasts but there is still a long way to go. 
 
-    \item Since data has to be integrated from variety of source points, the credibility of a data item listed can be established strongly but with the added evil of entity resolution - which has been explained in section \ref{dataer}. 
+    \item Since data has to be integrated from variety of source points, the credibility of a data item listed can be established strongly but with the added evil of Entity Resolution - which has been explained in section \ref{dataer}. 
 
     \item Mostly, no unique identifiers for entities appear in datasets that are publicly available. There is a possibility of duplication of data, this is where the ER work comes in handy.  
 
@@ -248,9 +248,9 @@ Any data that is crawled is not fed into the system directly. Instead, a REST PO
 
     \item Names are the biggest problems in such a work. People use titles like Mr., Shri, Shriman, Late, Lt., Mrs., Kumari, Kumar which again add more complexity to the problem. 
 
-    \item There is no standard data format for dates even across government departments. Similarly for the address - there is no standard format to extract out relevant information.
+    \item There is no standard data format for dates or addresses even across government departments. 
 
-    \item Most of the government sites maintain significant data on-line but hidden in a complex web of links and most of the times the data is available as PDF files.
+    \item Most of the government sites maintain significant data on-line but hidden in a complex web of links and most of the times the data is available in PDF files.
 
 
 \end{enumerate}
@@ -258,21 +258,20 @@ Any data that is crawled is not fed into the system directly. Instead, a REST PO
 
 \subsection{Tools and Methods}
 
-We describe here tools that we picked and methodology adopted up along the way for data collection and cleaning. It is important to note that no single tool can be a cure for all the data-sources. In fact, what we have learned in due course of time is that different kind of data sources require different approach.
-The data being noisy due to entry errors and the schema/ model/ format differences of the sources causes various consistency issues to creep up when compiling them into a single model.
-There are other issues of not obtaining enough data to churn out any useful information. In that case we have adopted techniques of generating more data from that which is available.
+We describe here tools and methodology adopted along the way for data collection and cleaning. It is important to note that no single tool can be a cure for all the data-sources. In fact, what we have learned in due course of time is that different kind of data-sources require different approach.
+The data being noisy due to entry errors and the schema/model/format differences of the sources cause various consistency issues to creep up when compiling them into a single model. There are other issues of not obtaining enough data to churn out any useful information. In that case we have adopted techniques of generating more data from that which is available.
 
 \begin{enumerate}
 
     \item A \textbf{ naive method } that we experimented during the initial work is to fetch an html page through python's urllib library, and then parsing the same with BeautifulSoup library. Advantages of Beautiful soup is that it allows users to get html elements by text query instead of div ids like xpath or css selectors. On the downside, this approach requires all cases of failures handled explicitly in the code. Even the data to be stored is to be explicitly written in desired type of file (csv in our case).
 
-    \item \textbf{ Selenium } - It is basically a web testing framework, mainly used to automate human interactions with an website. Running Selenium is similar to having an human agent using a browser to select items and extract data for you. Since it works as an agent with a browser, many issues get automatically averted like - authentication issues against a bot, easy interactions with browser gui elements (for eg. - modal panes) etc. Selenium was extensively used in scraping of the companywiki website.
+    \item \textbf{Selenium} - It is basically a web testing framework, mainly used to automate human interactions with an website. Running Selenium is similar to having a human agent using a browser to select items and extract data for you. Since it works as an agent with a browser, many issues get automatically averted like - authentication issues against a bot, easy interactions with browser GUI elements (for eg. - modal panes) etc. Selenium has been extensively used in scraping of the companywiki website for our dataset.
 
-    \item \textbf{ scrapy } - scrapy is a framework to create a web crawler bot which can be used to crawl the web and scrape pages. It has almost everything required to get data easily. A request wrapper to send requests at ease, callback functions to handle errors, ORMs to store the data with ease with whatever format user wants, file down-loader etc. scrapy also uses twisted, an asynchronous network library which is event driven. So unlike other tools above, data collection with scrapy is very fast. The disadvantage however is that of a high learning curve which can be a waste of time if amount of data to be collected is not that high. Scrapy also cannot interact with same page Javascript requests and interact with browser elements. The websites of Loksabha, RajyaSabha were scraped using scrapy.
+    \item \textbf{Scrapy} - A framework to create a web crawler bot which can be used to crawl the web and scrape pages. It has almost everything required to crawl/scrape data with ease. It provides a request wrapper to send requests at ease, callback functions to handle errors, ORMs to store the data with ease with whatever format user wants, file down-loader etc. The framework scrapy also uses \emph{twisted}, an asynchronous network library which is event driven. So unlike other tools above, data collection with scrapy is very fast. The disadvantage however is that of a high learning curve which can be a waste of time if amount of data to be collected is not that high. Scrapy also cannot interact with same page Javascript requests and interact with browser elements. The websites of Loksabha, RajyaSabha for our datasets were scraped using scrapy.
 
-    \item \textbf{ Manual data collection } - When the dataset is small, it is manually collected by using some tool ( Google sheet's \emph{ ImportHtml } function for example) or by simply doing data entry by hand. The resultant data is free of errors with some trade-off for time. Manual work is also required when \textbf {\emph { bootstrapping some dataset } }. Bootstrapping is the process of expanding a dataset using some seed dataset. For our case, we collected data for top 1000 companies by value. From this initial seed, company id no. (CIN) was collected from companywiki site, with their director information. Finally director's pages were looked after to collect information about other companies owned by them. In the end, this data generated a total of 60000 company records.
+    \item \textbf{Manual data collection} - When the dataset is small, it is manually collected by using some tool (Google sheet's \emph{ ImportHtml } function for example) or by simply doing data entry by hand. The resultant data is free of errors with some trade-off for time. Manual work is also required when \textbf {\emph {bootstrapping some dataset} }. Bootstrapping is the process of expanding a dataset using some seed dataset. For our case, we collected data for top 1000 companies by value from Capitaline. From this initial seed, company id no. (CIN) was collected from companywiki site, with their director information. Finally director's pages were looked after to collect information about other companies shared by them. In the end, this data generated a total of 60000 company records and 90000 director records.
 
-    \item The \textbf{ data collected is preprocessed } using the python pandas library. Here issues like encoding mismatch (\emph{ utf-8 vs ascii }), text format conversions (like \emph{ converting a date given in string to UNIX timestamp format }) and text normalizations ( like \emph{ name field reduction to FirstName\textless single space \textgreater LastName }) are handled .
+    \item The \textbf{data collected is preprocessed} using the python pandas library. Here issues like encoding mismatch (\emph{ utf-8 vs ascii }), text format conversions (like \emph{ converting a date given in string to UNIX timestamp format }) and text normalizations ( like \emph{ name field reduction to FirstName  \textless single space\textgreater   LastName }) are handled .
 
 \end{enumerate}
 
@@ -282,10 +281,10 @@ There are other issues of not obtaining enough data to churn out any useful info
 The challenges in collecting any corporate data are:
 
 \begin{enumerate}
-    \item Getting government provided unique identification numbers for the company
-    \item Getting government provided director identification numbers for their directors
+    \item Getting government provided unique identification numbers for the company.
+    \item Getting government provided director identification numbers for their directors.
     \item Linking these two IDS.
-    \item Getting the list of all companies over the time with their Ids of course.
+    \item Getting the list of all important companies (with their IDs) over the time.
     \item Getting the list of subsidiaries for each company/group. (The toughest job)
 \end{enumerate}  
 
@@ -296,21 +295,28 @@ We have been able to tackle the first four challenges to a commendable extent bu
 
 \subsection{Ministry of Corporate Affairs (MCA)} 
 
-Being the official government source, MCA \cite{MCA} is the most authentic data source we have found for obtaining the list of companies and LLPs (Limited Liability Partnerships) operating in India. It gives us all the companies registered year-wise before and after 1980 till date in the form of pdfs with their CIN/LLPIN (Corporate Identity Number/Limited Liability Partnership Identification Number) which is unique to a company/LLP. The only downside as always with any pdf data is a lengthy parsing job.
+Being the official government source, MCA \cite{MCA} is the most authentic data source we have found for obtaining the list of companies and LLPs (Limited Liability Partnerships) operating in India. It gives us all the companies registered year-wise before and after 1980 till date in the form of PDFs with their CIN/LLPIN (Corporate Identity Number/Limited Liability Partnership Identification Number) which is unique to a company/LLP. The only downside as always with any PDF data is a lengthy parsing job.
 
-MCA, with its search engine, contains a huge amount of data. Armed with the CIN, we can obtain a lot more information for a company from the MCA site itself. We get the type of the company, the category of the company, the headquarters, its market capital, date of incorporation and the charges it is facing. Not only that we also obtain the signatories of a company from the MCA site as well i.e. their board-of-directors, with their unique DIN(Director Identity Number). This can again be useful in entity resolution. (This is a new feature they introduced).
+MCA, with its search engine, contains a huge amount of data. Armed with the CIN, we can obtain a lot more information for a company from the MCA site itself. We get the type of the company, the category of the company, it's headquarters, its market capital, date of incorporation and the charges it is facing. Not only that, we also obtain the signatories of a company from the MCA site as well i.e. their board-of-directors, with their unique DIN(Director Identification Number). This can again be useful in entity resolution. 
 
-But MCA with all its data poses a lot of problems to deal with-
+But MCA with all its data poses a lot of problems to deal with:
+
 \begin{enumerate}
-    \item MCA has an exhaustive list of all legally registered companies which is a really big number to process. As such, not only crawling  them will be a lengthy task, but also processing the data after crawled and filtering out the relevant companies of interest. Then will come the issue normalizing and cleaning up the data.
+    
+    \item MCA has an exhaustive list of all legally registered companies which is a really big number to process. As such, not only crawling  them will be a lengthy task, but also processing the data after crawled and filtering out the relevant companies of interest. 
+
     \item Crawling MCA and scraping it is not a very straight forward task as the web UI within it contains a bad control flow with  manipulation of many browser GUI elements which as of now can be performed by testing frameworks like Selenium only. This is a real performance bottleneck determined by speed of Selenium and MCA server. 
-    \item Although it allows one to look for director DINs and other information from a CIN, the reverse is not implemented. The site does not also provide enough filtering options to filter out data in first place.
+
+    \item Although it allows one to look for director DINs and other information from a CIN, the reverse is not implemented for MCA website. The site does not also provide enough filtering options to filter out data in first place.
+
 \end{enumerate}
 
 \subsection{Initial approach, Capitaline database and CompanyWiki}
 
-Initially we tried to collect company data by searching the names of politicians as potential directors. This helped us to find companies associated with politicians as source of potential overlap between coporate-politcians. But the problem was that most of the companies that the politicians are linked to are small businesses on which we have little interest. Thus, we changed our approach to obtain the companies of interest (most valued companies for example), and find the entities linked with them. These entities of the top companies are actual power elites by our definition. Any links between them and politicians (direct or indirect) are our actual point of interests.
-At this juncture, we utilized the data from \textbf{Capitaline} \cite{capitaline}. Capitaline is a database containing info on Indian companies. 
+Initially we tried to collect company data by searching the names of politicians as potential directors. This helped us to find companies associated with politicians as our proof-of-concept for potential overlap between coporate-politcians. \\
+
+But the problem was that most of the companies that the politicians are linked to are small businesses for which we have little interest. Thus, we changed our approach to obtain the companies of interest (most valued companies for example), and find the entities linked with them. These entities of the top companies are actual power elites by our definition. Any links between them and politicians (direct or indirect) are our actual point of interests.
+At this juncture, we utilized the data from \textbf{Capitaline} \cite{Capitaline}. Capitaline is a database containing info on Indian companies. 
 
 % We used Capitaline data as collected by Parag Pahwa[citation].
 
@@ -323,29 +329,36 @@ The data collected consisted of following information-
     \item Donations to political parties
 \end{itemize}
 
-However, the problem was that it had no unique ids like CIN, DIN to uniquely determine a company or director and help us in resolution. So we decided to generate a new dataset of our own. Using the Company Name and Value field we picked top 1000 valued company and looked for relevant information in other data stores like CompanyWiki. 
-CompanyWiki is another website containing data from mostly MCA. It helped us by giving a better platform with more options of searching/ querying the data. It also contained government IDs for the entries (CIN for companies, DIN for directors etc. ) which helped us to link entities. The website also allowed us to search on CINs, DINS  / get CINs given DINs and vice-versa. 
-For our purpose we obtained our director sharing data by following means-
+However, the problem was that Capitaline had no unique ids like CIN, DIN to uniquely determine a company or director and help us in resolution. So we decided to generate a new dataset of our own. Using the Company Name and Value field we picked top 1000 valued company from Capitaline and looked for relevant information in other data-stores like CompanyWiki. \\
+
+CompanyWiki is another website containing data from mostly MCA. It helped us by giving a better platform with more options of searching/ querying the data. It also contained government IDs for the entries (CIN for companies, DIN for directors etc. ) which helped us to link entities. The website also allowed us to search on CINs, DINS  / get CINs given DINs and vice-versa.\\
+
+For our purpose we obtained our director sharing data by following the under-mentioned steps.
 
 \begin{enumerate}
     \item Obtain top 1000 valued company from Capitaline data - an SQL query on database table storing the company name and value ordered by value and limit to 1000 entries.
-    \item Manual annotation of 1000 companies to get its CIN. This was done by searching for the company name in CompanyWiki.
+    
+    \item Manual annotation of 1000 companies to get its CIN. This was done by searching for the company name in CompanyWiki and manually verify for exact same entities.
+
     \item Running Selenium script for taking the list of IDs to get all director names, DINs from CompanyWiki.
-    \item Using these to get all the companies, CINs where the corresponding director is a member. Here also Selenium was used to get the company names, CINs from the list of DINs inputted. The script took entire 3 days to complete the task. Advantage of using the CIN here became useful when duplicates are filtered with the help of it.
+    
+    \item Using these to get all the companies, CINs where the corresponding director is a member. Here also Selenium was used to get the company names, CINs from the list of DINs inputted. The script took entire 3 days to complete the task. Advantage of using the CINs and DINs here became useful when duplicates are filtered with the help of these for both companies and directors.
+
 \end{enumerate}
 
-Thus in this way a dataset of 1000 companies and  9400 directors were expanded to a dataset of 90000 directors and 60000 companies. This data formed the starting point in our Core Database.
+Thus in this way a dataset of 1000 companies and 9400 directors was expanded to a dataset of 90000 directors and 60000 companies. This data formed the starting point of our Core Database.
 
 \subsection{Political data}
 
-Our task in this domain was to find personal information of MPs and their dependents. So we went looking in Wikipedia of various political members and their families. But Wikipedia is highly unstructured and crawling, parsing Wikipedia even with professional extractors is a tedious task.
+Our task in this domain was to find personal information of MPs and their dependents. So we went looking in Wikipedia for various political members and their families. But Wikipedia is highly unstructured and crawling, parsing Wikipedia even with professional extractors is a tedious \& challenging task.
 
 We started with these problem statements in our mind:
 \begin{itemize}
     \item How to get info on all 16 Lok Sabha's MPs?
     \item How to get the family information of MPs?
 \end{itemize}
-\subsection{MyNeta}
+
+\subsubsection{MyNeta}
 MyNeta is a site launched by Association of Democratic Reforms (ADR) to provide public awareness about Indian politicians. They contain several important information about Indian MPs including -
 \begin{itemize}
     \item Personal information
@@ -353,33 +366,35 @@ MyNeta is a site launched by Association of Democratic Reforms (ADR) to provide 
     \item Assets and Liabilities
     \item Criminal cases - if any
 \end{itemize}
-For our work, we used only the personal information of the politician. MyNeta also keeps an internal id (named MyNeta ID) which we keep to resolve duplicates in the data.
+For our work, we mainly used the personal information of the politician. MyNeta also keeps an internal id (named MyNeta ID) which we keep to resolve duplicates in the data.
 
-\subsection{Lok Sabha Official data}
+\subsubsection{Lok Sabha Official data}
 
-We also chose to scrape official LokSabha site for politician's personal properties as per government records for better triangulation of political entities (especially when we found some information missing in MyNeta dataset) and also for looking up family ties of the political leaders.
-We finally got this information from official site of LokSabha which gave us actual government provided records. Scripts were written in scrapy which allowed us to gather information about politician. We also downloaded the images of politicians to be used later in the Power Elites web app \ref{chapwebapp}.
+We also chose to scrape official LokSabha site for politician's personal data as per government records for better triangulation of political entities (especially when we found some information missing in MyNeta dataset) and also for looking up family ties of the political leaders.\\
+
+We finally got this information from official site of LokSabha which gave us actual government provided records. Scripts were written in scrapy which allowed us to gather information about Indian politicians. We also downloaded the images of politicians which have been used on profile pages of these politicians in the Power Elites web app \ref{chapwebapp}.
 
 \subsubsection{Rajya Sabha Official data}
 
-We collected Rajya Sabha data as well from their official site to look for more corporate-political tie ups. Rajya Sabha data is more interesting as we have some businessmen directly nominated as a Rajya Sabha.  
+We collected Rajya Sabha data as well from their official site to look for more corporate-political tie ups. Rajya Sabha data is more interesting as we have some businessmen directly nominated in Rajya Sabha by our political leaders.  
 
-\section{Family Ties Information}
+\subsection{Family Ties Information}
 
 We also have manually collected from the web various family ties in businesses and politics. Major source for this data is wikipedia. This data allowed us to find new relations/links from already obtained graph.\cite{indianbfamilies} \cite{indianpfamilies}
 
 
 All the mash-ups created by these datasets have been reported in viz section \ref{chapviz}
 
-\section{Data integration}
+\section{Data Integration}
 \label{dataint}
 
-As discussed earlier, the real challenge of forming a data mashup is the non-uniformity of different sources which include differences in schema, data model, formats of text, assumptions of persons scraping the data(hereby referred to as \textbf{ data gatherers } or \textbf{ gatherers }) etc. To alleviate such problems, we came up with a particular data format to be used by all data gatherers on conformance with which he or she should pre-format the data before pushing in to the system. By separating out the problem of data integration, we have reduced maintenance costs for the knowledge base. In this way, the schema described in the system model is kept intact, while the data gatherer can crawl the data by his own whim as long as he conforms to the data format expected by the write API.
+As discussed earlier, the real challenge of forming a data mash-up is the non-uniformity of different sources which include differences in schema, data model, formats of text, assumptions of persons scraping the data(hereby referred to as \textbf{ data gatherers } or \textbf{ gatherers }) etc. To alleviate such problems, we came up with a particular data format to be adhered to by all data-gatherers for uniformity before data is pushed to the system.\\
 
-The initial plan was to allow the crawled data to be pushed into some MySQL database. Each gatherer would then have to define a mapping somewhere to map all the fields of the crawled data to the fields in the actual graph data. But this poised the problem of maintaining a new map file/table which was crucial to data pushing. The data gatherer would have to enlist new mappings for every new data crawled from a source. The maintenance of the  would have been another problem to deal with.
+By separating out the problem of data integration and keeping aggregated data in a separate data-store, we have been able to reduce maintenance costs for the knowledge base. In this way, the schema described in the system model is kept intact, while the data gatherer can crawl the data in accordance with his own whim as long as he conforms to the data format expected by the write API. \\
+
+The initial plan was to allow the crawled data to be pushed into some MySQL database. Each gatherer would then have to define a mapping somewhere to map all the fields of the crawled data to the fields in the actual graph data. But this poised the problem of maintaining a new map file/table which was crucial for pushing the data. The data gatherer would have to enlist new mappings for every new data crawled from a source. The maintenance of such a database would have been another problem to deal with. \\
 %
-Instead we chose to provide gatherers with a REST API and  a specific data format which he/she has to adhere to while pushing in the data.
-For now, JSON payload is used in a specific format. Similar to the graph database format, this payload is designed as follows -
+Instead we chose to provide gatherers with a REST API and a specific data format which he/she has to adhere to while pushing in the data. For now, JSON payload is used in a specific format. Very similar to the graph database model, this payload is designed as follows:
 
 \begin{lstlisting}[language=json,firstnumber=1]
 {
@@ -413,33 +428,39 @@ For now, JSON payload is used in a specific format. Similar to the graph databas
         "end_entity": "2",
         "fetchdate": "1466024344",
         "sourceurl": "http://loksabha.nic.in",
-        "bidirectional": "no",
+        "bidirectional": "False",
         "properties": {
         }
     }]
 }
 \end{lstlisting}
 
-The main components of the payload is as follows -
+The main components of the payload are as follows -
+
 \begin{itemize}
+
     \item entities - array with each element having following info
         \begin{enumerate}
-            \item id - unique id specific to data gathering task
+            \item id - unique entity id specific to data gathering task
             \item labels, properties - adhering to an entity in graph db
-            \item sourceurl, fetchdate - to be used for provenance (to be given by the gatherer) to be discussed in chapter \ref{chapwebapp}
+            \item sourceurl, fetchdate - to be used for provenance (to be given by the gatherer) and to be discussed in chapter \ref{chapwebapp}
         \end{enumerate}
+
     \item relations - array with each element having following info
+
         \begin{enumerate}
-            \item id - unique id specific to data gathering task
-            \item startentity,endentity - ids of entities
-            \item isbidirectional - whether the relation is bidirectional 
-            \item labels, properties - adhering to relation properties in graphdb
+            \item id - unique relation id specific to data gathering task
+            \item startentity,endentity - ids of participating entities
+            \item bidirectional - boolean attribute to determine whether the relation is bidirectional 
+            \item labels, properties - adhering to relation attributes in neo4j graph database
             \item sourceurl, fetchdate - to be used for provenance (to be given by gatherer) to be discussed in chapter \ref{chapwebapp}
         \end{enumerate}
-    \item authentication info - used by the Power Elites app described later \ref{chapwebapp}
+
+    \item authentication info - used by the Power Elites app as described in later chapter \ref{chapwebapp}
+
 \end{itemize}
 
-All data crawled or manually collected is first pushed into a separate graph database ( a separate Neo4j instance)-  \emph{crawl data-store} (here onwards refer to as crawl-DB) using REST API calls with the JSON payload. The pushed data is then verified/resolved by human moderator before being pushed to the system. A high level view of the central internals of the system is shown in the Figure \ref{fig:twodb}.
+All data crawled or manually collected is first pushed into a separate graph database ( a separate Neo4j instance)-  \emph{crawl data-store} (here onwards refer to as crawl-DB) using REST API calls with the JSON payload. The pushed data is then verified and resolved by human moderator before being pushed to the system. A high level view of the central internals of the system is shown in the Figure \ref{fig:twodb}.
 
 \begin{figure}[H]
 \begin{center}  
@@ -449,13 +470,13 @@ All data crawled or manually collected is first pushed into a separate graph dat
 \end{center}
 \end{figure}
 
-This way - we will have different non-connected subgraphs in the Crawl - DB .  
-But how do we resolve the nodes and relations now with the core data-store? The basic setup id described in the next section. 
+This way - we have different non-connected subgraphs in the Crawl - DB .  
+But how do we resolve the nodes and relations now with the core data-store? The basic setup is described in the next section of Entity Resolution. 
 
 \section{Entity Resolution}
 \label{dataer}
 
-The basic algorithm of entity resolution goes as follows-
+The basic algorithm of entity resolution is as follows-
 
 \begin{algorithm}[H]
 \KwData{Datasets - S, T }
@@ -471,10 +492,11 @@ parameters - S,T, threshold \;
 \end{algorithm}
 
 Complexity of above algorithm is O(n*m) where n is size(S) and m is size(T) when n records are searched linearly in S.
-        From the above, we can find that the two crucial operations here is the choice of proper scoring algorithm to pick s in line and search of t in S in line 1.
+        From the above, we can find that the two crucial operations here are the choice of proper scoring algorithm to pick s from S in line 2 and search for t in S in line 1. The faster and better they are, the more efficient is our entire ER task.
 
-\section{String Matching Algorithms}
-        The requirement of a scoring algorithm was such that it should match words with small spelling mistakes and similar names. In our case, we have used Jaro-Winkler distance as it considers ranges and transpositions while matching two words. A sample experiment from our side on a list of four names showed the scores as seen in table \ref{table:1}.
+\subsection{String Matching Algorithms}
+        The requirement of a scoring algorithm for our basic ER algo is such that it should match efficiently all similar sounding and similarly spelt words. For our initial testcases, we experimented with Jaro-Winkler distance (and others) as it considers ranges and transpositions while matching two words. A sample experiment and result scores on a list of four names can be seen in table \ref{table:1}.
+
     \begin{table}[H]
     \centering
     \caption{Comparison of string matching algorithm}
@@ -487,57 +509,65 @@ Complexity of above algorithm is O(n*m) where n is size(S) and m is size(T) when
     gautam adani vs gautambhai adani & 4                    & 0.86                    & 0.92                   &  \\ \cline{1-4}
     \end{tabular}
     \end{table}
-        Upon a test run of all algorithms over a sample of 100 names from our datasets we decided to use jaro-winkler for the purpose. We also required to match names which are phonetically similar to other names. These helped us to match names like \textit{ 'Gautam' } and \textit{ 'Gautambhai' }, \textit{ 'Vidya' }, \textit{ 'Bidya' } and \textit{ 'Biday' } etc.
+        Upon a test run of all algorithms over a sample of 100 names from our datasets we decided to use jaro-winkler for the purpose. 
 
-\section{Comparison techniques}
-        As obvious from above algorithm the performance of entity matching algorithm depends largely on how fast the searching occurs in dataset S. A naive algorithm like above added a factor of O(n) on linear search over entire S. As a result, the performance of the entire system got bottlenecked by the resolution module. As a result we sought out for other solutions regarding this. The obvious improvement over it is the possible implementation of a binary search to reduce search speed to O(log n) time. But binary search is not applicable here for following two reasons -
-            \begin{enumerate}
-                \item Binary search uses a predicate like gt, eq, lt , the value of which is true or false. Such predicates determines some order in the dataset. 
-                \item The absence of such predicates as above avoid any sorting or ranking of the data in any order for any possibility of binary search.
+        But, we also needed to match names which are phonetically similar to other names. These helped us to match names like \textit{ 'Gautam' } and \textit{ 'Gautambhai' }, \textit{ 'Vidya' }, \textit{ 'Bidya' } and \textit{ 'Biday' } etc.
+
+\subsection{Comparison techniques}
         
-            \end{enumerate}
+        As obvious from the above basic ER algorithm, the performance of entity matching algorithm depends largely on how fast the searching (and thus the comparison between two strings) occurs in dataset S. A naive algorithm like above added a factor of O(n) due to linear search over entire S. As a result, the performance of the entire system got bottlenecked by the resolution module. We started looking for other alternatives regarding this. The obvious improvement over it could have been the possible implementation of a binary search to reduce search speed to O(log n) time. But binary search uses predicates like gt, eq, lt , the value of which are true or false. Such predicates determines some order in the dataset. Data usually cannot be ordered like this eliminating out the possibility of binary search over our data.
+        
 
-\section{Machine learning techniques}
+\subsection{Machine learning techniques}
 
-        After having performance bottleneck in searching records in other datasets, we looked for probabilistic ways of solving the same problem. We used the python library of dedupe \cite{dedupe} for this purpose. The library basically induced an active learning mechanism to obtain training samples where it picked two entities of possible match and prompts the user to label positive/negative. It then matches the related entities accordingly with the hypothesis formed. Unfortunately this approach suffered from following drawbacks-
+        After having performance bottleneck in searching records in other datasets, we looked for probabilistic ways of solving the same problem. We used the python library dedupe \cite{dedupe} for this purpose. The library basically induced an active learning mechanism to obtain training samples where it picks two entities of possible match and prompts the user to label positive/negative. It then matches the related entities accordingly with the hypothesis formed. Unfortunately this approach suffered from following drawbacks-
         \begin{itemize}
         \item Too small data to accurately form a proper hypothesis. 
         \item The labels that were asked to mark along with data were picked at random and often the results of the algorithm are different in different runs (depending on the number of positive or negative label given at that time).
         \end{itemize}
-        Fortunately indexing other dataset helped to come out of this.
 
-\section{Indexing and Apache Solr}
-        Indexing allows searching to be very fast of near O(1) speed. Indexes are data-structures that store contents of a document (in our context fields of records in a dataset) for faster access to the document. This enables faster retrieval with a trade off for using more memory. For our purpose we used Apache Solr framework \cite{solr}for the searching step. Solr uses Apache Lucene \cite{lucene} to create an inverted index based desired on fields in the records. An inverted index basically creates a data structure on the content of the records and have pointers to the actual locations of the records. So for all text in the specified fields, Lucene breaks them (tokenizes them) and store them in a data structure for fast retrieval.  Solr also sets up a  Web server with REST APIs to allow us to integrate it with other parts of our system described in Chapter \ref{chapwebapp}. 
+        Fortunately indexing the core-dataset proved to a be silver-bullet for all the searching problems.
+
+\subsection{Indexing and Apache Solr}
+        Indexing allows searching to be very fast - of near O(1) speed. Indexes are data-structures that store contents of a document (in our context fields of records in a dataset) for faster access to the document. This enables faster retrieval with a trade-off of using more memory. For our purpose we used Apache Solr framework \cite{solr} for the searching step. Solr uses Apache Lucene \cite{lucene} to create an inverted index on desired fields in the records. An inverted index basically creates a data structure on the content of the records and have pointers to the actual locations of the records. So for all text in the specified fields, Lucene breaks them (tokenizes them) and store them in a data structure for fast retrieval.  Solr also sets up a  Web server with REST APIs to allow us to integrate it with other parts of our system described in Chapter \ref{chapwebapp}. 
         Since Solr has its own sets of protocols we had to modify the way we apply the resolution algorithm described above. The main steps followed by us to realize this are as follows.\cite{solrdocs} 
 \begin{itemize}
 
-        \item \textbf{ Defining a data set } to index  (the data set S above). We described a data source which contained the dataset. In this case, it was a mysql database. (file \emph{ db-data-config.xml }) .
-        \item \textbf{ Defining the fields } to index. Solr needs to have a schema of the records to know which fields will indexed and which one is kept as satellite data. These are specified in solr configuration files. (file \emph{schema.xml})
-        \item \textbf{ Defining how to preprocess } all the terms before creating the index. Solr allows to specify a list of pre-built tokenizers, stemmers, filters to preprocess a term or custom ones if necessary. We used whitespace tokenizers and double metaphone phonetic filters to get a match score relevant to our purpose and in this way used the phonetic algorithm for better text matching. (file - \emph{ solrconfig.xml })
+        \item \textbf{Defining a data set} to index  (the data set S in ER algo). We described a data source which contained the dataset. In this case, it was a mysql database. (file \emph{ db-data-config.xml }) .
+        
+        \item \textbf{Defining the fields} to index. Solr needs to have a schema of the records to know which fields will indexed and which one is kept as satellite data. These are specified in solr configuration files. (file \emph{schema.xml})
+
+        \item \textbf{Defining how to pre-process} all the terms before creating the index. Solr allows to specify a list of pre-built tokenizers, stemmers, filters to preprocess a term or custom ones if necessary. We used whitespace tokenizers and double metaphone phonetic filters to get a match score relevant to our purpose and in this way used the phonetic algorithm for better text matching. (file - \emph{ solrconfig.xml })
+        
         \item \textbf{ Forming a lucene query } based on the contents of records of another dataset (data set T above)
-        \item \textbf{ Applying Jaro algorithm } for comparison was difficult in Solr. This is because, all the functions applied to the text for indexing are necessarily single parameter. Jaro or any other non-phonetic string metric needs at lest two string Results returned by the Solr is further filtered by the Jaro-Winkler algorithm. Results being quite small, does not take much time even if a one-one matching algorithm is executed. 
+        
+        \item \textbf{ Applying Jaro algorithm } for comparison was difficult in Solr. This is because, all the functions applied to the text for indexing are necessarily single parameter. Jaro or any other non-phonetic string metric needs at-least two strings. Results returned by the Solr can be further filtered by the Jaro-Winkler algorithm. Results being quite small, does not take much time even if a one-one matching algorithm is executed. 
 
 \end{itemize}
-\subsection{Solr Fields}
+\subsubsection{Solr Fields}
     To effectively triangulate two entities, special emphasis was given on which fields to compare while doing it. After few experiments we decided to match records on following fields generated from the graph data model we discussed in previous section.
 
 \begin{itemize}
-    \item \textbf{ Aliases }- a list that contains names pertaining to an entity. This is especially required when a person/institution is known by several names in the world. Eg. - Narendra Modi vs Narendra Damodar Modi, BJP vs Bharatiya Janata Party 
+    
+    \item \textbf{Aliases}- a list that contains alternate and primary names pertaining to an entity. This is especially required when a person/institution is known by several names in the world. Eg. - Narendra Modi vs Narendra Damodar Modi, BJP vs Bharatiya Janata Party
+
     \item \textbf{ Aliases  Phonetic } - same as above but here search is done on phonetic index.
-    \item \textbf{ label } - Label dictates the type of entity as per data model in section- \ref{datamodel}.
+
+    \item \textbf{Label} - Label dictates the type of entity as per data model in section- \ref{datamodel}. An entity can have multiple labels.
+
     \item \textbf{ Keywords } - a list that contains main keywords of the entity. This field is most helpful in triangulation as it indexes all the properties of the entity and the aliases of the entities directly related with the original entity. Important properties unique to a particular entity like location for a particular item.
 \end{itemize}
 
-\subsection{Lucene Queries}
-    Proper search queries are essential to efficiently resolve an entity. These involved using above fields effectively to obtain relevant entities- 
-    The grammar of the lucene query used by us goes as follows-\\
+\subsubsection{Lucene Queries}
+    Proper search queries are essential for efficiently resolving an entity. These involves using the above indexed fields effectively to obtain relevant entities. The grammar of the lucene query used goes as follows-\\
+
         \emph{ \textbf{ L } ::=   \textbf{ I }':'(\textbf{Q}) \textbf{L}  OR $\epsilon$ } \\
        \emph{ where,  \textbf{I} ::= \textless index field \textgreater  }\\
         \emph{ \textbf{Q} ::= \textless query string\textgreater to be matched against I } \\
 
     query string can be as follows -\\
     
-    \emph{ "string text" } - matching the exact word 'string text'\\
+    \emph{"string text"} - matching the exact word 'string text'\\
     \emph{ string text } - matches string or text or both \\
     \emph{ string$\sim$ } - lucene applies edit distance to string and returns the possible matches \\
     
@@ -545,7 +575,7 @@ Complexity of above algorithm is O(n*m) where n is size(S) and m is size(T) when
     %" labels:(each label separated by whitespace) aliases:(each alias~ separated by whitespace ) AND aliases-phonetic:(each alias separated by whitepace) AND keywords:( each keyword~ separated by whitespace)"
     More details on lucene query can be found at \url{https://lucene.apache.org/core/2\_9\_4/queryparsersyntax.html}
     %Eg. - 
-\subsection{Performance}
-    On testing our Solr integrated system with the original basic resolution algorithm, we found many fold improvements. Initially upon resolving 1000 corporate entities against about 500 political ones over the "name" field in both took us about 150 minutes to resolve. That makes resolution of a single entity about 18s.
-    Compared to that, a single entity is resolved in Solr in little over 1s showing a performance upgrade of about 18x.
+\subsubsection{Performance}
+    On testing our Solr integrated system against the original basic resolution algorithm, we found many-folds improvement. Initially upon resolving 1000 corporate entities against about 500 political ones over the "name" field in both the datasets took us about 150 minutes to resolve using basic ER algo. That makes resolution of a single entity about 18s.
+    Compared to that, a single entity is resolved in Solr in little over 1s showing a performance upgrade of almost around 18x.
 
