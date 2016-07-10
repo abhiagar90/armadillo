@@ -12,7 +12,7 @@ Problem of forming the social networks of Indian Politicians and Corporates, vis
 We intended to complete following tasks through our project-
     - To collect data from semantic web (and other sources) to form a database ( henceforth referred to as (b) "knowledge base" (b) / (b) "knowledge graph" (b) )
     - To create a neat, structured minimal error data collection which otherwise is scattered at respective sources.
-    - To provide a data mashup from different fields to further help the academecians, journalists etc.
+    - To provide a data mash-up from different fields to further help the academecians, journalists etc.
     - For monitoring the top players in Indian society - mainly in the spheres of politics and businesses in India.
     - To disemminate information to public  which brings about accountability and transparency. 
     -  To seek answers to questions like -
