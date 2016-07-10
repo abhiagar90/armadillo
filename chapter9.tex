@@ -1,8 +1,7 @@
 \chapter{Constructing the Social network}
-
 The driving fuel for any social network is the data it represents. The problem in constructing a linked-data system such as this one is always the data and the entropy it brings. The challenges are always the usual ones - unavailability of data, noise in the collected data, no authentic source, and many-a-times no structure in the data. Even if we are successful in collecting and cleaning the linked data we want, the way we go about integrating all this variety of information in a single data-store is itself an another challenge. \\
 
-The choice of data-store matters here the most because one would like to query the data and unearth interesting relations between participating entities. Henceforth, a person or an \emph{organization} will be called an \emph{entity}. These entities would be linked to each other by certain edges/links just like in a graph which we will normally call \emph{relations}. All these challenges are elevated manifold when one wishes to resolve entities from different datasets into a single unified entity. \\
+The choice of data-store matters here the most because one would like to query the data and unearth interesting relations between parties111cipating entities. Henceforth, a person or an \emph{organization} will be called an \emph{entity}. These entities would be linked to each other by certain edges/links just like in a graph which we will normally call \emph{relations}. All these challenges are elevated manifold when one wishes to resolve entities from different datasets into a single unified entity. \\
 
 Here we describe in order our choice of data storage, our core data model for the linked data, data collection practices and data sources, data integration methodology, and finally the necessary evil in such a system -  entity resolution. \\
 
@@ -223,7 +222,7 @@ We list some images here that better describe the present data model.
 \end{center}
 \end{figure}
 
-\section{Data collection and description}
+\section{Data Collection \& Description}
 \label{datacollect}
 
 Since the aim was to to build a social network for all the Indian power houses, we needed to identify and collect as much varied data as possible. It is only when different kind of data mingle with each other in the system that we can hope to see some hidden patterns or dig out interesting insights. All the visualizations that we obtained from this data are shown in the analysis Chapter \ref{chapviz}.
@@ -371,7 +370,7 @@ We also have manually collected from the web various family ties in businesses a
 
 All the mash-ups created by these datasets have been reported in viz section \ref{chapviz}
 
-\section{Data integration}
+\section{Data Integration}
 \label{dataint}
 
 As discussed earlier, the real challenge of forming a data mashup is the non-uniformity of different sources which include differences in schema, data model, formats of text, assumptions of persons scraping the data(hereby referred to as \textbf{ data gatherers } or \textbf{ gatherers }) etc. To alleviate such problems, we came up with a particular data format to be used by all data gatherers on conformance with which he or she should pre-format the data before pushing in to the system. By separating out the problem of data integration, we have reduced maintenance costs for the knowledge base. In this way, the schema described in the system model is kept intact, while the data gatherer can crawl the data by his own whim as long as he conforms to the data format expected by the write API.
